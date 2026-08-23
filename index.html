@@ -1,0 +1,202 @@
+<title>Sponge Bridges</title>
+<meta name="description" content="A lone courier walks a fogbound town, carrying everything on his back. Sponge Bridges — coming soon.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#12151a; --bg2:#0b0d10;
+    --fog:#c2564a; --fog-dim:#8a4038;
+    --gold:#d4a72c;
+    --ink:#f0ead9; --ink-dim:rgba(240,234,217,.56); --ink-faint:rgba(240,234,217,.32);
+    --line:rgba(240,234,217,.14);
+    --display:'Fraunces','Noto Serif SC',serif;
+    --body:'Archivo','Noto Sans SC',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body);
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--fog);color:var(--bg)}
+
+  /* ══ hero ══ */
+  .hero{
+    position:relative; min-height:100svh; display:flex; flex-direction:column;
+    justify-content:flex-end; overflow:hidden;
+    background:
+      radial-gradient(1100px 620px at 50% 108%, rgba(194,86,74,.35), transparent 62%),
+      linear-gradient(180deg, var(--bg2) 0%, var(--bg) 46%, #171310 100%);
+  }
+  .grain{position:absolute; inset:0; opacity:.5; mix-blend-mode:overlay; pointer-events:none}
+
+  .skyline{position:absolute; left:0; right:0; bottom:0; height:46%; opacity:.9}
+
+  nav{
+    position:absolute; top:0; left:0; right:0; z-index:5;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:clamp(20px,4vw,40px) clamp(20px,5vw,56px);
+  }
+  nav .mark{font-family:var(--display); font-weight:600; font-size:15px; letter-spacing:.02em; color:var(--ink-dim)}
+  nav .tag{
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint);
+    border:1px solid var(--line); padding:5px 12px;
+  }
+
+  .herobody{position:relative; z-index:3; padding:0 clamp(20px,6vw,64px) clamp(64px,10vh,120px)}
+  .eyebrow{
+    font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--fog);
+    margin-bottom:18px; opacity:0; animation:rise 1s .15s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  h1{
+    font-family:var(--display); font-weight:900; font-optical-sizing:auto;
+    font-size:clamp(58px,13vw,168px); line-height:.88; letter-spacing:-.01em;
+    color:var(--ink); text-wrap:balance; opacity:0;
+    animation:rise 1.1s .3s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  h1 em{font-style:italic; font-weight:300; color:var(--ink-dim)}
+  .tagline{
+    margin-top:22px; max-width:32em; font-size:clamp(15px,1.9vw,19px); line-height:1.65;
+    color:var(--ink-dim); font-weight:400; opacity:0;
+    animation:rise 1.1s .55s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes rise{from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:translateY(0)}}
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow,h1,.tagline{animation:none; opacity:1}
+    .walker{animation:none !important}
+  }
+
+  .scrolldown{
+    position:absolute; bottom:28px; right:clamp(20px,5vw,56px); z-index:4;
+    display:flex; align-items:center; gap:10px; color:var(--ink-faint);
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  }
+  .scrolldown .ln{width:1px; height:34px; background:linear-gradient(var(--ink-faint),transparent)}
+
+  /* ══ pitch ══ */
+  .pitch{
+    max-width:720px; margin:0 auto; padding:min(18vw,180px) clamp(20px,6vw,40px) 100px;
+    text-align:center;
+  }
+  .pitch p{
+    font-family:var(--display); font-weight:300; font-size:clamp(24px,3.6vw,38px);
+    line-height:1.5; color:var(--ink); text-wrap:balance;
+  }
+  .pitch p + p{margin-top:1.1em}
+  .pitch em{font-style:italic; color:var(--fog); font-weight:600}
+
+  /* ══ pillars ══ */
+  .pillars{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .pillar{
+    background:var(--bg); padding:56px 28px; text-align:center;
+  }
+  .pillar .n{
+    font-family:var(--display); font-style:italic; font-weight:300; font-size:14px;
+    color:var(--ink-faint); margin-bottom:14px; display:block;
+  }
+  .pillar h3{
+    font-family:var(--display); font-weight:600; font-size:clamp(20px,2.4vw,26px);
+    margin-bottom:10px; color:var(--ink);
+  }
+  .pillar p{font-size:14px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto}
+  @media(max-width:760px){ .pillars{grid-template-columns:1fr} .pillar{padding:44px 24px; border-bottom:1px solid var(--line)} }
+
+  /* ══ closing ══ */
+  .closing{
+    position:relative; padding:min(20vw,200px) clamp(20px,6vw,40px) clamp(70px,10vh,110px);
+    text-align:center; overflow:hidden;
+    background:radial-gradient(900px 500px at 50% 100%, rgba(212,167,44,.10), transparent 65%);
+  }
+  .closing h2{
+    font-family:var(--display); font-weight:900; font-size:clamp(40px,7vw,86px);
+    line-height:1; letter-spacing:-.01em; margin-bottom:22px; text-wrap:balance;
+  }
+  .closing .sub{color:var(--ink-dim); font-size:15px; max-width:34em; margin:0 auto 34px; line-height:1.7}
+  .notify{
+    display:inline-flex; align-items:center; gap:10px; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-faint); border:1px solid var(--line);
+    padding:12px 22px;
+  }
+  .notify .dot{width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 10px var(--gold)}
+
+  footer{
+    padding:30px clamp(20px,6vw,40px) 40px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:10px; color:var(--ink-faint); font-size:11px;
+    letter-spacing:.05em; border-top:1px solid var(--line);
+  }
+</style>
+
+<section class="hero">
+  <svg class="grain" width="100%" height="100%" aria-hidden="true">
+    <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#n)" opacity="0.05"/>
+  </svg>
+
+  <svg class="skyline" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <rect x="0" y="150" width="70" height="150" fill="#0e1013" opacity=".8"/>
+    <rect x="90" y="90" width="46" height="210" fill="#0e1013" opacity=".85"/>
+    <rect x="150" y="170" width="90" height="130" fill="#0e1013" opacity=".7"/>
+    <rect x="980" y="120" width="60" height="180" fill="#0e1013" opacity=".8"/>
+    <rect x="1060" y="60" width="50" height="240" fill="#0e1013" opacity=".9"/>
+    <rect x="1120" y="160" width="80" height="140" fill="#0e1013" opacity=".7"/>
+
+    <g class="walker" transform="translate(600,300) scale(1.15)">
+      <rect x="-16" y="-118" width="32" height="20" fill="#0e1013"/>
+      <rect x="-19" y="-96" width="38" height="22" fill="#0e1013"/>
+      <rect x="-14" y="-72" width="28" height="18" fill="#0e1013"/>
+      <path d="M -14,-54 Q -16,-30 -11,0 L 11,0 Q 16,-30 14,-54 Q 8,-62 0,-62 Q -8,-62 -14,-54 Z" fill="#0e1013"/>
+      <circle cx="0" cy="-70" r="9" fill="#0e1013"/>
+      <path d="M -9,0 L -13,32 L -6,32 L -3,0 Z" fill="#0e1013"/>
+      <path d="M 9,0 L 13,30 L 6,30 L 3,0 Z" fill="#0e1013"/>
+    </g>
+  </svg>
+
+  <nav>
+    <div class="mark">Sponge Bridges</div>
+    <div class="tag">In Development</div>
+  </nav>
+
+  <div class="herobody">
+    <div class="eyebrow">A Delivery, Not a War</div>
+    <h1>Sponge<br><em>Bridges</em></h1>
+    <p class="tagline">Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.</p>
+  </div>
+
+  <div class="scrolldown"><span class="ln"></span>Scroll</div>
+</section>
+
+<section class="pitch">
+  <p>You wake in a stranger's town. The fog took the streets, the sky, the way out.</p>
+  <p>What you carry is what you have. <em>Where you walk is yours to choose.</em></p>
+</section>
+
+<section class="pillars">
+  <div class="pillar">
+    <span class="n">i.</span>
+    <h3>Carry</h3>
+    <p>Nothing moves unless you move it. Weight is a promise you make with your own two legs.</p>
+  </div>
+  <div class="pillar">
+    <span class="n">ii.</span>
+    <h3>Survive</h3>
+    <p>Hunger, thirst, the cold, the dark. The town doesn't care whether you make it.</p>
+  </div>
+  <div class="pillar">
+    <span class="n">iii.</span>
+    <h3>Choose Your Way Out</h3>
+    <p>There is no one path through the fog. There's just the one you're willing to walk.</p>
+  </div>
+</section>
+
+<section class="closing">
+  <h2>The fog is waiting.</h2>
+  <p class="sub">Sponge Bridges is currently in development. Follow along for the walk out.</p>
+  <div class="notify"><span class="dot"></span> More to come</div>
+</section>
+
+<footer>
+  <span>Sponge Bridges</span>
+  <span>© 2026</span>
+</footer>
