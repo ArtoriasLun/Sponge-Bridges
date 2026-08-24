@@ -223,11 +223,39 @@
   @media(max-width:640px){ .viewer{gap:8px} .viewer .navbtn{width:30px; height:30px; font-size:13px} }
 
   /* ══ pitch ══ */
-  .pitch{max-width:720px; margin:0 auto; padding:min(16vw,150px) clamp(20px,6vw,40px) 90px; text-align:center}
-  .pitch p{font-family:var(--display); font-weight:300; font-size:clamp(23px,3.4vw,36px); line-height:1.5; color:var(--ink); text-wrap:balance; opacity:0; transform:translateY(16px)}
-  .pitch p.in{animation:rise .9s cubic-bezier(.16,1,.3,1) forwards}
-  .pitch p + p{margin-top:1.1em}
+  .pitch{
+    max-width:1080px; margin:0 auto; padding:min(14vw,130px) clamp(20px,6vw,40px) 90px;
+    display:grid; grid-template-columns:1fr 1.25fr; gap:clamp(28px,5vw,60px); align-items:center;
+  }
+  .pitch .p-art{position:relative; aspect-ratio:4/5; border:1px solid var(--line); overflow:hidden; background:var(--bg2)}
+  .pitch .p-art::before,.pitch .p-art::after{content:"";position:absolute;top:0;width:12px;height:12px;z-index:2}
+  .pitch .p-art::before{left:0;border-top:1px solid var(--glass);border-left:1px solid var(--glass)}
+  .pitch .p-art::after{right:0;border-top:1px solid var(--glass);border-right:1px solid var(--glass)}
+  .pitch .p-art img{width:100%; height:100%; object-fit:cover; display:block}
+  .pitch .p-art .ph{
+    position:absolute; inset:0; display:none; align-items:center; justify-content:center; text-align:center;
+    font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint);
+    background:repeating-linear-gradient(135deg, rgba(243,237,224,.03) 0 2px, transparent 2px 14px), var(--bg2);
+  }
+  .pitch .p-copy{opacity:0; transform:translateY(16px)}
+  .pitch .p-copy.in{animation:rise .9s cubic-bezier(.16,1,.3,1) forwards}
+  .pitch .p-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--fire); margin-bottom:14px}
+  .pitch h2{font-family:var(--display); font-weight:600; font-size:clamp(24px,3.2vw,36px); color:var(--ink); margin-bottom:16px}
+  .pitch p{font-size:15px; line-height:1.75; color:var(--ink-dim)}
+  .pitch p + p{margin-top:1em}
   .pitch em{font-style:italic; color:var(--glass); font-weight:600}
+  .pitch .p-plat{
+    display:inline-block; margin-top:20px; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--glass); border:1px solid var(--glass-line); background:var(--glass-dim); padding:6px 13px;
+  }
+  .pitch .cta-wiki{
+    display:inline-flex; align-items:center; gap:12px; margin-top:28px; cursor:pointer; text-decoration:none;
+    font-family:var(--mono); font-size:14px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
+    border:1px solid var(--glass-line); background:var(--glass-dim); padding:20px 34px;
+    transition:border-color .3s ease, background .3s ease, transform .3s ease;
+  }
+  .pitch .cta-wiki:hover{border-color:var(--glass); background:rgba(63,214,201,.28); transform:translateX(4px)}
+  @media(max-width:760px){ .pitch{grid-template-columns:1fr} .pitch .p-art{max-width:340px; margin:0 auto} }
 
   /* ══ pillars — ui-style modules: thin glass border, corner brackets, no fill ══ */
   .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
@@ -261,12 +289,6 @@
   .notify:hover{border-color:var(--glass); background:rgba(63,214,201,.28); color:var(--ink)}
   .notify .dot{width:6px; height:6px; border-radius:50%; background:var(--glass); box-shadow:0 0 10px var(--glass); animation:blink 1.8s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:1} 50%{opacity:.35}}
-  .wiki-link{
-    position:relative; display:block; margin-top:22px;
-    font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink-faint);
-    text-decoration:none; transition:color .25s ease;
-  }
-  .wiki-link:hover{color:var(--glass)}
 
   footer{
     padding:26px clamp(20px,6vw,40px) 36px; display:flex; justify-content:space-between; align-items:center;
@@ -325,8 +347,19 @@
 </section>
 
 <section class="pitch">
-  <p class="reveal" data-i18n-html="pitch.p1">You wake in a stranger's town. The fog took the streets, the sky, the way out.</p>
-  <p class="reveal" data-i18n-html="pitch.p2">What you carry is what you have. <em>Where you walk is yours to choose.</em></p>
+  <div class="p-art">
+    <img src="header.jpg" alt="A courier carrying a stacked cargo tower walks a fogbound, burning street." onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="ph">KEY ART<br>PLACEHOLDER</div>
+  </div>
+  <div class="p-copy reveal">
+    <div class="p-eyebrow" data-i18n="pitch.eyebrow">Survivor's Handbook</div>
+    <h2 data-i18n="pitch.h2">G City</h2>
+    <p data-i18n-html="pitch.p1">You are Sam, a courier. The day the fog rose past the edge of town, it became no-man's-land — the roads are still there, the houses are still there, nobody wants to walk in anymore. You wake strapped into a cargo frame; soon there's a tower stacked higher with every haul — supplies, spare parts, your last ration — the weight and the bulk both count, for real.</p>
+    <p data-i18n-html="pitch.p2">No safehouses. No waypoints. Hunger, thirst, and fatigue are real numbers. Scent and noise really do give you away. Cross the streets, the apartments, the precinct, the basements — find your own way out: fix the fog device, blast a gap through, walk it off, or find the one person still willing to help. <em>Four routes. First one you finish is the one that counts.</em></p>
+    <div class="p-plat" data-i18n="pitch.platform">Platform — Steam Only</div>
+    <br>
+    <a class="cta-wiki" href="game-wiki.html" data-i18n="pitch.cta">Enter the Survivor's Handbook →</a>
+  </div>
 </section>
 
 <section class="pillars">
@@ -357,7 +390,6 @@
   <h2 data-i18n="closing.h2">The fog is waiting.</h2>
   <p class="sub" data-i18n="closing.sub">Sponge Bridges is currently in development. Follow along for the walk out.</p>
   <div class="notify"><span class="dot"></span> <span data-i18n="closing.notify">More to come</span></div>
-  <a class="wiki-link" href="game-wiki.html" data-i18n="closing.wiki">Read the survivor's handbook →</a>
 </section>
 
 <footer>
@@ -383,15 +415,18 @@
       'gallery.eyebrow':'Gallery',
       'gallery.h2':'Captured In-Engine',
       'gallery.soon':'Screenshots coming soon',
-      'pitch.p1':'You wake in a stranger’s town. The fog took the streets, the sky, the way out.',
-      'pitch.p2':'What you carry is what you have. <em>Where you walk is yours to choose.</em>',
+      'pitch.eyebrow':'Survivor’s Handbook',
+      'pitch.h2':'G City',
+      'pitch.p1':'You are Sam, a courier. The day the fog rose past the edge of town, it became no-man’s-land — the roads are still there, the houses are still there, nobody wants to walk in anymore. You wake strapped into a cargo frame; soon there’s a tower stacked higher with every haul — supplies, spare parts, your last ration — the weight and the bulk both count, for real.',
+      'pitch.p2':'No safehouses. No waypoints. Hunger, thirst, and fatigue are real numbers. Scent and noise really do give you away. Cross the streets, the apartments, the precinct, the basements — find your own way out: fix the fog device, blast a gap through, walk it off, or find the one person still willing to help. <em>Four routes. First one you finish is the one that counts.</em>',
+      'pitch.platform':'Platform — Steam Only',
+      'pitch.cta':'Enter the Survivor’s Handbook →',
       'pillar.1.title':'Carry',
       'pillar.2.title':'Survive',
       'pillar.3.title':'Choose Your Way Out',
       'closing.h2':'The fog is waiting.',
       'closing.sub':'Sponge Bridges is currently in development. Follow along for the walk out.',
-      'closing.notify':'More to come',
-      'closing.wiki':'Read the survivor\'s handbook →'
+      'closing.notify':'More to come'
     },
     zh: {
       'nav.dev':'预备阶段',
@@ -401,15 +436,18 @@
       'gallery.eyebrow':'画廊',
       'gallery.h2':'游戏实机截图',
       'gallery.soon':'截图即将上线',
-      'pitch.p1':'你在一座陌生的小镇醒来。浓雾吞没了街道、天空，还有出路。',
-      'pitch.p2':'你带着什么，你就拥有什么。<em>往哪儿走，由你自己决定。</em>',
+      'pitch.eyebrow':'幸存者手册',
+      'pitch.h2':'G市',
+      'pitch.p1':'你叫 Sam，一名信使。红雾从小镇外沿升起那天起，这里就成了无人区——路还在，房子还在，只是没人愿意再走进来。你背着一副货运骨架醒来，肩上很快会架起一座越叠越高的<strong>货物塔</strong>：物资、零件、最后一口口粮，重量和体积都实打实地算数。',
+      'pitch.p2':'没有安全屋，没有传送点。饥饿、口渴、疲劳都是真实数值，气味和噪音会真正暴露你。穿过街道、公寓、警局与地下室，找到你的出路——修好去雾装置、炸开一道缺口、硬扛穿雾，或者找那个唯一愿意伸手的人。<em>四条路，谁先走通谁算数。</em>',
+      'pitch.platform':'平台 — 仅 Steam',
+      'pitch.cta':'进入幸存者手册 →',
       'pillar.1.title':'背负',
       'pillar.2.title':'生存',
       'pillar.3.title':'走出属于你的路',
       'closing.h2':'浓雾，仍在等你。',
       'closing.sub':'《Sponge Bridges》目前正在开发中。关注我们，一起等这场走出迷雾的旅程。',
-      'closing.notify':'敬请期待',
-      'closing.wiki':'阅读幸存者手册 →'
+      'closing.notify':'敬请期待'
     }
   };
 
