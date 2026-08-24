@@ -1,6 +1,6 @@
 <title>Sponge Bridges</title>
 <meta name="description" content="A lone courier walks a fogbound town, carrying everything on his back. Sponge Bridges — coming soon.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
 <style>
   /* ══ palette: pulled from header.jpg's own dusk/fire/cracked-teal key art,
      structured through ui-style's glass grammar (right angles, corner
@@ -14,6 +14,7 @@
     --ink:#f3ede0; --ink-dim:rgba(243,237,224,.62); --ink-faint:rgba(243,237,224,.34);
     --line:rgba(243,237,224,.14);
     --display:'Fraunces','Noto Serif SC',serif;
+    --title:'Orbitron','Rajdhani','Noto Sans SC',sans-serif;
     --body:'Archivo','Noto Sans SC',sans-serif;
     --mono:'Share Tech Mono','Noto Sans SC',monospace;
   }
@@ -70,6 +71,20 @@
   nav .tag::before,nav .tag::after{content:"";position:absolute;top:-2px;width:5px;height:5px;border-top:1px solid var(--glass);}
   nav .tag::before{left:-2px;border-left:1px solid var(--glass)}
   nav .tag::after{right:-2px;border-right:1px solid var(--glass)}
+  nav .devstatus{display:flex; align-items:center; gap:9px}
+  nav .devstatus .bar{position:relative; width:36px; height:3px; background:rgba(243,237,224,.12); overflow:hidden}
+  nav .devstatus .bar::after{
+    content:""; position:absolute; top:0; left:0; height:100%; width:40%;
+    background:var(--glass); box-shadow:0 0 6px var(--glass);
+    animation:devsweep 2.2s ease-in-out infinite;
+  }
+  @keyframes devsweep{0%{left:-40%} 100%{left:100%}}
+  nav .support-link{
+    position:relative; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-dim); border:1px solid var(--line); background:rgba(243,237,224,.03);
+    padding:6px 13px; text-decoration:none; transition:color .25s ease, border-color .25s ease, background .25s ease;
+  }
+  nav .support-link:hover{color:var(--fire); border-color:var(--fire-dim); background:rgba(242,149,74,.08)}
   nav .navright{display:flex; align-items:center; gap:14px}
   nav .langsw{display:flex; border:1px solid var(--line)}
   nav .langsw button{
@@ -87,27 +102,54 @@
     margin-bottom:16px; opacity:0; animation:rise 1s .15s cubic-bezier(.16,1,.3,1) forwards;
   }
   h1{
-    font-family:var(--display); font-weight:900; font-optical-sizing:auto;
-    font-size:clamp(52px,12vw,152px); line-height:.88; letter-spacing:-.01em;
-    color:var(--ink); text-shadow:0 4px 40px rgba(0,0,0,.5); text-wrap:balance; opacity:0;
+    font-family:var(--title); font-weight:900; text-transform:uppercase;
+    font-size:clamp(42px,10vw,124px); line-height:.98; letter-spacing:.02em;
+    color:var(--ink); text-shadow:0 0 40px rgba(63,214,201,.35), 0 4px 40px rgba(0,0,0,.5); text-wrap:balance; opacity:0;
     animation:rise 1.1s .3s cubic-bezier(.16,1,.3,1) forwards;
   }
-  h1 em{font-style:italic; font-weight:300; color:var(--glass)}
+  h1 em{font-style:normal; font-weight:500; color:var(--glass)}
   .tagline{
-    margin-top:20px; max-width:32em; font-size:clamp(15px,1.9vw,19px); line-height:1.65;
-    color:var(--ink-dim); font-weight:400; opacity:0;
+    margin-top:20px; max-width:34em; min-height:3.6em; opacity:0;
     animation:rise 1.1s .55s cubic-bezier(.16,1,.3,1) forwards;
   }
   @keyframes rise{from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:translateY(0)}}
   @media (prefers-reduced-motion: reduce){ .eyebrow,h1,.tagline{animation:none; opacity:1} }
+
+  /* ══ quote slideshow — hero tagline + pillar text cycle through verified
+     quotes with a glitch-flicker transition (DS-style terminal readout) ══ */
+  .q-text{font-size:clamp(15px,1.9vw,19px); line-height:1.65; color:var(--ink-dim); font-weight:400}
+  .q-cite{margin-top:8px; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--fire-dim)}
+  .q-fade{animation:q-out .4s ease forwards}
+  .q-fade.in{animation:q-in .5s ease forwards}
+  @keyframes q-out{
+    0%{opacity:1; transform:translateX(0); filter:blur(0)}
+    30%{opacity:.15; transform:translateX(-3px); filter:blur(1.5px)}
+    60%{opacity:.5; transform:translateX(3px)}
+    100%{opacity:0; transform:translateX(0)}
+  }
+  @keyframes q-in{
+    0%{opacity:0; transform:translateX(4px); filter:blur(2px)}
+    45%{opacity:.55; transform:translateX(-2px)}
+    100%{opacity:1; transform:translateX(0); filter:blur(0)}
+  }
+  @media (prefers-reduced-motion: reduce){ .q-fade,.q-fade.in{animation:none !important} }
 
   .scrolldown{
     position:absolute; bottom:26px; right:clamp(20px,5vw,56px); z-index:5;
     display:flex; align-items:center; gap:10px; color:var(--ink-faint);
     font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
   }
-  .scrolldown .ln{width:1px; height:32px; background:linear-gradient(var(--glass),transparent); animation:pulse-ln 2.4s ease-in-out infinite}
-  @keyframes pulse-ln{0%,100%{opacity:.4} 50%{opacity:1}}
+  .scrolldown .ln{
+    position:relative; width:1px; height:34px; overflow:hidden;
+    background:linear-gradient(180deg, transparent, rgba(243,237,224,.12) 20%, rgba(243,237,224,.12) 80%, transparent);
+  }
+  .scrolldown .ln::after{
+    content:""; position:absolute; left:0; top:-40%; width:100%; height:40%;
+    background:linear-gradient(180deg, transparent, var(--glass) 55%, transparent);
+    box-shadow:0 0 6px var(--glass);
+    animation:flow-ln 2.6s cubic-bezier(.4,0,.2,1) infinite;
+  }
+  @keyframes flow-ln{0%{top:-40%} 100%{top:100%}}
 
   /* ══ pitch ══ */
   .pitch{max-width:720px; margin:0 auto; padding:min(16vw,150px) clamp(20px,6vw,40px) 90px; text-align:center}
@@ -126,7 +168,9 @@
   .pillar:hover::before,.pillar:hover::after{opacity:.9}
   .pillar .n{font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--glass); margin-bottom:14px; display:block}
   .pillar h3{font-family:var(--display); font-weight:600; font-size:clamp(19px,2.2vw,24px); margin-bottom:10px; color:var(--ink)}
-  .pillar p{font-size:13.5px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto}
+  .pillar .quotebox{min-height:5.6em}
+  .pillar .q-text{font-size:13.5px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto}
+  .pillar .q-cite{text-align:center}
   @media(max-width:760px){ .pillars{grid-template-columns:1fr} .pillar{padding:40px 24px; border-bottom:1px solid var(--line)} }
 
   /* ══ closing ══ */
@@ -164,15 +208,21 @@
   <nav>
     <div class="mark">Sponge Bridges</div>
     <div class="navright">
-      <div class="tag" data-i18n="nav.dev">In Development</div>
+      <a class="support-link" href="support.html" data-i18n="nav.support">Contact Support</a>
+      <div class="tag devstatus">
+        <span data-i18n="nav.dev">Pre-Alpha</span>
+        <span class="bar"></span>
+      </div>
       <div class="langsw" id="langsw"></div>
     </div>
   </nav>
 
   <div class="herobody">
-    <div class="eyebrow" data-i18n="hero.eyebrow">A Delivery, Not a War</div>
+    <div class="eyebrow" data-i18n="hero.eyebrow">A Love Letter to DEATH STRANDING &amp; Cataclysm: Dark Days Ahead</div>
     <h1>Sponge<br><em>Bridges</em></h1>
-    <p class="tagline" data-i18n="hero.tagline">Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.</p>
+    <div class="tagline" id="heroQuote">
+      <p class="q-text">Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.</p>
+    </div>
   </div>
 
   <div class="scrolldown"><span class="ln"></span><span data-i18n="hero.scroll">Scroll</span></div>
@@ -187,17 +237,23 @@
   <div class="pillar reveal">
     <span class="n">01</span>
     <h3 data-i18n="pillar.1.title">Carry</h3>
-    <p data-i18n="pillar.1.desc">Nothing moves unless you move it. Weight is a promise you make with your own two legs.</p>
+    <div class="quotebox" id="pillarQuote1">
+      <p class="q-text">Nothing moves unless you move it. Weight is a promise you make with your own two legs.</p>
+    </div>
   </div>
   <div class="pillar reveal">
     <span class="n">02</span>
     <h3 data-i18n="pillar.2.title">Survive</h3>
-    <p data-i18n="pillar.2.desc">Hunger, thirst, the cold, the dark. The town doesn't care whether you make it.</p>
+    <div class="quotebox" id="pillarQuote2">
+      <p class="q-text">Hunger, thirst, the cold, the dark. The town doesn't care whether you make it.</p>
+    </div>
   </div>
   <div class="pillar reveal">
     <span class="n">03</span>
     <h3 data-i18n="pillar.3.title">Choose Your Way Out</h3>
-    <p data-i18n="pillar.3.desc">There is no one path through the fog. There's just the one you're willing to walk.</p>
+    <div class="quotebox" id="pillarQuote3">
+      <p class="q-text">There is no one path through the fog. There's just the one you're willing to walk.</p>
+    </div>
   </div>
 </section>
 
@@ -209,7 +265,7 @@
 
 <footer>
   <span>Sponge Bridges</span>
-  <span><a href="support.html" data-i18n="footer.support" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--line)">Support</a> · © 2026</span>
+  <span>© 2026</span>
 </footer>
 
 <script>
@@ -223,44 +279,39 @@
   ];
   var I18N = {
     en: {
-      'nav.dev':'In Development',
-      'hero.eyebrow':'A Delivery, Not a War',
-      'hero.tagline':'Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.',
+      'nav.dev':'Pre-Alpha',
+      'nav.support':'Contact Support',
+      'hero.eyebrow':'A Love Letter to DEATH STRANDING & Cataclysm: DDA',
       'hero.scroll':'Scroll',
       'pitch.p1':'You wake in a stranger’s town. The fog took the streets, the sky, the way out.',
       'pitch.p2':'What you carry is what you have. <em>Where you walk is yours to choose.</em>',
       'pillar.1.title':'Carry',
-      'pillar.1.desc':'Nothing moves unless you move it. Weight is a promise you make with your own two legs.',
       'pillar.2.title':'Survive',
-      'pillar.2.desc':'Hunger, thirst, the cold, the dark. The town doesn’t care whether you make it.',
       'pillar.3.title':'Choose Your Way Out',
-      'pillar.3.desc':'There is no one path through the fog. There’s just the one you’re willing to walk.',
       'closing.h2':'The fog is waiting.',
       'closing.sub':'Sponge Bridges is currently in development. Follow along for the walk out.',
-      'closing.notify':'More to come',
-      'footer.support':'Support'
+      'closing.notify':'More to come'
     },
     zh: {
-      'nav.dev':'开发中',
-      'hero.eyebrow':'这是一场配送，不是一场战争',
-      'hero.tagline':'每一步都是一次配送。每一次配送，都是你独自一人在浓雾中做出的选择——背上是你所有的一切。',
+      'nav.dev':'预备阶段',
+      'nav.support':'联系支持',
+      'hero.eyebrow':'献给《死亡搁浅》与《大灾变：黑暗降临》的一封情书',
       'hero.scroll':'向下滚动',
       'pitch.p1':'你在一座陌生的小镇醒来。浓雾吞没了街道、天空，还有出路。',
       'pitch.p2':'你带着什么，你就拥有什么。<em>往哪儿走，由你自己决定。</em>',
       'pillar.1.title':'背负',
-      'pillar.1.desc':'东西不会自己动，只能靠你搬。重量，是你用双腿许下的承诺。',
       'pillar.2.title':'生存',
-      'pillar.2.desc':'饥饿、干渴、寒冷、黑暗。这座小镇不在乎你能不能撑过去。',
       'pillar.3.title':'走出属于你的路',
-      'pillar.3.desc':'穿越浓雾没有唯一的路。只有你愿意去走的那一条。',
       'closing.h2':'浓雾，仍在等你。',
       'closing.sub':'《Sponge Bridges》目前正在开发中。关注我们，一起等这场走出迷雾的旅程。',
-      'closing.notify':'敬请期待',
-      'footer.support':'客服支持'
+      'closing.notify':'敬请期待'
     }
   };
 
+  var currentLang = 'en';
+
   function applyLang(lang){
+    currentLang = lang;
     var dict = I18N[lang] || I18N.en;
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.querySelectorAll('[data-i18n]').forEach(function(el){
@@ -277,7 +328,108 @@
       b.classList.toggle('active', b.dataset.lang === lang);
     });
     try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+    renderAllQuotes();
   }
+
+  // ══ quote slideshow — every quote below was checked against a primary or
+  // widely-documented source before being added; anything that couldn't be
+  // verified was left out rather than published as a fake attribution.
+  // "attrib." = widely circulated under this name but no verified primary
+  // source found — shown for what it is, not passed off as confirmed. ══
+  var HERO_QUOTES = [
+    {en:'Man is great in that he is a bridge and not a goal; man can be loved for the fact that he is a crossing and a going under.', zh:'人之所以伟大，在于他是一座桥梁，而不是一个目的；人之所以可爱，在于他是一个过渡和一种沉沦。', citeEn:'— Nietzsche, Thus Spoke Zarathustra', citeZh:'— 尼采《查拉图斯特拉如是说》'},
+    {en:'Let’s build bridges, not walls.', zh:'我们要建的是桥，而不是墙。', citeEn:'— attrib. Martin Luther King Jr.', citeZh:'— 相传为马丁·路德·金'},
+    {en:'The highest good is like water — it benefits all things without contending, and dwells in places others disdain. That is why it is close to the Way.', zh:'上善若水。水善利万物而不争，处众人之所恶，故几于道。', citeEn:'— Laozi, Tao Te Jing', citeZh:'— 老子《道德经》'},
+    {en:'The softest thing in the world overcomes the hardest thing in the world.', zh:'天下之至柔，驰骋天下之至坚。', citeEn:'— Laozi, Tao Te Jing', citeZh:'— 老子《道德经》'},
+    {en:'In the depth of winter, I finally learned that within me there lay an invincible summer.', zh:'在隆冬，我终于知道，我身上有一个不可战胜的夏天。', citeEn:'— Albert Camus, Return to Tipasa', citeZh:'— 加缪《重返蒂巴萨》'},
+    {en:'One must imagine Sisyphus happy.', zh:'必须想象西西弗是幸福的。', citeEn:'— Albert Camus, The Myth of Sisyphus', citeZh:'— 加缪《西西弗神话》'}
+  ];
+
+  var PILLAR_QUOTES = {
+    1: [
+      {en:'Nothing moves unless you move it. Weight is a promise you make with your own two legs.', zh:'东西不会自己动，只能靠你搬。重量，是你用双腿许下的承诺。', weight:40},
+      {en:'Life is like carrying a heavy load on a long journey — there is no need to rush.', zh:'人之一生，如负重远行，不可急于求成。', citeEn:'— attrib. Tokugawa Ieyasu, Testament', citeZh:'— 相传为德川家康《遗训》', weight:24},
+      {en:'If you want to go fast, go alone. If you want to go far, go together.', zh:'如果你想走得快，就一个人走；如果你想走得远，就结伴同行。', citeEn:'— proverb, origin disputed', citeZh:'— 谚语，来源存疑（非确证非洲谚语）', weight:20},
+      {en:'I never go back on my word. That is my ninja way!', zh:'说到做到，这就是我的忍道！', citeEn:'— Naruto Uzumaki, Naruto', citeZh:'— 漩涡鸣人《火影忍者》', weight:4}
+    ],
+    2: [
+      {en:'Hunger, thirst, the cold, the dark. The town doesn’t care whether you make it.', zh:'饥饿、干渴、寒冷、黑暗。这座小镇不在乎你能不能撑过去。', weight:40},
+      {en:'The world ain’t all sunshine and rainbows. It’s a very mean and nasty place, and it will beat you to your knees and keep you there permanently if you let it.', zh:'这个世界并不总是阳光和彩虹。它是一个残酷肮脏的地方，只要你给它机会，就会把你打趴在地，永远不让你翻身。', citeEn:'— Rocky Balboa, Rocky Balboa (2006)', citeZh:'— 洛奇·巴尔博亚《洛奇：勇者无惧》(2006)', weight:22},
+      {en:'Nature is not cruel, only pitilessly indifferent.', zh:'大自然并不残忍，它只是无情的漠然。', citeEn:'— Richard Dawkins, River Out of Eden', citeZh:'— 理查德·道金斯《伊甸园之河》', weight:20},
+      {en:'No matter what, I have to win. No matter what, I have to survive!!!', zh:'无论如何都要赢，无论如何都要活下去！！！', citeEn:'— Mikasa Ackerman, Attack on Titan', citeZh:'— 三笠·阿克曼《进击的巨人》', weight:4},
+      {en:'Let’s live on, together.', zh:'一起，活下去吧。', citeEn:'— Ashitaka, Princess Mononoke', citeZh:'— 阿席达卡《幽灵公主》', weight:4}
+    ],
+    3: [
+      {en:'There is no one path through the fog. There’s just the one you’re willing to walk.', zh:'穿越浓雾没有唯一的路。只有你愿意去走的那一条。', weight:40},
+      {en:'Two roads diverged in a yellow wood, and I— I took the one less traveled by, and that has made all the difference.', zh:'黄色的树林里分出两条路，而我选择了人迹更少的一条，这改变了一切。', citeEn:'— Robert Frost, The Road Not Taken', citeZh:'— 罗伯特·弗罗斯特《未选择的路》', weight:22},
+      {en:'There was no road on the earth to begin with — but when many walk one way, a road is made.', zh:'其实地上本没有路，走的人多了，也便成了路。', citeEn:'— Lu Xun, My Old Home', citeZh:'— 鲁迅《故乡》', weight:20},
+      {en:'With imagination, I can be anything I want!', zh:'凭借想象力，我可以变成任何我想成为的样子！', citeEn:'— SpongeBob SquarePants, "Idiot Box"', citeZh:'— 海绵宝宝《傻瓜箱》', weight:4}
+    ]
+  };
+
+  function pickWeighted(pool){
+    var total = pool.reduce(function(s,q){ return s + (q.weight || 1); }, 0);
+    var r = Math.random() * total;
+    for (var i = 0; i < pool.length; i++) {
+      r -= (pool[i].weight || 1);
+      if (r <= 0) return pool[i];
+    }
+    return pool[pool.length - 1];
+  }
+
+  function quoteHTML(q){
+    var cite = currentLang === 'zh' ? q.citeZh : q.citeEn;
+    var text = currentLang === 'zh' ? q.zh : q.en;
+    return '<p class="q-text">' + text + '</p>' + (cite ? '<p class="q-cite">' + cite + '</p>' : '');
+  }
+
+  var heroIndex = 0;
+  var pillarState = {1:null, 2:null, 3:null};
+
+  function flipInto(host, html){
+    var wrap = document.createElement('div');
+    wrap.className = 'q-fade';
+    wrap.innerHTML = host.innerHTML;
+    host.innerHTML = '';
+    host.appendChild(wrap);
+    requestAnimationFrame(function(){
+      setTimeout(function(){
+        host.innerHTML = html;
+        var nu = document.createElement('div');
+        nu.className = 'q-fade in';
+        nu.innerHTML = host.innerHTML;
+        host.innerHTML = '';
+        host.appendChild(nu);
+      }, 380);
+    });
+  }
+
+  function renderAllQuotes(){
+    var heroHost = document.getElementById('heroQuote');
+    if (heroHost) heroHost.innerHTML = quoteHTML(HERO_QUOTES[heroIndex]);
+    [1,2,3].forEach(function(n){
+      if (!pillarState[n]) pillarState[n] = PILLAR_QUOTES[n][0];
+      var host = document.getElementById('pillarQuote' + n);
+      if (host) host.innerHTML = quoteHTML(pillarState[n]);
+    });
+  }
+
+  function tickHero(){
+    heroIndex = (heroIndex + 1) % HERO_QUOTES.length;
+    var host = document.getElementById('heroQuote');
+    if (host) flipInto(host, quoteHTML(HERO_QUOTES[heroIndex]));
+  }
+
+  function tickPillar(n){
+    pillarState[n] = pickWeighted(PILLAR_QUOTES[n]);
+    var host = document.getElementById('pillarQuote' + n);
+    if (host) flipInto(host, quoteHTML(pillarState[n]));
+  }
+
+  setInterval(tickHero, 10000);
+  setInterval(function(){ tickPillar(1); }, 9000);
+  setInterval(function(){ tickPillar(2); }, 9600);
+  setInterval(function(){ tickPillar(3); }, 10200);
 
   function detectLang(){
     try {
