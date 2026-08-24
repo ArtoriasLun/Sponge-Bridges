@@ -1,11 +1,7 @@
 <title>幸存者手册：G市</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <style>
-  /* ══ ui-style: Glass Holographic Terminal ══
-     颜色 token 与 sponge-bridges-homepage.html 同一套（--bg/--bg2/--glass/--fire/--ink 系），
-     只是套进本页原有的变量名里，保留手册自己的玻璃终端排版/密度；
-     功能色（on/tk/gap）仍是独立的状态语义色，不跟随主视觉品牌色走。 */
-  :root{
+    :root{
     --deep:#050409; --cyan:#3fd6c9; --white:#f3ede0;
     --dim:rgba(243,237,224,.62); --dim2:rgba(243,237,224,.36);
     --fill:rgba(5,4,9,.72); --subtle:rgba(63,214,201,.05); --active:rgba(63,214,201,.20);
@@ -36,6 +32,16 @@
   .masthead h1{font-family:var(--raj);font-weight:700;font-size:clamp(28px,4vw,42px);color:var(--white);
     text-shadow:0 0 16px rgba(255,255,255,.35);margin:10px 0 8px;letter-spacing:.02em}
   .masthead .sub{color:var(--dim);max-width:48em;font-size:14px}
+  .backrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .backrow .backlink{color:var(--cyan);font-family:var(--raj);font-weight:600;font-size:.85rem;
+    text-decoration:none;border-bottom:1px solid var(--lineB);display:inline-block}
+  #langsw{display:flex;align-items:center;gap:8px}
+  #langsw .navlink{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--dim2);text-decoration:none;background:none;border:none;padding:0;cursor:pointer;
+    transition:color .25s ease}
+  #langsw .navlink:hover{color:var(--tk)}
+  #langsw .navlink.active{color:var(--cyan)}
+  #langsw .sep{color:var(--dim2);opacity:.4;font-family:var(--mono);font-size:10px}
   .content{padding:10px clamp(20px,4vw,48px) 90px;max-width:920px}
   @media(max-width:900px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--lineB)}}
 
@@ -70,8 +76,7 @@
   h4.mini{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim2);margin:16px 0 6px}
   p{margin:9px 0;font-size:13.8px}
 
-  /* ── glass module (entries, cards) ── */
-  .entry{position:relative;background:var(--subtle);border:1px solid var(--lineD);padding:16px 18px;margin:12px 0}
+    .entry{position:relative;background:var(--subtle);border:1px solid var(--lineD);padding:16px 18px;margin:12px 0}
   .entry::before,.entry::after{content:"";position:absolute;width:7px;height:7px}
   .entry::before{top:0;left:0;border-top:1px solid rgba(63,214,201,.6);border-left:1px solid rgba(63,214,201,.6)}
   .entry::after{top:0;right:0;border-top:1px solid rgba(63,214,201,.6);border-right:1px solid rgba(63,214,201,.6)}
@@ -98,11 +103,8 @@
   .hide{display:none!important}
   ::selection{background:var(--active);color:var(--white)}
 
-  /* ══ HUD 状态色词汇：GlassCyan(常态)/SignalOrange(警戒)/VitalRed(危急)/SignalGreen(良好) ══
-     与 csrc/UI/StatusGlyphs.cs 同一套语义色，本页所有条形/像素点组件都遵循这套配色，不额外发明新语言 ══ */
-
-  /* ── 分级像素点条（tierpips）：口渴/疲劳这类有限阶梯的剩余量指标 ── */
-  .tierpips{display:flex;gap:4px;align-items:center}
+  
+    .tierpips{display:flex;gap:4px;align-items:center}
   .tierpips i{width:11px;height:11px;border:1px solid var(--lineD);background:transparent;display:inline-block}
   .tierpips i.s0{background:var(--cyan);border-color:var(--cyan)}
   .tierpips i.s1{background:var(--tk);border-color:var(--tk)}
@@ -110,22 +112,19 @@
   .tierlabels{display:flex;gap:4px;font-family:var(--mono);font-size:9.5px;color:var(--dim2);margin-top:5px}
   .tierlabels span{flex:1;text-align:center;min-width:11px}
 
-  /* ── 需求行：饥饿是连续曲线，用渐变条而非阶梯点 ── */
-  .needrow{margin:16px 0}
+    .needrow{margin:16px 0}
   .needlbl{font-family:var(--raj);font-weight:700;font-size:14px;color:var(--white);margin-bottom:7px}
   .gradientbar{height:11px;border:1px solid var(--lineD);background:linear-gradient(90deg,var(--cyan),var(--tk) 55%,var(--gap));opacity:.9}
   .neednote{font-size:11.5px;color:var(--dim2);margin-top:5px}
 
-  /* ── 对比条（mbar）：强度类数值，如护甲覆盖差异，只用宽度表达相对关系，不写数字 ── */
-  .mbar{display:flex;align-items:center;gap:10px;margin:7px 0}
+    .mbar{display:flex;align-items:center;gap:10px;margin:7px 0}
   .mlbl{width:78px;font-family:var(--mono);font-size:10.5px;color:var(--dim2);flex-shrink:0}
   .mtrack{flex:1;height:9px;border:1px solid var(--lineD);background:var(--fill);position:relative}
   .mfill{height:100%}
   .mfill.ok{background:var(--cyan)}
   .mfill.crit{background:var(--gap)}
 
-  /* ── 图鉴属性像素点（mstats）：耐久/速度/护甲这类强度类简写 ── */
-  .mstats{display:flex;flex-wrap:wrap;gap:16px 20px;margin:10px 0}
+    .mstats{display:flex;flex-wrap:wrap;gap:16px 20px;margin:10px 0}
   .mstat{display:flex;align-items:center;gap:6px}
   .mstat .ml{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim2)}
   .mstat .mp{display:flex;gap:2px}
@@ -134,8 +133,7 @@
   .mstat.weak .mp i.f{background:var(--gap);border-color:var(--gap)}
   .mstat .txt{font-family:var(--mono);font-size:10px;color:var(--dim)}
 
-  /* ══ 简介 tab ══ */
-  .intro-wrap{display:grid;grid-template-columns:minmax(180px,280px) 1fr;gap:28px;align-items:start}
+    .intro-wrap{display:grid;grid-template-columns:minmax(180px,280px) 1fr;gap:28px;align-items:start}
   @media(max-width:720px){.intro-wrap{grid-template-columns:1fr}}
   .intro-art{position:relative;aspect-ratio:3/4;background:var(--fill);border:1px solid var(--lineD);overflow:hidden}
   .intro-art::before,.intro-art::after{content:"";position:absolute;top:0;width:12px;height:12px;z-index:2}
@@ -163,8 +161,7 @@
   .pillars3 h4{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white);margin:6px 0 4px}
   .pillars3 p{font-size:12.4px;margin:0;color:var(--dim)}
 
-  /* ══ tab bar + 页内小索引 ══ */
-  .tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+    .tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
   .tabbtn{position:relative;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
     color:var(--dim);background:var(--subtle);border:1px solid var(--lineD);padding:8px 15px;cursor:pointer;
     transition:color .2s ease,border-color .2s ease,background .2s ease}
@@ -181,8 +178,7 @@
   .tabindex a:hover{color:var(--white);border-color:var(--lineD)}
   .tabindex .sep{color:var(--dim2)}
 
-  /* ══ 分区间「翻页」切换：3D 翻转 + 玻璃扫描闪烁，呼应主页 q-fade 故障闪烁 ══ */
-  .content{position:relative;perspective:1800px}
+    .content{position:relative;perspective:1800px}
   .content::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;z-index:5;
     background:repeating-linear-gradient(0deg, rgba(63,214,201,.10) 0 1px, transparent 1px 3px);
     mix-blend-mode:screen}
@@ -213,47 +209,50 @@
 
 <div class="shell">
 <aside>
-  <div class="brand">幸存者手册<small>Survivor's Dossier · G市</small></div>
-  <input id="search" type="text" placeholder="搜索图鉴 / 地点…" autocomplete="off">
+  <div class="brand"><span data-i18n="brand.title">幸存者手册</span><small data-i18n="brand.small">Survivor's Dossier · G市</small></div>
+  <input id="search" type="text" placeholder="搜索图鉴 / 地点…" data-i18n-placeholder="search.placeholder" autocomplete="off">
   <div class="searchcount" id="searchcount"></div>
   <nav class="toc" id="toc">
-    <div class="grp" data-tab="0"><b>简介</b>
-      <a href="#intro">游戏简介</a>
+    <div class="grp" data-tab="0"><b data-i18n="toc.grp0">简介</b>
+      <a href="#intro" data-i18n="toc.intro">游戏简介</a>
     </div>
-    <div class="grp" data-tab="1"><b>生存系统</b>
-      <a href="#needs">生存需求</a>
-      <a href="#combat">战斗与护甲</a>
-      <a href="#ai">怪物如何找到你</a>
+    <div class="grp" data-tab="1"><b data-i18n="toc.grp1">生存系统</b>
+      <a href="#needs" data-i18n="needs.h2">生存需求</a>
+      <a href="#combat" data-i18n="combat.h2">战斗与护甲</a>
+      <a href="#ai" data-i18n="ai.h2">怪物如何找到你</a>
     </div>
-    <div class="grp" data-tab="2"><b>图鉴与物资</b>
-      <a href="#bestiary">怪物图鉴</a>
-      <a href="#crafting">制作与建造</a>
+    <div class="grp" data-tab="2"><b data-i18n="toc.grp2">图鉴与物资</b>
+      <a href="#bestiary" data-i18n="bestiary.h2">怪物图鉴</a>
+      <a href="#crafting" data-i18n="crafting.h2">制作与建造</a>
     </div>
-    <div class="grp" data-tab="3"><b>地点</b>
-      <a href="#town">G市城镇</a>
-      <a href="#tutorial">新手教程公寓</a>
-      <a href="#basement">隐藏地下室</a>
-      <a href="#police">警局</a>
+    <div class="grp" data-tab="3"><b data-i18n="toc.grp3">地点</b>
+      <a href="#town" data-i18n="town.h2">G市城镇</a>
+      <a href="#tutorial" data-i18n="tutorial.h2">新手教程公寓</a>
+      <a href="#basement" data-i18n="basement.h2">隐藏地下室</a>
+      <a href="#police" data-i18n="police.h2">警局</a>
     </div>
-    <div class="grp" data-tab="4"><b>世界与人物</b>
-      <a href="#lore">红雾与焦油人</a>
-      <a href="#npcs">重要人物</a>
+    <div class="grp" data-tab="4"><b data-i18n="toc.grp4">世界与人物</b>
+      <a href="#lore" data-i18n="lore.h2">红雾与焦油人</a>
+      <a href="#npcs" data-i18n="npcs.h2">重要人物</a>
     </div>
   </nav>
 </aside>
 
 <main>
 <div class="masthead">
-  <a href="index.html" style="color:var(--cyan);font-family:var(--raj);font-weight:600;font-size:.85rem;text-decoration:none;border-bottom:1px solid var(--lineB);display:inline-block;margin-bottom:14px">← 返回首页</a>
+  <div class="backrow">
+    <a class="backlink" href="index.html" data-i18n="masthead.back">← 返回首页</a>
+    <div id="langsw"></div>
+  </div>
   <div class="kicker">SPONGE BRIDGES</div>
-  <h1>幸存者手册：G市</h1>
-  <p class="sub">图鉴、道具、地点与机制——想在G市活下去，你需要知道的都在这里。</p>
+  <h1 data-i18n="masthead.h1">幸存者手册：G市</h1>
+  <p class="sub" data-i18n="masthead.sub">图鉴、道具、地点与机制——想在G市活下去，你需要知道的都在这里。</p>
   <div class="tabbar" id="tabbar" role="tablist">
-    <button class="tabbtn" data-tab="0" role="tab">简介</button>
-    <button class="tabbtn" data-tab="1" role="tab">生存指南</button>
-    <button class="tabbtn" data-tab="2" role="tab">图鉴与物资</button>
-    <button class="tabbtn" data-tab="3" role="tab">城镇与地点</button>
-    <button class="tabbtn" data-tab="4" role="tab">世界与人物</button>
+    <button class="tabbtn" data-tab="0" role="tab" data-i18n="tab.0">简介</button>
+    <button class="tabbtn" data-tab="1" role="tab" data-i18n="tab.1">生存指南</button>
+    <button class="tabbtn" data-tab="2" role="tab" data-i18n="tab.2">图鉴与物资</button>
+    <button class="tabbtn" data-tab="3" role="tab" data-i18n="tab.3">城镇与地点</button>
+    <button class="tabbtn" data-tab="4" role="tab" data-i18n="tab.4">世界与人物</button>
   </div>
 </div>
 
@@ -261,23 +260,22 @@
 
 <div class="tabpanel" data-tab="0">
 <section id="intro">
-  <h2>简介</h2>
-  <div class="intro-eyebrow">致敬《死亡搁浅》与《大灾变：黑暗降临》的原创重构</div>
+  <h2 data-i18n="tab.0">简介</h2>
+  <div class="intro-eyebrow" data-i18n="intro.eyebrow">致敬《死亡搁浅》与《大灾变：黑暗降临》的原创重构</div>
   <div class="intro-wrap">
     <div class="intro-art">
-      <!-- header.jpg：与官方主页同一张关键美术图，取自本仓库根目录；找不到时优雅退化为玻璃占位块 -->
-      <img src="images/header.jpg" alt="信使背负着不断加高的货物塔，走过被红雾与烈焰笼罩的G市街道" id="introImg" onerror="this.style.display='none';document.getElementById('introPh').style.display='flex'">
+            <img src="images/header.jpg" alt="信使背负着不断加高的货物塔，走过被红雾与烈焰笼罩的G市街道" data-i18n-alt="intro.imgalt" id="introImg" onerror="this.style.display='none';document.getElementById('introPh').style.display='flex'">
       <div class="ph" id="introPh" style="display:none">KEY ART<br>PLACEHOLDER</div>
     </div>
     <div class="intro-copy">
-      <h3>幸存者手册：G市</h3>
-      <p>你叫 <b>Sam</b>，一名信使。红雾从镇外升起那天起，G市就成了无人区。你背着一副货运骨架醒来，肩上很快会架起一座越叠越高的<strong>货物塔</strong>——扛的每一件物资，都实打实地计入重量与体积。</p>
-      <p>没有安全屋，没有传送点。饥饿、口渴、疲劳都是真实数值，你留下的气味和声响会被焦油人真正循迹追来。</p>
-      <div class="tag-plat">平台 <b>仅 Steam</b></div>
+      <h3 data-i18n="masthead.h1">幸存者手册：G市</h3>
+      <p data-i18n-html="intro.p1">你叫 <b>Sam</b>，一名信使。红雾从镇外升起那天起，G市就成了无人区。你背着一副货运骨架醒来，肩上很快会架起一座越叠越高的<strong>货物塔</strong>——扛的每一件物资，都实打实地计入重量与体积。</p>
+      <p data-i18n-html="intro.p2">没有安全屋，没有传送点。饥饿、口渴、疲劳都是真实数值，你留下的气味和声响会被焦油人真正循迹追来。</p>
+      <div class="tag-plat" data-i18n-html="intro.plat">平台 <b>仅 Steam</b></div>
       <div class="pillars3">
-        <div><span class="pn">01</span><h4>浸透</h4><p>扛得越多，吸得越透——重量是你自己选的代价。</p></div>
-        <div><span class="pn">02</span><h4>吸收</h4><p>吸收，而非毁灭。</p></div>
-        <div><span class="pn">03</span><h4>连接</h4><p>从绳索到桥梁：用连接重新缝合断裂的世界。</p></div>
+        <div><span class="pn">01</span><h4 data-i18n="intro.pillar1.title">浸透</h4><p data-i18n="intro.pillar1.desc">扛得越多，吸得越透——重量是你自己选的代价。</p></div>
+        <div><span class="pn">02</span><h4 data-i18n="intro.pillar2.title">吸收</h4><p data-i18n="intro.pillar2.desc">吸收，而非毁灭。</p></div>
+        <div><span class="pn">03</span><h4 data-i18n="intro.pillar3.title">连接</h4><p data-i18n="intro.pillar3.desc">从绳索到桥梁：用连接重新缝合断裂的世界。</p></div>
       </div>
     </div>
   </div>
@@ -285,218 +283,218 @@
 </div>
 
 <div class="tabpanel" data-tab="1">
-<div class="tabindex"><span class="til">本页目录</span>
-  <a href="#needs">生存需求</a><span class="sep">·</span>
-  <a href="#combat">战斗与护甲</a><span class="sep">·</span>
-  <a href="#ai">怪物如何找到你</a>
+<div class="tabindex"><span class="til" data-i18n="tabindex.label">本页目录</span>
+  <a href="#needs" data-i18n="needs.h2">生存需求</a><span class="sep">·</span>
+  <a href="#combat" data-i18n="combat.h2">战斗与护甲</a><span class="sep">·</span>
+  <a href="#ai" data-i18n="ai.h2">怪物如何找到你</a>
 </div>
 <section id="needs">
-  <h2>生存需求</h2>
-  <p class="lede">饥饿、口渴、疲劳按真实数值走，惩罚是渐变的曲线，不是踩到某个点就突然掉状态的跳变。</p>
+  <h2 data-i18n="needs.h2">生存需求</h2>
+  <p class="lede" data-i18n="needs.lede">饥饿、口渴、疲劳按真实数值走，惩罚是渐变的曲线，不是踩到某个点就突然掉状态的跳变。</p>
 
   <div class="needrow">
-    <div class="needlbl">饥饿</div>
+    <div class="needlbl" data-i18n="needs.hunger.label">饥饿</div>
     <div class="gradientbar"></div>
-    <div class="neednote">连续曲线：越饿，速度惩罚越深，没有分级跳变</div>
+    <div class="neednote" data-i18n="needs.hunger.note">连续曲线：越饿，速度惩罚越深，没有分级跳变</div>
   </div>
 
   <div class="needrow">
-    <div class="needlbl">口渴</div>
+    <div class="needlbl" data-i18n="needs.thirst.label">口渴</div>
     <div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s1"></i><i class="s2"></i></div>
-    <div class="tierlabels"><span>渴</span><span>很渴</span><span>脱水</span><span>极渴</span></div>
+    <div class="tierlabels"><span data-i18n="needs.thirst.t0">渴</span><span data-i18n="needs.thirst.t1">很渴</span><span data-i18n="needs.thirst.t2">脱水</span><span data-i18n="needs.thirst.t3">极渴</span></div>
   </div>
 
   <div class="needrow">
-    <div class="needlbl">疲劳</div>
+    <div class="needlbl" data-i18n="needs.fatigue.label">疲劳</div>
     <div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s2"></i></div>
-    <div class="tierlabels"><span>累</span><span>极累</span><span>力竭</span></div>
+    <div class="tierlabels"><span data-i18n="needs.fatigue.t0">累</span><span data-i18n="needs.fatigue.t1">极累</span><span data-i18n="needs.fatigue.t2">力竭</span></div>
   </div>
 
-  <div class="okbox"><b>进食即时回复：</b>啃一口口粮，热量立刻到账，不用纠结走位省不省体力。</div>
-  <p>常驻 HUD 面板会用同一套发光图标显示速度、体力与情绪状态，附带异常状态提示行。</p>
+  <div class="okbox" data-i18n-html="needs.okbox"><b>进食即时回复：</b>啃一口口粮，热量立刻到账，不用纠结走位省不省体力。</div>
+  <p data-i18n="needs.hudnote">常驻 HUD 面板会用同一套发光图标显示速度、体力与情绪状态，附带异常状态提示行。</p>
 </section>
 
 <section id="combat">
-  <h2>战斗与护甲</h2>
-  <p class="lede">命中→护甲→弱点，三层判定层层递进。</p>
+  <h2 data-i18n="combat.h2">战斗与护甲</h2>
+  <p class="lede" data-i18n="combat.lede">命中→护甲→弱点，三层判定层层递进。</p>
 
-  <h4 class="mini">护甲结算</h4>
-  <p>命中先看装备能否覆盖到中弹部位，覆盖住才按材质抗性表结算能穿透多少伤害——整套护甲当一个整体滚动，不分逐件细算。</p>
+  <h4 class="mini" data-i18n="combat.armor.title">护甲结算</h4>
+  <p data-i18n="combat.armor.p">命中先看装备能否覆盖到中弹部位，覆盖住才按材质抗性表结算能穿透多少伤害——整套护甲当一个整体滚动，不分逐件细算。</p>
 
-  <h4 class="mini">弱点系统</h4>
-  <div class="mbar"><span class="mlbl">普通部位</span><div class="mtrack"><div class="mfill ok" style="width:70%"></div></div></div>
-  <div class="mbar"><span class="mlbl">弱点部位</span><div class="mtrack"><div class="mfill crit" style="width:14%"></div></div></div>
-  <p>命中弱点更容易破防、触发暴击，有时还带控制效果。以焦油人浩克为例：<strong>打头明显更容易破防，打眼睛几乎跟没穿甲一样</strong>——全靠瞄准和走位，堆数值帮不了你稳定打要害。</p>
+  <h4 class="mini" data-i18n="combat.weak.title">弱点系统</h4>
+  <div class="mbar"><span class="mlbl" data-i18n="combat.weak.normal">普通部位</span><div class="mtrack"><div class="mfill ok" style="width:70%"></div></div></div>
+  <div class="mbar"><span class="mlbl" data-i18n="combat.weak.weak">弱点部位</span><div class="mtrack"><div class="mfill crit" style="width:14%"></div></div></div>
+  <p data-i18n-html="combat.weak.p">命中弱点更容易破防、触发暴击，有时还带控制效果。以焦油人浩克为例：<strong>打头明显更容易破防，打眼睛几乎跟没穿甲一样</strong>——全靠瞄准和走位，堆数值帮不了你稳定打要害。</p>
 
-  <h4 class="mini">红雾伤害</h4>
-  <p>红雾伤害也走正常的护甲结算，不是绕过装备的"无视防御"——穿对材质的装备确实能帮你减免一部分。</p>
+  <h4 class="mini" data-i18n="combat.fog.title">红雾伤害</h4>
+  <p data-i18n="combat.fog.p">红雾伤害也走正常的护甲结算，不是绕过装备的"无视防御"——穿对材质的装备确实能帮你减免一部分。</p>
 </section>
 
 <section id="ai">
-  <h2>怪物如何找到你</h2>
-  <p class="lede">怪物不认识你的坐标——它们靠气味和声音找你。</p>
+  <h2 data-i18n="ai.h2">怪物如何找到你</h2>
+  <p class="lede" data-i18n="ai.lede">怪物不认识你的坐标——它们靠气味和声音找你。</p>
 
-  <h4 class="mini">气味追踪</h4>
-  <p>你走过的每一步都会留下气味，随后扩散、随时间变淡。带追踪能力的怪（比如焦油人浩克）会沿气味变浓的方向爬升；绕路、拉开距离、放慢脚步都能让它变淡变断。</p>
+  <h4 class="mini" data-i18n="ai.scent.title">气味追踪</h4>
+  <p data-i18n="ai.scent.p">你走过的每一步都会留下气味，随后扩散、随时间变淡。带追踪能力的怪（比如焦油人浩克）会沿气味变浓的方向爬升；绕路、拉开距离、放慢脚步都能让它变淡变断。</p>
 
-  <h4 class="mini">噪音追踪</h4>
-  <p>开枪、脚步、开关门、装填弹药、警报——几乎每个动作都会发声，被听见但看不见来源时，怪物只会在大致方向留下一个疑惑标记，不会直扑你的真实位置。爆炸是个例外，目前不会发出声响。</p>
+  <h4 class="mini" data-i18n="ai.noise.title">噪音追踪</h4>
+  <p data-i18n="ai.noise.p">开枪、脚步、开关门、装填弹药、警报——几乎每个动作都会发声，被听见但看不见来源时，怪物只会在大致方向留下一个疑惑标记，不会直扑你的真实位置。爆炸是个例外，目前不会发出声响。</p>
 
-  <h4 class="mini">尸体复活</h4>
-  <p>刚倒下的尸体基本不会复活，放得越久概率越高。<strong>持续用火把一具本能复活的尸体烧穿，会让它满血复活成另一种更麻烦的怪</strong>——这不影响正在战斗中的活体，只影响尸体复活成什么。</p>
+  <h4 class="mini" data-i18n="ai.corpse.title">尸体复活</h4>
+  <p data-i18n-html="ai.corpse.p">刚倒下的尸体基本不会复活，放得越久概率越高。<strong>持续用火把一具本能复活的尸体烧穿，会让它满血复活成另一种更麻烦的怪</strong>——这不影响正在战斗中的活体，只影响尸体复活成什么。</p>
 
-  <h4 class="mini">情绪与态度</h4>
-  <p>每只怪携带愤怒值和士气值，受伤、听到噪音、同伴死亡等触发器会推动它在敌对/跟随/无视/逃跑间切换。<b>投喂</b>能压低愤怒值让怪进入无视状态，但受到攻击会立刻重新激怒。</p>
+  <h4 class="mini" data-i18n="ai.mood.title">情绪与态度</h4>
+  <p data-i18n-html="ai.mood.p">每只怪携带愤怒值和士气值，受伤、听到噪音、同伴死亡等触发器会推动它在敌对/跟随/无视/逃跑间切换。<b>投喂</b>能压低愤怒值让怪进入无视状态，但受到攻击会立刻重新激怒。</p>
 </section>
 </div>
 
 <div class="tabpanel" data-tab="2">
-<div class="tabindex"><span class="til">本页目录</span>
-  <a href="#bestiary">怪物图鉴</a><span class="sep">·</span>
-  <a href="#crafting">制作与建造</a>
+<div class="tabindex"><span class="til" data-i18n="tabindex.label">本页目录</span>
+  <a href="#bestiary" data-i18n="bestiary.h2">怪物图鉴</a><span class="sep">·</span>
+  <a href="#crafting" data-i18n="crafting.h2">制作与建造</a>
 </div>
 <section id="bestiary">
-  <h2>怪物图鉴</h2>
-  <p class="lede">本作没有"丧尸"——所有文字、对话、图鉴里，怪物一律叫<strong>焦油人</strong>。</p>
+  <h2 data-i18n="bestiary.h2">怪物图鉴</h2>
+  <p class="lede" data-i18n-html="bestiary.lede">本作没有"丧尸"——所有文字、对话、图鉴里，怪物一律叫<strong>焦油人</strong>。</p>
 
-  <div class="entry" data-search="大楼保安 crawler 焦油人 教程 3F">
-    <h4>大楼保安</h4>
-    <div class="meta"><code>mon_zombie_crawler</code> · 教程公寓 3F 专属实例</div>
+  <div class="entry" data-search="大楼保安 crawler 焦油人 教程 3F building security crawler tar man tutorial 3F">
+    <h4 data-i18n="bestiary.crawler.name">大楼保安</h4>
+    <div class="meta"><code>mon_zombie_crawler</code> · <span data-i18n="bestiary.crawler.meta">教程公寓 3F 专属实例</span></div>
     <div class="mstats">
-      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
-      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
-      <div class="mstat weak"><span class="ml">弱点</span><span class="mp"><i class="f"></i></span><span class="txt">头部</span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="mstat weak"><span class="ml" data-i18n="stat.weak">弱点</span><span class="mp"><i class="f"></i></span><span class="txt" data-i18n="weaktxt.head">头部</span></div>
     </div>
-    <p>教程楼里最先遇到的爬行焦油人，行动迟缓，身上带着全楼房门钥匙。</p>
+    <p data-i18n="bestiary.crawler.desc">教程楼里最先遇到的爬行焦油人，行动迟缓，身上带着全楼房门钥匙。</p>
   </div>
 
-  <div class="entry" data-search="保安队长 brute 焦油人 教程 1F">
-    <h4>保安队长</h4>
-    <div class="meta"><code>mon_zombie_brute</code> · 教程公寓 1F 专属实例</div>
+  <div class="entry" data-search="保安队长 brute 焦油人 教程 1F security captain brute tar man tutorial 1F">
+    <h4 data-i18n="bestiary.brute.name">保安队长</h4>
+    <div class="meta"><code>mon_zombie_brute</code> · <span data-i18n="bestiary.brute.meta">教程公寓 1F 专属实例</span></div>
     <div class="mstats">
-      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
-      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
-      <div class="mstat weak"><span class="ml">弱点</span><span class="mp"><i class="f"></i></span><span class="txt">头部</span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat weak"><span class="ml" data-i18n="stat.weak">弱点</span><span class="mp"><i class="f"></i></span><span class="txt" data-i18n="weaktxt.head">头部</span></div>
     </div>
-    <p>大堂驻守的第二个保安，护甲单薄但速度更快，身上带着大门与地下室冰库的钥匙。</p>
+    <p data-i18n="bestiary.brute.desc">大堂驻守的第二个保安，护甲单薄但速度更快，身上带着大门与地下室冰库的钥匙。</p>
   </div>
 
-  <div class="entry" data-search="焦油人浩克 hulk boss 焦油人">
-    <h4>焦油人浩克</h4>
-    <div class="meta"><code>mon_zombie_hulk</code> · 全程游荡的主要威胁</div>
+  <div class="entry" data-search="焦油人浩克 hulk boss 焦油人 tar hulk tar man">
+    <h4 data-i18n="bestiary.hulk.name">焦油人浩克</h4>
+    <div class="meta"><code>mon_zombie_hulk</code> · <span data-i18n="bestiary.hulk.meta">全程游荡的主要威胁</span></div>
     <div class="mstats">
-      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
-      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
-      <div class="mstat weak"><span class="ml">弱点</span><span class="mp"><i class="f"></i></span><span class="txt">头部 / 眼睛</span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+      <div class="mstat weak"><span class="ml" data-i18n="stat.weak">弱点</span><span class="mp"><i class="f"></i></span><span class="txt" data-i18n="bestiary.hulk.weaktxt">头部 / 眼睛</span></div>
     </div>
-    <p>从开局就在镇中心游荡，速度明显比你快，靠气味和噪音找你，近战沉重且带穿甲。</p>
+    <p data-i18n="bestiary.hulk.desc">从开局就在镇中心游荡，速度明显比你快，靠气味和噪音找你，近战沉重且带穿甲。</p>
   </div>
 
-  <div class="entry" data-search="复活体 fiend 焦油人">
-    <h4>复活体</h4>
-    <div class="meta"><code>mon_zombie_fiend</code> · 焦油人浩克尸体烧穿后的产物，没有固定摆放点</div>
+  <div class="entry" data-search="复活体 fiend 焦油人 revenant tar man">
+    <h4 data-i18n="bestiary.fiend.name">复活体</h4>
+    <div class="meta"><code>mon_zombie_fiend</code> · <span data-i18n="bestiary.fiend.meta">焦油人浩克尸体烧穿后的产物，没有固定摆放点</span></div>
     <div class="mstats">
-      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
-      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
     </div>
-    <p>比浩克本体轻得多，满血复活，多一手拉伸攻击，耐火耐酸。</p>
+    <p data-i18n="bestiary.fiend.desc">比浩克本体轻得多，满血复活，多一手拉伸攻击，耐火耐酸。</p>
   </div>
 
-  <div class="entry" data-search="重装焦油人 kevlar brute 凯夫拉 地下室">
-    <h4>重装焦油人（凯夫拉）</h4>
-    <div class="meta"><code>mon_zombie_kevlar_1</code> · 隐藏地下室 A 组</div>
+  <div class="entry" data-search="重装焦油人 kevlar brute 凯夫拉 地下室 heavy tar man kevlar brute basement">
+    <h4 data-i18n="bestiary.kevlar1.name">重装焦油人（凯夫拉）</h4>
+    <div class="meta"><code>mon_zombie_kevlar_1</code> · <span data-i18n="bestiary.kevlar1.meta">隐藏地下室 A 组</span></div>
     <div class="mstats">
-      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
-      <div class="mstat"><span class="ml">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.armor">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
     </div>
-    <p>与保安队长同一血统，但凯夫拉护甲远超普通焦油人——挡子弹和刀，不挡拳头。</p>
+    <p data-i18n="bestiary.kevlar1.desc">与保安队长同一血统，但凯夫拉护甲远超普通焦油人——挡子弹和刀，不挡拳头。</p>
   </div>
 
-  <div class="entry" data-search="重装焦油人浩克 kevlar hulk 凯夫拉 地下室">
-    <h4>重装焦油人浩克（凯夫拉）</h4>
-    <div class="meta"><code>mon_zombie_kevlar_2</code> · 隐藏地下室 B 组（最终关押室）</div>
+  <div class="entry" data-search="重装焦油人浩克 kevlar hulk 凯夫拉 地下室 heavy tar hulk kevlar basement">
+    <h4 data-i18n="bestiary.kevlar2.name">重装焦油人浩克（凯夫拉）</h4>
+    <div class="meta"><code>mon_zombie_kevlar_2</code> · <span data-i18n="bestiary.kevlar2.meta">隐藏地下室 B 组（最终关押室）</span></div>
     <div class="mstats">
-      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
-      <div class="mstat"><span class="ml">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml" data-i18n="stat.armor">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
     </div>
-    <p>耐久不及浩克本体，但护甲碾压级——炸药对它完全不生效，得靠近战、远程或投喂。</p>
+    <p data-i18n="bestiary.kevlar2.desc">耐久不及浩克本体，但护甲碾压级——炸药对它完全不生效，得靠近战、远程或投喂。</p>
   </div>
 
-  <div class="entry" data-search="街头 游荡 monstergroup group_zombie 普通焦油人">
-    <h4>街头游荡的焦油人</h4>
-    <div class="meta"><code>GROUP_ZOMBIE</code> · 城镇密度刷怪，非固定摆放</div>
-    <p>镇上大多是标准型，混有多种职业与体型变体，属于环境难度，不掉钥匙、不解锁任何东西。</p>
+  <div class="entry" data-search="街头 游荡 monstergroup group_zombie 普通焦油人 tar men roaming streets standard">
+    <h4 data-i18n="bestiary.street.name">街头游荡的焦油人</h4>
+    <div class="meta"><code>GROUP_ZOMBIE</code> · <span data-i18n="bestiary.street.meta">城镇密度刷怪，非固定摆放</span></div>
+    <p data-i18n="bestiary.street.desc">镇上大多是标准型，混有多种职业与体型变体，属于环境难度，不掉钥匙、不解锁任何东西。</p>
   </div>
 </section>
 
 <section id="crafting">
-  <h2>制作与建造</h2>
-  <p>模拟真实世界的数千种制作配方，材料自动从随身与周边搜集。</p>
-  <h3 class="sub">建造系统 <span class="pill op">开发中</span></h3>
-  <p>建造系统尚在开发中，暂未开放。</p>
+  <h2 data-i18n="crafting.h2">制作与建造</h2>
+  <p data-i18n="crafting.p1">模拟真实世界的数千种制作配方，材料自动从随身与周边搜集。</p>
+  <h3 class="sub" data-i18n="crafting.building.title">建造系统 <span class="pill op" data-i18n="crafting.pill.dev">开发中</span></h3>
+  <p data-i18n="crafting.building.p">建造系统尚在开发中，暂未开放。</p>
 </section>
 </div>
 
 <div class="tabpanel" data-tab="3">
-<div class="tabindex"><span class="til">本页目录</span>
-  <a href="#town">G市城镇</a><span class="sep">·</span>
-  <a href="#tutorial">新手教程公寓</a><span class="sep">·</span>
-  <a href="#basement">隐藏地下室</a><span class="sep">·</span>
-  <a href="#police">警局</a>
+<div class="tabindex"><span class="til" data-i18n="tabindex.label">本页目录</span>
+  <a href="#town" data-i18n="town.h2">G市城镇</a><span class="sep">·</span>
+  <a href="#tutorial" data-i18n="tutorial.h2">新手教程公寓</a><span class="sep">·</span>
+  <a href="#basement" data-i18n="basement.h2">隐藏地下室</a><span class="sep">·</span>
+  <a href="#police" data-i18n="police.h2">警局</a>
 </div>
 <section id="town">
-  <h2>G市城镇</h2>
-  <p>每一局的小镇都会重新生成——街道、建筑与物资各不相同，但少数地标始终存在。</p>
+  <h2 data-i18n="town.h2">G市城镇</h2>
+  <p data-i18n="town.p">每一局的小镇都会重新生成——街道、建筑与物资各不相同，但少数地标始终存在。</p>
 </section>
 
 <section id="tutorial">
-  <h2>新手教程公寓</h2>
-  <p class="lede">唯一、固定、手工排布的四层教程楼，每局内容一致。</p>
+  <h2 data-i18n="tutorial.h2">新手教程公寓</h2>
+  <p class="lede" data-i18n="tutorial.lede">唯一、固定、手工排布的四层教程楼，每局内容一致。</p>
   <div class="tower">
-    <div class="row"><div class="fl">4F</div><div class="fc"><b style="color:var(--white)">醒来层。</b>阿伦重伤躺在楼梯口，救不救是你的选择。</div></div>
-    <div class="row"><div class="fl">3F</div><div class="fc"><b style="color:var(--white)">大楼保安把守。</b>教遭遇与搜尸。</div></div>
-    <div class="row"><div class="fl">2F</div><div class="fc"><b style="color:var(--white)">陷阱场。</b>钉板与铁蒺藜混布。</div></div>
-    <div class="row"><div class="fl">1F</div><div class="fc"><b style="color:var(--white)">保安队长把守大门。</b>前三层所学在此汇总。</div></div>
+    <div class="row"><div class="fl">4F</div><div class="fc" data-i18n-html="tutorial.floor.4f"><b style="color:var(--white)">醒来层。</b>阿伦重伤躺在楼梯口，救不救是你的选择。</div></div>
+    <div class="row"><div class="fl">3F</div><div class="fc" data-i18n-html="tutorial.floor.3f"><b style="color:var(--white)">大楼保安把守。</b>教遭遇与搜尸。</div></div>
+    <div class="row"><div class="fl">2F</div><div class="fc" data-i18n-html="tutorial.floor.2f"><b style="color:var(--white)">陷阱场。</b>钉板与铁蒺藜混布。</div></div>
+    <div class="row"><div class="fl">1F</div><div class="fc" data-i18n-html="tutorial.floor.1f"><b style="color:var(--white)">保安队长把守大门。</b>前三层所学在此汇总。</div></div>
   </div>
 
-  <p>这栋楼不止一条通关方式，钥匙不是唯一动线——怎么下楼，你自己想办法。</p>
+  <p data-i18n="tutorial.p2">这栋楼不止一条通关方式，钥匙不是唯一动线——怎么下楼，你自己想办法。</p>
 </section>
 
 <section id="basement">
-  <h2>隐藏地下室</h2>
-  <p class="lede">入口藏在教程楼里，是一条投喂教学 + 探索奖励链条，怎么走由你自己发现。</p>
+  <h2 data-i18n="basement.h2">隐藏地下室</h2>
+  <p class="lede" data-i18n="basement.lede">入口藏在教程楼里，是一条投喂教学 + 探索奖励链条，怎么走由你自己发现。</p>
 </section>
 
 <section id="police">
-  <h2>警局</h2>
-  <p class="lede">一台需要真本事破解的终端，完全可选，不碰它也不影响游玩。</p>
-  <div class="mbar" style="max-width:260px"><span class="mlbl">破解难度</span><div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s2"></i></div></div>
-  <p>电子技能不够扎实，可能根本破不开这台终端——结果好坏都由你自己去试。</p>
+  <h2 data-i18n="police.h2">警局</h2>
+  <p class="lede" data-i18n="police.lede">一台需要真本事破解的终端，完全可选，不碰它也不影响游玩。</p>
+  <div class="mbar" style="max-width:260px"><span class="mlbl" data-i18n="police.hackdiff.label">破解难度</span><div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s2"></i></div></div>
+  <p data-i18n="police.p2">电子技能不够扎实，可能根本破不开这台终端——结果好坏都由你自己去试。</p>
 </section>
 </div>
 
 <div class="tabpanel" data-tab="4">
-<div class="tabindex"><span class="til">本页目录</span>
-  <a href="#lore">红雾与焦油人</a><span class="sep">·</span>
-  <a href="#npcs">重要人物</a>
+<div class="tabindex"><span class="til" data-i18n="tabindex.label">本页目录</span>
+  <a href="#lore" data-i18n="lore.h2">红雾与焦油人</a><span class="sep">·</span>
+  <a href="#npcs" data-i18n="npcs.h2">重要人物</a>
 </div>
 <section id="lore">
-  <h2>红雾与焦油人</h2>
-  <p class="lede">红雾是镇外那圈警戒环真正的样子——外星焦油物质渗出地表后凝成的雾墙，和焦油人同出一源。</p>
-  <p>被红雾接触、渗透过的人会被改造成焦油人。三者是同一条故事线上的节点，不是各自孤立的设定。</p>
+  <h2 data-i18n="lore.h2">红雾与焦油人</h2>
+  <p class="lede" data-i18n="lore.p1">红雾是镇外那圈警戒环真正的样子——外星焦油物质渗出地表后凝成的雾墙，和焦油人同出一源。</p>
+  <p data-i18n="lore.p2">被红雾接触、渗透过的人会被改造成焦油人。三者是同一条故事线上的节点，不是各自孤立的设定。</p>
 </section>
 
 <section id="npcs">
-  <h2>重要人物</h2>
+  <h2 data-i18n="npcs.h2">重要人物</h2>
 
-  <div class="entry" data-search="波德 bode 邻居 英雄">
-    <h4>波德</h4>
-    <p>G市"无人区"边缘一位低调的平民英雄，装束在废土色调里格外鲜艳，行事佛系。</p>
+  <div class="entry" data-search="波德 bode 邻居 英雄 bode neighbor hero">
+    <h4 data-i18n="npcs.bode.name">波德</h4>
+    <p data-i18n="npcs.bode.desc">G市"无人区"边缘一位低调的平民英雄，装束在废土色调里格外鲜艳，行事佛系。</p>
   </div>
 
-  <div class="entry" data-search="阿伦 alun 义体 徒弟">
-    <h4>阿伦</h4>
-    <p>波德的（自封）徒弟，义体改造幸存者，因独自挑战焦油人浩克而重伤。</p>
+  <div class="entry" data-search="阿伦 alun 义体 徒弟 alun cybernetic apprentice">
+    <h4 data-i18n="npcs.alun.name">阿伦</h4>
+    <p data-i18n="npcs.alun.desc">波德的（自封）徒弟，义体改造幸存者，因独自挑战焦油人浩克而重伤。</p>
   </div>
 </section>
 </div>
@@ -507,6 +505,320 @@
 
 <script>
 (function(){
+  var LANGS = [
+    {code:'en', label:'EN'},
+    {code:'zh', label:'中文'}
+  ];
+  var I18N = {
+    en: {
+      'page.title':'Survivor’s Dossier: City G',
+      'masthead.back':'← Back to Home',
+      'masthead.h1':'Survivor’s Dossier: City G',
+      'masthead.sub':'Bestiary, gear, locations, and mechanics — everything you need to survive City G is right here.',
+      'tab.0':'Overview',
+      'tab.1':'Survival Guide',
+      'tab.2':'Bestiary & Supplies',
+      'tab.3':'Town & Locations',
+      'tab.4':'World & Characters',
+      'brand.title':'Survivor’s Dossier',
+      'brand.small':'Survivor’s Dossier · City G',
+      'search.placeholder':'Search bestiary / locations…',
+      'toc.grp0':'Overview',
+      'toc.intro':'Game Overview',
+      'toc.grp1':'Survival Systems',
+      'toc.grp2':'Bestiary & Supplies',
+      'toc.grp3':'Locations',
+      'toc.grp4':'World & Characters',
+      'tabindex.label':'On this page',
+      'intro.eyebrow':'A Tribute to DEATH STRANDING & Cataclysm: DDA — An Original Reimagining',
+      'intro.imgalt':'A courier carries an ever-taller cargo tower through City G’s streets, wrapped in red fog and fire',
+      'intro.p1':'You’re <b>Sam</b>, a courier. The day the red fog rose past the town limits, City G became a dead zone. You wake up strapped into a cargo frame, and soon a <strong>cargo tower</strong> stacks up on your back — every item you carry counts, in real weight and real volume.',
+      'intro.p2':'No safehouses, no waypoints. Hunger, thirst, and fatigue are real numbers, and the scent and sound you leave behind get tracked by tar men for real.',
+      'intro.plat':'Platform <b>Steam Only</b>',
+      'intro.pillar1.title':'Soaked Through',
+      'intro.pillar1.desc':'The more you carry, the more you soak up — the weight is a cost you chose yourself.',
+      'intro.pillar2.title':'Absorb',
+      'intro.pillar2.desc':'Absorb, not destroy.',
+      'intro.pillar3.title':'Connect',
+      'intro.pillar3.desc':'From rope to bridge: mending a broken world through connection.',
+      'needs.h2':'Survival Needs',
+      'needs.lede':'Hunger, thirst, and fatigue run on real numbers — the penalty is a gradual curve, not a sudden state change at some threshold.',
+      'needs.hunger.label':'Hunger',
+      'needs.hunger.note':'A continuous curve: the hungrier you are, the deeper the speed penalty — no stepped jumps',
+      'needs.thirst.label':'Thirst',
+      'needs.thirst.t0':'Thirsty', 'needs.thirst.t1':'Very Thirsty', 'needs.thirst.t2':'Dehydrated', 'needs.thirst.t3':'Parched',
+      'needs.fatigue.label':'Fatigue',
+      'needs.fatigue.t0':'Tired', 'needs.fatigue.t1':'Exhausted', 'needs.fatigue.t2':'Spent',
+      'needs.okbox':'<b>Eating pays off instantly:</b> take a bite of rations and the calories land right away — no need to fret over whether moving around burns it off.',
+      'needs.hudnote':'The always-on HUD panel shows speed, stamina, and mood with the same glowing icon set, plus a status-effect readout line.',
+      'combat.h2':'Combat & Armor',
+      'combat.lede':'Hit → armor → weak point: three layers of resolution, one after another.',
+      'combat.armor.title':'Armor Resolution',
+      'combat.armor.p':'A hit first checks whether your gear covers the struck location; only if it’s covered does the material resistance table decide how much damage gets through — the whole suit rolls as one unit, not piece by piece.',
+      'combat.weak.title':'Weak Point System',
+      'combat.weak.normal':'Normal spot',
+      'combat.weak.weak':'Weak spot',
+      'combat.weak.p':'Hitting a weak point breaks armor more easily, triggers criticals, and sometimes carries a control effect. Take the Tar Hulk: <strong>a headshot noticeably cracks its armor faster, and an eye shot lands almost like it’s wearing nothing</strong> — it all comes down to aim and positioning; stacking stats won’t help you land hits consistently.',
+      'combat.fog.title':'Red Fog Damage',
+      'combat.fog.p':'Red fog damage resolves through the normal armor pipeline too — it’s not an "ignore defense" effect that skips your gear. Wearing the right material genuinely mitigates part of it.',
+      'ai.h2':'How Monsters Find You',
+      'ai.lede':'Monsters don’t know your coordinates — they find you by scent and sound.',
+      'ai.scent.title':'Scent Tracking',
+      'ai.scent.p':'Every step you take leaves scent, which then spreads and fades over time. Monsters with tracking ability (like the Tar Hulk) climb up the gradient toward stronger scent; taking a detour, opening distance, or slowing down all let it fade and break.',
+      'ai.noise.title':'Noise Tracking',
+      'ai.noise.p':'Gunfire, footsteps, doors, reloading, alarms — nearly every action makes noise. When something is heard but not seen, the monster only marks a rough direction, a puzzled guess, not a beeline to your real position. Explosions are the one exception — they currently make no sound at all.',
+      'ai.corpse.title':'Corpse Revival',
+      'ai.corpse.p':'A freshly downed corpse almost never gets back up — the longer it sits, the higher the odds climb. <strong>Keep burning through a corpse that was destined to revive, and it comes back at full health as something worse</strong> — this doesn’t touch anything still alive and fighting; it only decides what the corpse turns into.',
+      'ai.mood.title':'Mood & Attitude',
+      'ai.mood.p':'Every monster carries an anger value and a morale value. Getting hurt, hearing noise, a companion dying — triggers like these push it between hostile / following / ignoring / fleeing. <b>Feeding it</b> can lower anger enough to make it ignore you, but any attack on it re-triggers full aggression instantly.',
+      'bestiary.h2':'Bestiary',
+      'bestiary.lede':'This game has no "zombies" — in every line of text, dialogue, and this bestiary, they’re called <strong>tar men</strong>.',
+      'stat.durability':'Durability', 'stat.speed':'Speed', 'stat.weak':'Weak Point', 'stat.armor':'Armor',
+      'weaktxt.head':'Head',
+      'bestiary.crawler.name':'Building Security',
+      'bestiary.crawler.meta':'unique instance, Tutorial Apartment 3F',
+      'bestiary.crawler.desc':'The first crawling tar man you meet in the tutorial tower — slow-moving, and carrying keys to every door on the floor.',
+      'bestiary.brute.name':'Security Captain',
+      'bestiary.brute.meta':'unique instance, Tutorial Apartment 1F',
+      'bestiary.brute.desc':'The second guard, stationed in the lobby — thinner armor but faster, carrying keys to the front gate and the basement cold-storage room.',
+      'bestiary.hulk.name':'Tar Hulk',
+      'bestiary.hulk.meta':'main roaming threat, present from the start',
+      'bestiary.hulk.weaktxt':'Head / Eyes',
+      'bestiary.hulk.desc':'Roams the town center from the opening moments, noticeably faster than you, hunts by scent and sound, and hits hard in melee with armor penetration.',
+      'bestiary.fiend.name':'Revenant',
+      'bestiary.fiend.meta':'what a Tar Hulk corpse becomes after being burned through; no fixed spawn point',
+      'bestiary.fiend.desc':'Much lighter than the Hulk it came from, revives at full health, adds a reach attack, and resists fire and acid.',
+      'bestiary.kevlar1.name':'Heavy Tar Man (Kevlar)',
+      'bestiary.kevlar1.meta':'Hidden Basement, Group A',
+      'bestiary.kevlar1.desc':'Same lineage as the Security Captain, but its kevlar armor far outclasses a standard tar man’s — stops bullets and blades, not fists.',
+      'bestiary.kevlar2.name':'Heavy Tar Hulk (Kevlar)',
+      'bestiary.kevlar2.meta':'Hidden Basement, Group B (final holding cell)',
+      'bestiary.kevlar2.desc':'Less durable than the base Hulk, but its armor is on another level — explosives do nothing against it; you’ll need melee, ranged fire, or feeding it instead.',
+      'bestiary.street.name':'Tar Men Roaming the Streets',
+      'bestiary.street.meta':'town density spawns, not fixed placements',
+      'bestiary.street.desc':'Most of the town is standard-type tar men, mixed with several job and body-type variants — ambient difficulty, no keys drop, nothing unlocks from them.',
+      'crafting.h2':'Crafting & Building',
+      'crafting.p1':'Simulates thousands of real-world crafting recipes; materials are pulled automatically from your inventory and surroundings.',
+      'crafting.building.title':'Building System',
+      'crafting.pill.dev':'In Development',
+      'crafting.building.p':'The building system is still in development and not yet available.',
+      'town.h2':'The Town of City G',
+      'town.p':'The town regenerates every run — streets, buildings, and supplies all differ, but a handful of landmarks always stay put.',
+      'tutorial.h2':'Tutorial Apartment Tower',
+      'tutorial.lede':'The one fixed, hand-authored four-floor tutorial tower — the same content every run.',
+      'tutorial.floor.4f':'<b style="color:var(--white)">Wake-up floor.</b> Alun lies badly hurt at the stairwell — saving him is your call.',
+      'tutorial.floor.3f':'<b style="color:var(--white)">Guarded by Building Security.</b> Teaches encounters and looting corpses.',
+      'tutorial.floor.2f':'<b style="color:var(--white)">Trap floor.</b> Spike boards and caltrops mixed in.',
+      'tutorial.floor.1f':'<b style="color:var(--white)">Security Captain guards the front gate.</b> Everything from the three floors above comes together here.',
+      'tutorial.p2':'The tower isn’t a one-path building, and the key isn’t the only route through — how you get downstairs is yours to figure out.',
+      'basement.h2':'Hidden Basement',
+      'basement.lede':'The entrance is hidden inside the tutorial tower — a chain that teaches feeding and rewards exploration; finding your way through it is on you.',
+      'police.h2':'Police Station',
+      'police.lede':'A terminal that takes real skill to crack, entirely optional — skip it and it changes nothing about the run.',
+      'police.hackdiff.label':'Hack Difficulty',
+      'police.p2':'If your electronics skill isn’t sharp enough, you might not crack this terminal at all — good or bad, the outcome is yours to find out by trying.',
+      'lore.h2':'Red Fog & Tar Men',
+      'lore.p1':'The red fog is the true shape of the quarantine ring outside town — a wall of mist condensed from alien tar seeping up from the ground, sharing one source with the tar men.',
+      'lore.p2':'People touched and soaked by the red fog get remade into tar men. All three are nodes on the same storyline, not separate settings bolted together.',
+      'npcs.h2':'Key Characters',
+      'npcs.bode.name':'Bode',
+      'npcs.bode.desc':'A low-key civilian hero at the edge of City G’s dead zone, dressed in colors that pop against the wasteland palette, easygoing to the point of indifference.',
+      'npcs.alun.name':'Alun',
+      'npcs.alun.desc':'Bode’s (self-declared) apprentice, a cybernetically augmented survivor badly hurt after taking on a Tar Hulk alone.'
+    },
+    zh: {
+      'page.title':'幸存者手册：G市',
+      'masthead.back':'← 返回首页',
+      'masthead.h1':'幸存者手册：G市',
+      'masthead.sub':'图鉴、道具、地点与机制——想在G市活下去，你需要知道的都在这里。',
+      'tab.0':'简介',
+      'tab.1':'生存指南',
+      'tab.2':'图鉴与物资',
+      'tab.3':'城镇与地点',
+      'tab.4':'世界与人物',
+      'brand.title':'幸存者手册',
+      'brand.small':'Survivor\'s Dossier · G市',
+      'search.placeholder':'搜索图鉴 / 地点…',
+      'toc.grp0':'简介',
+      'toc.intro':'游戏简介',
+      'toc.grp1':'生存系统',
+      'toc.grp2':'图鉴与物资',
+      'toc.grp3':'地点',
+      'toc.grp4':'世界与人物',
+      'tabindex.label':'本页目录',
+      'intro.eyebrow':'致敬《死亡搁浅》与《大灾变：黑暗降临》的原创重构',
+      'intro.imgalt':'信使背负着不断加高的货物塔，走过被红雾与烈焰笼罩的G市街道',
+      'intro.p1':'你叫 <b>Sam</b>，一名信使。红雾从镇外升起那天起，G市就成了无人区。你背着一副货运骨架醒来，肩上很快会架起一座越叠越高的<strong>货物塔</strong>——扛的每一件物资，都实打实地计入重量与体积。',
+      'intro.p2':'没有安全屋，没有传送点。饥饿、口渴、疲劳都是真实数值，你留下的气味和声响会被焦油人真正循迹追来。',
+      'intro.plat':'平台 <b>仅 Steam</b>',
+      'intro.pillar1.title':'浸透',
+      'intro.pillar1.desc':'扛得越多，吸得越透——重量是你自己选的代价。',
+      'intro.pillar2.title':'吸收',
+      'intro.pillar2.desc':'吸收，而非毁灭。',
+      'intro.pillar3.title':'连接',
+      'intro.pillar3.desc':'从绳索到桥梁：用连接重新缝合断裂的世界。',
+      'needs.h2':'生存需求',
+      'needs.lede':'饥饿、口渴、疲劳按真实数值走，惩罚是渐变的曲线，不是踩到某个点就突然掉状态的跳变。',
+      'needs.hunger.label':'饥饿',
+      'needs.hunger.note':'连续曲线：越饿，速度惩罚越深，没有分级跳变',
+      'needs.thirst.label':'口渴',
+      'needs.thirst.t0':'渴', 'needs.thirst.t1':'很渴', 'needs.thirst.t2':'脱水', 'needs.thirst.t3':'极渴',
+      'needs.fatigue.label':'疲劳',
+      'needs.fatigue.t0':'累', 'needs.fatigue.t1':'极累', 'needs.fatigue.t2':'力竭',
+      'needs.okbox':'<b>进食即时回复：</b>啃一口口粮，热量立刻到账，不用纠结走位省不省体力。',
+      'needs.hudnote':'常驻 HUD 面板会用同一套发光图标显示速度、体力与情绪状态，附带异常状态提示行。',
+      'combat.h2':'战斗与护甲',
+      'combat.lede':'命中→护甲→弱点，三层判定层层递进。',
+      'combat.armor.title':'护甲结算',
+      'combat.armor.p':'命中先看装备能否覆盖到中弹部位，覆盖住才按材质抗性表结算能穿透多少伤害——整套护甲当一个整体滚动，不分逐件细算。',
+      'combat.weak.title':'弱点系统',
+      'combat.weak.normal':'普通部位',
+      'combat.weak.weak':'弱点部位',
+      'combat.weak.p':'命中弱点更容易破防、触发暴击，有时还带控制效果。以焦油人浩克为例：<strong>打头明显更容易破防，打眼睛几乎跟没穿甲一样</strong>——全靠瞄准和走位，堆数值帮不了你稳定打要害。',
+      'combat.fog.title':'红雾伤害',
+      'combat.fog.p':'红雾伤害也走正常的护甲结算，不是绕过装备的"无视防御"——穿对材质的装备确实能帮你减免一部分。',
+      'ai.h2':'怪物如何找到你',
+      'ai.lede':'怪物不认识你的坐标——它们靠气味和声音找你。',
+      'ai.scent.title':'气味追踪',
+      'ai.scent.p':'你走过的每一步都会留下气味，随后扩散、随时间变淡。带追踪能力的怪（比如焦油人浩克）会沿气味变浓的方向爬升；绕路、拉开距离、放慢脚步都能让它变淡变断。',
+      'ai.noise.title':'噪音追踪',
+      'ai.noise.p':'开枪、脚步、开关门、装填弹药、警报——几乎每个动作都会发声，被听见但看不见来源时，怪物只会在大致方向留下一个疑惑标记，不会直扑你的真实位置。爆炸是个例外，目前不会发出声响。',
+      'ai.corpse.title':'尸体复活',
+      'ai.corpse.p':'刚倒下的尸体基本不会复活，放得越久概率越高。<strong>持续用火把一具本能复活的尸体烧穿，会让它满血复活成另一种更麻烦的怪</strong>——这不影响正在战斗中的活体，只影响尸体复活成什么。',
+      'ai.mood.title':'情绪与态度',
+      'ai.mood.p':'每只怪携带愤怒值和士气值，受伤、听到噪音、同伴死亡等触发器会推动它在敌对/跟随/无视/逃跑间切换。<b>投喂</b>能压低愤怒值让怪进入无视状态，但受到攻击会立刻重新激怒。',
+      'bestiary.h2':'怪物图鉴',
+      'bestiary.lede':'本作没有"丧尸"——所有文字、对话、图鉴里，怪物一律叫<strong>焦油人</strong>。',
+      'stat.durability':'耐久', 'stat.speed':'速度', 'stat.weak':'弱点', 'stat.armor':'护甲',
+      'weaktxt.head':'头部',
+      'bestiary.crawler.name':'大楼保安',
+      'bestiary.crawler.meta':'教程公寓 3F 专属实例',
+      'bestiary.crawler.desc':'教程楼里最先遇到的爬行焦油人，行动迟缓，身上带着全楼房门钥匙。',
+      'bestiary.brute.name':'保安队长',
+      'bestiary.brute.meta':'教程公寓 1F 专属实例',
+      'bestiary.brute.desc':'大堂驻守的第二个保安，护甲单薄但速度更快，身上带着大门与地下室冰库的钥匙。',
+      'bestiary.hulk.name':'焦油人浩克',
+      'bestiary.hulk.meta':'全程游荡的主要威胁',
+      'bestiary.hulk.weaktxt':'头部 / 眼睛',
+      'bestiary.hulk.desc':'从开局就在镇中心游荡，速度明显比你快，靠气味和噪音找你，近战沉重且带穿甲。',
+      'bestiary.fiend.name':'复活体',
+      'bestiary.fiend.meta':'焦油人浩克尸体烧穿后的产物，没有固定摆放点',
+      'bestiary.fiend.desc':'比浩克本体轻得多，满血复活，多一手拉伸攻击，耐火耐酸。',
+      'bestiary.kevlar1.name':'重装焦油人（凯夫拉）',
+      'bestiary.kevlar1.meta':'隐藏地下室 A 组',
+      'bestiary.kevlar1.desc':'与保安队长同一血统，但凯夫拉护甲远超普通焦油人——挡子弹和刀，不挡拳头。',
+      'bestiary.kevlar2.name':'重装焦油人浩克（凯夫拉）',
+      'bestiary.kevlar2.meta':'隐藏地下室 B 组（最终关押室）',
+      'bestiary.kevlar2.desc':'耐久不及浩克本体，但护甲碾压级——炸药对它完全不生效，得靠近战、远程或投喂。',
+      'bestiary.street.name':'街头游荡的焦油人',
+      'bestiary.street.meta':'城镇密度刷怪，非固定摆放',
+      'bestiary.street.desc':'镇上大多是标准型，混有多种职业与体型变体，属于环境难度，不掉钥匙、不解锁任何东西。',
+      'crafting.h2':'制作与建造',
+      'crafting.p1':'模拟真实世界的数千种制作配方，材料自动从随身与周边搜集。',
+      'crafting.building.title':'建造系统',
+      'crafting.pill.dev':'开发中',
+      'crafting.building.p':'建造系统尚在开发中，暂未开放。',
+      'town.h2':'G市城镇',
+      'town.p':'每一局的小镇都会重新生成——街道、建筑与物资各不相同，但少数地标始终存在。',
+      'tutorial.h2':'新手教程公寓',
+      'tutorial.lede':'唯一、固定、手工排布的四层教程楼，每局内容一致。',
+      'tutorial.floor.4f':'<b style="color:var(--white)">醒来层。</b>阿伦重伤躺在楼梯口，救不救是你的选择。',
+      'tutorial.floor.3f':'<b style="color:var(--white)">大楼保安把守。</b>教遭遇与搜尸。',
+      'tutorial.floor.2f':'<b style="color:var(--white)">陷阱场。</b>钉板与铁蒺藜混布。',
+      'tutorial.floor.1f':'<b style="color:var(--white)">保安队长把守大门。</b>前三层所学在此汇总。',
+      'tutorial.p2':'这栋楼不止一条通关方式，钥匙不是唯一动线——怎么下楼，你自己想办法。',
+      'basement.h2':'隐藏地下室',
+      'basement.lede':'入口藏在教程楼里，是一条投喂教学 + 探索奖励链条，怎么走由你自己发现。',
+      'police.h2':'警局',
+      'police.lede':'一台需要真本事破解的终端，完全可选，不碰它也不影响游玩。',
+      'police.hackdiff.label':'破解难度',
+      'police.p2':'电子技能不够扎实，可能根本破不开这台终端——结果好坏都由你自己去试。',
+      'lore.h2':'红雾与焦油人',
+      'lore.p1':'红雾是镇外那圈警戒环真正的样子——外星焦油物质渗出地表后凝成的雾墙，和焦油人同出一源。',
+      'lore.p2':'被红雾接触、渗透过的人会被改造成焦油人。三者是同一条故事线上的节点，不是各自孤立的设定。',
+      'npcs.h2':'重要人物',
+      'npcs.bode.name':'波德',
+      'npcs.bode.desc':'G市"无人区"边缘一位低调的平民英雄，装束在废土色调里格外鲜艳，行事佛系。',
+      'npcs.alun.name':'阿伦',
+      'npcs.alun.desc':'波德的（自封）徒弟，义体改造幸存者，因独自挑战焦油人浩克而重伤。'
+    }
+  };
+
+  var currentLang = 'en';
+
+  function updateSearchCount(){
+    var search = document.getElementById('search');
+    var count = document.getElementById('searchcount');
+    if(!search || !count) return;
+    if(!search.value.trim()){ count.textContent = ''; return; }
+    var shown = document.querySelectorAll('.entry:not(.hide)').length;
+    if(currentLang === 'zh'){
+      count.textContent = shown + ' 条匹配' + (shown ? '（回车跳转到第一条）' : '');
+    } else {
+      count.textContent = shown + ' match' + (shown === 1 ? '' : 'es') + (shown ? ' (press Enter to jump to the first)' : '');
+    }
+  }
+
+  function applyLang(lang){
+    currentLang = lang;
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.title = dict['page.title'] || I18N.en['page.title'];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.textContent = val;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-html');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.innerHTML = val;
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-placeholder');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.placeholder = val;
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-alt');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.alt = val;
+    });
+    document.querySelectorAll('#langsw button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    updateSearchCount();
+    try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+  }
+
+  function detectLang(){
+    try {
+      var saved = localStorage.getItem('sb_lang');
+      if (saved && I18N[saved]) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || 'en').toLowerCase();
+    if (nav.indexOf('zh') === 0) return 'zh';
+    return 'en';
+  }
+
+  var sw = document.getElementById('langsw');
+  LANGS.forEach(function(l, i){
+    if (i > 0) {
+      var sep = document.createElement('span');
+      sep.className = 'sep';
+      sep.textContent = '/';
+      sw.appendChild(sep);
+    }
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'navlink';
+    b.dataset.lang = l.code;
+    b.textContent = l.label;
+    b.addEventListener('click', function(){ applyLang(l.code); });
+    sw.appendChild(b);
+  });
+  applyLang(detectLang());
+
   var search = document.getElementById('search');
   var count = document.getElementById('searchcount');
   var entries = Array.prototype.slice.call(document.querySelectorAll('.entry'));
@@ -519,7 +831,6 @@
   var currentTab = '0';
   var animating = false;
 
-  // ── 分区（Tab）切换：翻页式 3D 翻转 + 玻璃扫描闪烁，尊重 prefers-reduced-motion ──
   function setTabUI(idx){
     tabbtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tab')===idx); });
     groups.forEach(function(g){ g.classList.toggle('tab-dim', g.getAttribute('data-tab')!==idx); });
@@ -568,7 +879,6 @@
     b.addEventListener('click', function(){ switchTab(b.getAttribute('data-tab')); });
   });
 
-  // 侧栏 / 页内目录链接：同分区内用原生锚点跳转；跨分区先翻页再跳转
   var allTocLinks = Array.prototype.slice.call(document.querySelectorAll('nav.toc a, .tabindex a'));
   allTocLinks.forEach(function(a){
     a.addEventListener('click', function(e){
@@ -587,7 +897,6 @@
     });
   });
 
-  // ── 搜索：过滤逻辑不变；回车跳到第一条匹配项，自动切到它所在的分区 ──
   search.addEventListener('input', function(){
     var q = search.value.trim().toLowerCase();
     if(!q){
@@ -596,12 +905,10 @@
       count.textContent = '';
       return;
     }
-    var shown = 0;
     entries.forEach(function(e){
       var hay = (e.getAttribute('data-search')||'') + ' ' + e.textContent;
       var match = hay.toLowerCase().indexOf(q) !== -1;
       e.classList.toggle('hide', !match);
-      if(match) shown++;
     });
     var entrySections = ['bestiary','npcs'];
     sections.forEach(function(s){
@@ -609,7 +916,7 @@
       var anyVisible = s.querySelectorAll('.entry:not(.hide)').length > 0;
       s.classList.toggle('hide', !anyVisible);
     });
-    count.textContent = shown + ' 条匹配' + (shown ? '（回车跳转到第一条）' : '');
+    updateSearchCount();
   });
 
   search.addEventListener('keydown', function(e){
@@ -623,7 +930,6 @@
     });
   });
 
-  // ── 阅读进度高亮（仅当前可见分区内的 section 会真正触发 intersect）──
   var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
   var obs = new IntersectionObserver(function(entriesList){
     entriesList.forEach(function(en){
@@ -637,7 +943,6 @@
   }, {rootMargin:'-10% 0px -80% 0px'});
   sections.forEach(function(s){ if(s.id) obs.observe(s); });
 
-  // ── 初始激活分区：默认「简介」，若带 #hash 直接命中某个分区则直接开在那 ──
   var initialTab = '0';
   if(location.hash){
     var ht = document.querySelector(location.hash);

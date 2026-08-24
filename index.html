@@ -304,7 +304,7 @@
     <p data-i18n-html="pitch.p2">No safehouses. No waypoints. Hunger, thirst, and fatigue are real numbers. Scent and noise really do give you away. Cross the streets, the apartments, the precinct, the basements — find your own way out: fix the fog device, blast a gap through, walk it off, or find the one person still willing to help. <em>Four routes. First one you finish is the one that counts.</em></p>
     <div class="p-plat" data-i18n="pitch.platform">Platform — Steam Only</div>
     <br>
-    <a class="cta-wiki" id="wikiLink" href="game-wiki.html" data-i18n="pitch.cta">Enter the Survivor's Handbook →</a>
+    <a class="cta-wiki" href="game-wiki.html" data-i18n="pitch.cta">Enter the Survivor's Handbook →</a>
   </div>
 </section>
 
@@ -415,8 +415,6 @@
     document.querySelectorAll('#langsw button').forEach(function(b){
       b.classList.toggle('active', b.dataset.lang === lang);
     });
-    var wikiLink = document.getElementById('wikiLink');
-    if (wikiLink) wikiLink.href = lang === 'zh' ? 'game-wiki.html' : 'game-wiki.en.html';
     try { localStorage.setItem('sb_lang', lang); } catch (e) {}
   }
 
