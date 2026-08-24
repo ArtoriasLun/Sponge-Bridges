@@ -18,8 +18,6 @@
       linear-gradient(rgba(63,214,201,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(63,214,201,.03) 1px, transparent 1px);
     background-size:auto,auto,26px 26px,26px 26px}
   a{color:var(--cyan)}
-  code{font-family:var(--mono);font-size:.85em;background:var(--subtle);border:1px solid var(--lineD);
-    border-radius:3px;padding:0 6px;color:#a9c4dd;white-space:nowrap}
   strong{color:var(--white);font-weight:500}
   .num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
 
@@ -56,9 +54,9 @@
   nav.toc .grp{margin-top:16px}
   nav.toc .grp>b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--dim2);margin-bottom:6px}
-  nav.toc a{display:block;color:var(--dim);text-decoration:none;padding:3px 0 3px 10px;border-left:2px solid transparent}
-  nav.toc a:hover{color:var(--white);border-left-color:var(--lineB)}
-  nav.toc a.current{color:var(--white);border-left-color:var(--cyan);font-weight:700;text-shadow:0 0 8px rgba(255,255,255,.3)}
+  nav.toc a{display:block;color:var(--dim);text-decoration:none;padding:3px 0 3px 10px}
+  nav.toc a:hover{color:var(--white)}
+  nav.toc a.current{color:var(--white);font-weight:700}
 
   .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:18px 0 4px;font-size:12.5px;color:var(--dim)}
   .legend span{display:inline-flex;gap:6px;align-items:center}
@@ -359,7 +357,7 @@
 
   <div class="entry" data-search="大楼保安 crawler 焦油人 教程 3F building security crawler tar man tutorial 3F">
     <h4 data-i18n="bestiary.crawler.name">大楼保安</h4>
-    <div class="meta"><code>mon_zombie_crawler</code> · <span data-i18n="bestiary.crawler.meta">教程公寓 3F 专属实例</span></div>
+    <div class="meta"><span data-i18n="bestiary.crawler.meta">教程公寓 3F 专属实例</span></div>
     <div class="mstats">
       <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
       <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
@@ -370,7 +368,7 @@
 
   <div class="entry" data-search="保安队长 brute 焦油人 教程 1F security captain brute tar man tutorial 1F">
     <h4 data-i18n="bestiary.brute.name">保安队长</h4>
-    <div class="meta"><code>mon_zombie_brute</code> · <span data-i18n="bestiary.brute.meta">教程公寓 1F 专属实例</span></div>
+    <div class="meta"><span data-i18n="bestiary.brute.meta">教程公寓 1F 专属实例</span></div>
     <div class="mstats">
       <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
       <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
@@ -381,7 +379,7 @@
 
   <div class="entry" data-search="焦油人浩克 hulk boss 焦油人 tar hulk tar man">
     <h4 data-i18n="bestiary.hulk.name">焦油人浩克</h4>
-    <div class="meta"><code>mon_zombie_hulk</code> · <span data-i18n="bestiary.hulk.meta">全程游荡的主要威胁</span></div>
+    <div class="meta"><span data-i18n="bestiary.hulk.meta">全程游荡的主要威胁</span></div>
     <div class="mstats">
       <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
       <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
@@ -392,7 +390,7 @@
 
   <div class="entry" data-search="复活体 fiend 焦油人 revenant tar man">
     <h4 data-i18n="bestiary.fiend.name">复活体</h4>
-    <div class="meta"><code>mon_zombie_fiend</code> · <span data-i18n="bestiary.fiend.meta">焦油人浩克尸体烧穿后的产物，没有固定摆放点</span></div>
+    <div class="meta"><span data-i18n="bestiary.fiend.meta">焦油人浩克尸体烧穿后的产物，没有固定摆放点</span></div>
     <div class="mstats">
       <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
       <div class="mstat"><span class="ml" data-i18n="stat.speed">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
@@ -402,7 +400,7 @@
 
   <div class="entry" data-search="重装焦油人 kevlar brute 凯夫拉 地下室 heavy tar man kevlar brute basement">
     <h4 data-i18n="bestiary.kevlar1.name">重装焦油人（凯夫拉）</h4>
-    <div class="meta"><code>mon_zombie_kevlar_1</code> · <span data-i18n="bestiary.kevlar1.meta">隐藏地下室 A 组</span></div>
+    <div class="meta"><span data-i18n="bestiary.kevlar1.meta">隐藏地下室 A 组</span></div>
     <div class="mstats">
       <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
       <div class="mstat"><span class="ml" data-i18n="stat.armor">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
@@ -412,7 +410,7 @@
 
   <div class="entry" data-search="重装焦油人浩克 kevlar hulk 凯夫拉 地下室 heavy tar hulk kevlar basement">
     <h4 data-i18n="bestiary.kevlar2.name">重装焦油人浩克（凯夫拉）</h4>
-    <div class="meta"><code>mon_zombie_kevlar_2</code> · <span data-i18n="bestiary.kevlar2.meta">隐藏地下室 B 组（最终关押室）</span></div>
+    <div class="meta"><span data-i18n="bestiary.kevlar2.meta">隐藏地下室 B 组（最终关押室）</span></div>
     <div class="mstats">
       <div class="mstat"><span class="ml" data-i18n="stat.durability">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
       <div class="mstat"><span class="ml" data-i18n="stat.armor">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
@@ -422,7 +420,7 @@
 
   <div class="entry" data-search="街头 游荡 monstergroup group_zombie 普通焦油人 tar men roaming streets standard">
     <h4 data-i18n="bestiary.street.name">街头游荡的焦油人</h4>
-    <div class="meta"><code>GROUP_ZOMBIE</code> · <span data-i18n="bestiary.street.meta">城镇密度刷怪，非固定摆放</span></div>
+    <div class="meta"><span data-i18n="bestiary.street.meta">城镇密度刷怪，非固定摆放</span></div>
     <p data-i18n="bestiary.street.desc">镇上大多是标准型，混有多种职业与体型变体，属于环境难度，不掉钥匙、不解锁任何东西。</p>
   </div>
 </section>
