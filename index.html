@@ -70,6 +70,16 @@
   nav .tag::before,nav .tag::after{content:"";position:absolute;top:-2px;width:5px;height:5px;border-top:1px solid var(--glass);}
   nav .tag::before{left:-2px;border-left:1px solid var(--glass)}
   nav .tag::after{right:-2px;border-right:1px solid var(--glass)}
+  nav .navright{display:flex; align-items:center; gap:14px}
+  nav .langsw{display:flex; border:1px solid var(--line)}
+  nav .langsw button{
+    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); background:transparent; border:none; padding:6px 11px; cursor:pointer;
+    transition:color .25s ease, background .25s ease;
+  }
+  nav .langsw button+button{border-left:1px solid var(--line)}
+  nav .langsw button:hover{color:var(--ink)}
+  nav .langsw button.active{color:var(--glass); background:var(--glass-dim)}
 
   .herobody{position:relative; z-index:5; padding:0 clamp(20px,6vw,64px) clamp(60px,9vh,110px)}
   .eyebrow{
@@ -153,54 +163,143 @@
 
   <nav>
     <div class="mark">Sponge Bridges</div>
-    <div class="tag">In Development</div>
+    <div class="navright">
+      <div class="tag" data-i18n="nav.dev">In Development</div>
+      <div class="langsw" id="langsw"></div>
+    </div>
   </nav>
 
   <div class="herobody">
-    <div class="eyebrow">A Delivery, Not a War</div>
+    <div class="eyebrow" data-i18n="hero.eyebrow">A Delivery, Not a War</div>
     <h1>Sponge<br><em>Bridges</em></h1>
-    <p class="tagline">Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.</p>
+    <p class="tagline" data-i18n="hero.tagline">Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.</p>
   </div>
 
-  <div class="scrolldown"><span class="ln"></span>Scroll</div>
+  <div class="scrolldown"><span class="ln"></span><span data-i18n="hero.scroll">Scroll</span></div>
 </section>
 
 <section class="pitch">
-  <p class="reveal">You wake in a stranger's town. The fog took the streets, the sky, the way out.</p>
-  <p class="reveal">What you carry is what you have. <em>Where you walk is yours to choose.</em></p>
+  <p class="reveal" data-i18n-html="pitch.p1">You wake in a stranger's town. The fog took the streets, the sky, the way out.</p>
+  <p class="reveal" data-i18n-html="pitch.p2">What you carry is what you have. <em>Where you walk is yours to choose.</em></p>
 </section>
 
 <section class="pillars">
   <div class="pillar reveal">
     <span class="n">01</span>
-    <h3>Carry</h3>
-    <p>Nothing moves unless you move it. Weight is a promise you make with your own two legs.</p>
+    <h3 data-i18n="pillar.1.title">Carry</h3>
+    <p data-i18n="pillar.1.desc">Nothing moves unless you move it. Weight is a promise you make with your own two legs.</p>
   </div>
   <div class="pillar reveal">
     <span class="n">02</span>
-    <h3>Survive</h3>
-    <p>Hunger, thirst, the cold, the dark. The town doesn't care whether you make it.</p>
+    <h3 data-i18n="pillar.2.title">Survive</h3>
+    <p data-i18n="pillar.2.desc">Hunger, thirst, the cold, the dark. The town doesn't care whether you make it.</p>
   </div>
   <div class="pillar reveal">
     <span class="n">03</span>
-    <h3>Choose Your Way Out</h3>
-    <p>There is no one path through the fog. There's just the one you're willing to walk.</p>
+    <h3 data-i18n="pillar.3.title">Choose Your Way Out</h3>
+    <p data-i18n="pillar.3.desc">There is no one path through the fog. There's just the one you're willing to walk.</p>
   </div>
 </section>
 
 <section class="closing">
-  <h2>The fog is waiting.</h2>
-  <p class="sub">Sponge Bridges is currently in development. Follow along for the walk out.</p>
-  <div class="notify"><span class="dot"></span> More to come</div>
+  <h2 data-i18n="closing.h2">The fog is waiting.</h2>
+  <p class="sub" data-i18n="closing.sub">Sponge Bridges is currently in development. Follow along for the walk out.</p>
+  <div class="notify"><span class="dot"></span> <span data-i18n="closing.notify">More to come</span></div>
 </section>
 
 <footer>
   <span>Sponge Bridges</span>
-  <span><a href="support.html" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--line)">Support</a> · © 2026</span>
+  <span><a href="support.html" data-i18n="footer.support" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--line)">Support</a> · © 2026</span>
 </footer>
 
 <script>
 (function(){
+  // ══ i18n — add a language by adding one entry to LANGS and one block to I18N.
+  // Native tongue is English; every other language falls back to en for any
+  // missing key, so a partial translation never breaks the page. ══
+  var LANGS = [
+    {code:'en', label:'EN'},
+    {code:'zh', label:'中文'}
+  ];
+  var I18N = {
+    en: {
+      'nav.dev':'In Development',
+      'hero.eyebrow':'A Delivery, Not a War',
+      'hero.tagline':'Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.',
+      'hero.scroll':'Scroll',
+      'pitch.p1':'You wake in a stranger’s town. The fog took the streets, the sky, the way out.',
+      'pitch.p2':'What you carry is what you have. <em>Where you walk is yours to choose.</em>',
+      'pillar.1.title':'Carry',
+      'pillar.1.desc':'Nothing moves unless you move it. Weight is a promise you make with your own two legs.',
+      'pillar.2.title':'Survive',
+      'pillar.2.desc':'Hunger, thirst, the cold, the dark. The town doesn’t care whether you make it.',
+      'pillar.3.title':'Choose Your Way Out',
+      'pillar.3.desc':'There is no one path through the fog. There’s just the one you’re willing to walk.',
+      'closing.h2':'The fog is waiting.',
+      'closing.sub':'Sponge Bridges is currently in development. Follow along for the walk out.',
+      'closing.notify':'More to come',
+      'footer.support':'Support'
+    },
+    zh: {
+      'nav.dev':'开发中',
+      'hero.eyebrow':'这是一场配送，不是一场战争',
+      'hero.tagline':'每一步都是一次配送。每一次配送，都是你独自一人在浓雾中做出的选择——背上是你所有的一切。',
+      'hero.scroll':'向下滚动',
+      'pitch.p1':'你在一座陌生的小镇醒来。浓雾吞没了街道、天空，还有出路。',
+      'pitch.p2':'你带着什么，你就拥有什么。<em>往哪儿走，由你自己决定。</em>',
+      'pillar.1.title':'背负',
+      'pillar.1.desc':'东西不会自己动，只能靠你搬。重量，是你用双腿许下的承诺。',
+      'pillar.2.title':'生存',
+      'pillar.2.desc':'饥饿、干渴、寒冷、黑暗。这座小镇不在乎你能不能撑过去。',
+      'pillar.3.title':'走出属于你的路',
+      'pillar.3.desc':'穿越浓雾没有唯一的路。只有你愿意去走的那一条。',
+      'closing.h2':'浓雾，仍在等你。',
+      'closing.sub':'《Sponge Bridges》目前正在开发中。关注我们，一起等这场走出迷雾的旅程。',
+      'closing.notify':'敬请期待',
+      'footer.support':'客服支持'
+    }
+  };
+
+  function applyLang(lang){
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.textContent = val;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-html');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.innerHTML = val;
+    });
+    document.querySelectorAll('#langsw button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+  }
+
+  function detectLang(){
+    try {
+      var saved = localStorage.getItem('sb_lang');
+      if (saved && I18N[saved]) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || 'en').toLowerCase();
+    if (nav.indexOf('zh') === 0) return 'zh';
+    return 'en';
+  }
+
+  var sw = document.getElementById('langsw');
+  LANGS.forEach(function(l){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.lang = l.code;
+    b.textContent = l.label;
+    b.addEventListener('click', function(){ applyLang(l.code); });
+    sw.appendChild(b);
+  });
+  applyLang(detectLang());
+
   // sparse rising embers — minimal, not a particle storm
   var host = document.getElementById('embers');
   var count = window.matchMedia('(max-width: 640px)').matches ? 7 : 14;
