@@ -90,26 +90,15 @@
   <span>© 2026</span>
 </footer>
 
+<script src="support-lang-en.js"></script>
+<script src="support-lang-zh.js"></script>
 <script>
 (function(){
   var LANGS = [
     {code:'en', label:'EN'},
     {code:'zh', label:'中文'}
   ];
-  var I18N = {
-    en: {
-      'nav.back':'← Home',
-      'eyebrow':'Contact Support',
-      'h1':'Need a hand<br>through the fog?',
-      'lede':'Tell us what\'s going on — your system, what you were doing, what happened instead. <em>One issue per line</em> if you\'re reporting more than one.'
-    },
-    zh: {
-      'nav.back':'← 返回首页',
-      'eyebrow':'联系支持',
-      'h1':'迷雾之中，<br>需要帮助吗？',
-      'lede':'把你遇到的情况写清楚提交给我们——你的系统环境、当时在做什么、结果和预期有什么不同。<em>一条问题写一行</em>，如果不止一个问题的话。'
-    }
-  };
+  var I18N = { en: SUPPORT_I18N_EN, zh: SUPPORT_I18N_ZH };
 
   function applyLang(lang){
     var dict = I18N[lang] || I18N.en;
