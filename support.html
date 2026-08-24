@@ -33,6 +33,16 @@
     transition:color .25s ease, border-color .25s ease;
   }
   nav a.back:hover{color:var(--glass); border-color:var(--glass-line)}
+  nav .navright{display:flex; align-items:center; gap:12px}
+  nav .langsw{display:flex; border:1px solid var(--line)}
+  nav .langsw button{
+    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); background:transparent; border:none; padding:6px 11px; cursor:pointer;
+    transition:color .25s ease, background .25s ease;
+  }
+  nav .langsw button+button{border-left:1px solid var(--line)}
+  nav .langsw button:hover{color:var(--ink)}
+  nav .langsw button.active{color:var(--glass); background:var(--glass-dim)}
 
   main{max-width:640px; margin:0 auto; padding:clamp(48px,9vh,96px) clamp(18px,5vw,24px) 100px}
   .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:16px}
@@ -59,13 +69,16 @@
 
 <nav>
   <a class="mark" href="index.html">Sponge Bridges</a>
-  <a class="back" href="index.html">← Home</a>
+  <div class="navright">
+    <a class="back" href="index.html" data-i18n="nav.back">← Home</a>
+    <div class="langsw" id="langsw"></div>
+  </div>
 </nav>
 
 <main>
-  <div class="eyebrow">Support</div>
-  <h1>Need a hand<br>through the fog?</h1>
-  <p class="lede">Tell us what's going on and we'll get back to you. <em>Be as specific as you can</em> — your system, what you were doing, what happened instead.</p>
+  <div class="eyebrow" data-i18n="eyebrow">Support</div>
+  <h1 data-i18n-html="h1">Need a hand<br>through the fog?</h1>
+  <p class="lede" data-i18n-html="lede">Tell us what's going on and we'll get back to you. <em>Be as specific as you can</em> — your system, what you were doing, what happened instead.</p>
 
   <div class="embed">
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScIH3ZMvVJHEZaWgAKNKO2k2Tu1fYbCq2GABO_apDCmsG12KQ/viewform?embedded=true" title="Sponge Bridges support form">Loading…</iframe>
@@ -76,4 +89,67 @@
   <span>Sponge Bridges</span>
   <span>© 2026</span>
 </footer>
+
+<script>
+(function(){
+  var LANGS = [
+    {code:'en', label:'EN'},
+    {code:'zh', label:'中文'}
+  ];
+  var I18N = {
+    en: {
+      'nav.back':'← Home',
+      'eyebrow':'Support',
+      'h1':'Need a hand<br>through the fog?',
+      'lede':'Tell us what\'s going on and we\'ll get back to you. <em>Be as specific as you can</em> — your system, what you were doing, what happened instead.'
+    },
+    zh: {
+      'nav.back':'← 返回首页',
+      'eyebrow':'客服支持',
+      'h1':'迷雾之中，<br>需要帮助吗？',
+      'lede':'告诉我们发生了什么，我们会尽快回复你。<em>请尽量说得具体一些</em>——你的系统环境、当时在做什么、结果和预期有什么不同。'
+    }
+  };
+
+  function applyLang(lang){
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.textContent = val;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-html');
+      var val = dict[key] || I18N.en[key];
+      if (val) el.innerHTML = val;
+    });
+    document.querySelectorAll('#langsw button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+  }
+
+  function detectLang(){
+    try {
+      var saved = localStorage.getItem('sb_lang');
+      if (saved && I18N[saved]) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || 'en').toLowerCase();
+    if (nav.indexOf('zh') === 0) return 'zh';
+    return 'en';
+  }
+
+  var sw = document.getElementById('langsw');
+  LANGS.forEach(function(l){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.lang = l.code;
+    b.textContent = l.label;
+    b.addEventListener('click', function(){ applyLang(l.code); });
+    sw.appendChild(b);
+  });
+  applyLang(detectLang());
+})();
+</script>
 
