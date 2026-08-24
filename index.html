@@ -117,30 +117,14 @@
   @keyframes drip-flow{ 0%{background-position:0 -160%, 0 0} 100%{background-position:0 160%, 0 0} }
   @media (prefers-reduced-motion: reduce){ h1 .dl::after{animation:none; background-position:0 0, 0 0} }
   .tagline{
-    margin-top:20px; max-width:34em; min-height:3.6em; opacity:0;
+    margin-top:20px; max-width:34em; opacity:0;
+    font-size:clamp(15px,1.9vw,19px); line-height:1.65; color:var(--ink-dim); font-weight:400;
     animation:rise 1.1s .55s cubic-bezier(.16,1,.3,1) forwards;
   }
   @keyframes rise{from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:translateY(0)}}
   @media (prefers-reduced-motion: reduce){ .eyebrow,h1,.tagline{animation:none; opacity:1} }
 
-  /* ══ quote slideshow — hero tagline + pillar text cycle through verified
-     quotes with a glitch-flicker transition (DS-style terminal readout) ══ */
   .q-text{font-size:clamp(15px,1.9vw,19px); line-height:1.65; color:var(--ink-dim); font-weight:400}
-  .q-cite{margin-top:8px; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--fire-dim)}
-  .q-fade{animation:q-out .4s ease forwards}
-  .q-fade.in{animation:q-in .5s ease forwards}
-  @keyframes q-out{
-    0%{opacity:1; transform:translateX(0); filter:blur(0)}
-    30%{opacity:.15; transform:translateX(-3px); filter:blur(1.5px)}
-    60%{opacity:.5; transform:translateX(3px)}
-    100%{opacity:0; transform:translateX(0)}
-  }
-  @keyframes q-in{
-    0%{opacity:0; transform:translateX(4px); filter:blur(2px)}
-    45%{opacity:.55; transform:translateX(-2px)}
-    100%{opacity:1; transform:translateX(0); filter:blur(0)}
-  }
-  @media (prefers-reduced-motion: reduce){ .q-fade,.q-fade.in{animation:none !important} }
 
   .scrolldown{
     position:absolute; bottom:26px; right:clamp(20px,5vw,56px); z-index:5;
@@ -250,7 +234,6 @@
   .pillar h3{font-family:var(--display); font-weight:600; font-size:clamp(19px,2.2vw,24px); margin-bottom:10px; color:var(--ink)}
   .pillar .quotebox{min-height:5.6em}
   .pillar .q-text{font-size:13.5px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto}
-  .pillar .q-cite{text-align:center}
   @media(max-width:760px){ .pillars{grid-template-columns:1fr} .pillar{padding:40px 24px; border-bottom:1px solid var(--line)} }
 
   /* ══ closing ══ */
@@ -300,9 +283,7 @@
   <div class="herobody">
     <div class="eyebrow" data-i18n="hero.eyebrow">A Tribute to DEATH STRANDING &amp; Cataclysm: Dark Days Ahead</div>
     <h1 id="titleDrip">Sponge<br><em>Bridges</em></h1>
-    <div class="tagline" id="heroQuote">
-      <p class="q-text">Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.</p>
-    </div>
+    <p class="tagline" data-i18n="hero.tagline">Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.</p>
   </div>
 
   <div class="scrolldown"><span class="ln"></span><span data-i18n="hero.scroll">Scroll</span></div>
@@ -344,24 +325,18 @@
 <section class="pillars">
   <div class="pillar reveal">
     <span class="n">01</span>
-    <h3 data-i18n="pillar.1.title">Carry</h3>
-    <div class="quotebox" id="pillarQuote1">
-      <p class="q-text">Nothing moves unless you move it. Weight is a promise you make with your own two legs.</p>
-    </div>
+    <h3 data-i18n="pillar.1.title">Soaked Through</h3>
+    <div class="quotebox"><p class="q-text" data-i18n="pillar.1.desc">The more you carry, the more you soak up — the weight is a cost you chose yourself.</p></div>
   </div>
   <div class="pillar reveal">
     <span class="n">02</span>
-    <h3 data-i18n="pillar.2.title">Survive</h3>
-    <div class="quotebox" id="pillarQuote2">
-      <p class="q-text">Hunger, thirst, the cold, the dark. The town doesn't care whether you make it.</p>
-    </div>
+    <h3 data-i18n="pillar.2.title">Absorb</h3>
+    <div class="quotebox"><p class="q-text" data-i18n="pillar.2.desc">Absorb, not destroy.</p></div>
   </div>
   <div class="pillar reveal">
     <span class="n">03</span>
-    <h3 data-i18n="pillar.3.title">Choose Your Way Out</h3>
-    <div class="quotebox" id="pillarQuote3">
-      <p class="q-text">There is no one path through the fog. There's just the one you're willing to walk.</p>
-    </div>
+    <h3 data-i18n="pillar.3.title">Connect</h3>
+    <div class="quotebox"><p class="q-text" data-i18n="pillar.3.desc">From rope to bridge: mending a broken world through connection.</p></div>
   </div>
 </section>
 
@@ -390,6 +365,7 @@
       'nav.dev':'Pre-Alpha',
       'nav.support':'Contact Support',
       'hero.eyebrow':'A Tribute to DEATH STRANDING & Cataclysm: DDA',
+      'hero.tagline':'Every step is a delivery. Every delivery is a choice you make alone, in the fog, with everything you own strapped to your back.',
       'hero.scroll':'Scroll',
       'gallery.eyebrow':'Gallery',
       'gallery.h2':'Captured In-Engine',
@@ -400,9 +376,12 @@
       'pitch.p2':'No safehouses. No waypoints. Hunger, thirst, and fatigue are real numbers. Scent and noise really do give you away. Cross the streets, the apartments, the precinct, the basements — find your own way out: fix the fog device, blast a gap through, walk it off, or find the one person still willing to help. <em>Four routes. First one you finish is the one that counts.</em>',
       'pitch.platform':'Platform — Steam Only',
       'pitch.cta':'Enter the Survivor’s Handbook →',
-      'pillar.1.title':'Carry',
-      'pillar.2.title':'Survive',
-      'pillar.3.title':'Choose Your Way Out',
+      'pillar.1.title':'Soaked Through',
+      'pillar.1.desc':'The more you carry, the more you soak up — the weight is a cost you chose yourself.',
+      'pillar.2.title':'Absorb',
+      'pillar.2.desc':'Absorb, not destroy.',
+      'pillar.3.title':'Connect',
+      'pillar.3.desc':'From rope to bridge: mending a broken world through connection.',
       'closing.h2':'The fog is waiting.',
       'closing.sub':'Sponge Bridges is currently in development. Follow along for the walk out.',
       'closing.notify':'More to come'
@@ -411,6 +390,7 @@
       'nav.dev':'预备阶段',
       'nav.support':'联系支持',
       'hero.eyebrow':'致敬《死亡搁浅》与《大灾变：黑暗降临》',
+      'hero.tagline':'每一步都是一次配送。每一次配送，都是你独自一人在浓雾中做出的选择——背上是你所有的一切。',
       'hero.scroll':'向下滚动',
       'gallery.eyebrow':'画廊',
       'gallery.h2':'游戏实机截图',
@@ -421,9 +401,12 @@
       'pitch.p2':'没有安全屋，没有传送点。饥饿、口渴、疲劳都是真实数值，气味和噪音会真正暴露你。穿过街道、公寓、警局与地下室，找到你的出路——修好去雾装置、炸开一道缺口、硬扛穿雾，或者找那个唯一愿意伸手的人。<em>四条路，谁先走通谁算数。</em>',
       'pitch.platform':'平台 — 仅 Steam',
       'pitch.cta':'进入幸存者手册 →',
-      'pillar.1.title':'背负',
-      'pillar.2.title':'生存',
-      'pillar.3.title':'走出属于你的路',
+      'pillar.1.title':'浸透',
+      'pillar.1.desc':'扛得越多，吸得越透——重量是你自己选的代价。',
+      'pillar.2.title':'吸收',
+      'pillar.2.desc':'吸收，而非毁灭。',
+      'pillar.3.title':'连接',
+      'pillar.3.desc':'从绳索到桥梁：用连接重新缝合断裂的世界。',
       'closing.h2':'浓雾，仍在等你。',
       'closing.sub':'《Sponge Bridges》目前正在开发中。关注我们，一起等这场走出迷雾的旅程。',
       'closing.notify':'敬请期待'
@@ -450,107 +433,7 @@
       b.classList.toggle('active', b.dataset.lang === lang);
     });
     try { localStorage.setItem('sb_lang', lang); } catch (e) {}
-    renderAllQuotes();
   }
-
-  // ══ quote slideshow — every quote below was checked against a primary or
-  // widely-documented source before being added; anything that couldn't be
-  // verified was left out rather than published as a fake attribution.
-  // "attrib." = widely circulated under this name but no verified primary
-  // source found — shown for what it is, not passed off as confirmed. ══
-  var HERO_QUOTES = [
-    {en:'Tomorrow is in your hands.', zh:'明天，握在你自己手中。', citeEn:'— Death Stranding, official tagline', citeZh:'— 《死亡搁浅》官方标语'},
-    {en:'You’re all alone playing this game. You’re trying to connect this fractured society by yourself. The world is beautiful, but you’re small, just a tiny speck.', zh:'你是独自一人在玩这个游戏，要靠自己去重新连接这个支离破碎的社会。这个世界很美，但你很渺小，只是沧海一粟。', citeEn:'— Hideo Kojima, interview', citeZh:'— 小岛秀夫，采访'},
-    {en:'The dead are never truly gone from our lives. You just can’t see them, but you’re connected.', zh:'逝去的人从未真正离开我们的生活。你只是看不见他们，但你们依然相连。', citeEn:'— Hideo Kojima, interview', citeZh:'— 小岛秀夫，采访'},
-    {en:'I’m not with the UCA anymore. I’m just a man who makes deliveries.', zh:'我已经不隶属于任何机构了，我只是个负责送货的人。', citeEn:'— Sam Porter Bridges, Death Stranding', citeZh:'— 山姆·波特·布里吉斯，《死亡搁浅》'},
-    {en:'Knowing that even though I’m lonely, there are other people like me — that makes you feel at ease.', zh:'知道即便自己孤独，也还有和我一样的人存在——这会让人感到安心。', citeEn:'— Hideo Kojima, interview', citeZh:'— 小岛秀夫，采访'},
-    {en:'There’s an aspect of games that lonely people play — people who don’t fit into this world can become the protagonist of an imaginary one, and even connect with others there.', zh:'游戏本身就有这样一面——那些在现实里格格不入的人，能在虚构的世界里成为主角，甚至借此和他人产生连接。', citeEn:'— Hideo Kojima, interview', citeZh:'— 小岛秀夫，采访'}
-  ];
-
-  var PILLAR_QUOTES = {
-    1: [
-      {en:'Nothing moves unless you move it. Weight is a promise you make with your own two legs.', zh:'东西不会自己动，只能靠你搬。重量，是你用双腿许下的承诺。', weight:40},
-      {en:'Life is like carrying a heavy load on a long journey — there is no need to rush.', zh:'人之一生，如负重远行，不可急于求成。', citeEn:'— attrib. Tokugawa Ieyasu, Testament', citeZh:'— 相传为德川家康《遗训》', weight:24},
-      {en:'If you want to go fast, go alone. If you want to go far, go together.', zh:'如果你想走得快，就一个人走；如果你想走得远，就结伴同行。', citeEn:'— proverb, origin disputed', citeZh:'— 谚语，来源存疑（非确证非洲谚语）', weight:20},
-      {en:'The rope and the stick. We used them to build a world.', zh:'绳与棍，我们用它们建起了一个世界。', citeEn:'— Amelie, Death Stranding', citeZh:'— 艾米莉，《死亡搁浅》', weight:20}
-    ],
-    2: [
-      {en:'Hunger, thirst, the cold, the dark. The town doesn’t care whether you make it.', zh:'饥饿、干渴、寒冷、黑暗。这座小镇不在乎你能不能撑过去。', weight:40},
-      {en:'The world ain’t all sunshine and rainbows. It’s a very mean and nasty place, and it will beat you to your knees and keep you there permanently if you let it.', zh:'这个世界并不总是阳光和彩虹。它是一个残酷肮脏的地方，只要你给它机会，就会把你打趴在地，永远不让你翻身。', citeEn:'— Rocky Balboa, Rocky Balboa (2006)', citeZh:'— 洛奇·巴尔博亚《洛奇：勇者无惧》(2006)', weight:22},
-      {en:'Nature is not cruel, only pitilessly indifferent.', zh:'大自然并不残忍，它只是无情的漠然。', citeEn:'— Richard Dawkins, River Out of Eden', citeZh:'— 理查德·道金斯《伊甸园之河》', weight:20},
-      {en:'I want you to use what you experienced in the game in your real life. Connecting people. Rope and stick.', zh:'我希望你能把在游戏里的体验带进现实——去连接人与人。绳与棍。', citeEn:'— Hideo Kojima, interview', citeZh:'— 小岛秀夫，采访', weight:18}
-    ],
-    3: [
-      {en:'There is no one path through the fog. There’s just the one you’re willing to walk.', zh:'穿越浓雾没有唯一的路。只有你愿意去走的那一条。', weight:40},
-      {en:'Two roads diverged in a yellow wood, and I— I took the one less traveled by, and that has made all the difference.', zh:'黄色的树林里分出两条路，而我选择了人迹更少的一条，这改变了一切。', citeEn:'— Robert Frost, The Road Not Taken', citeZh:'— 罗伯特·弗罗斯特《未选择的路》', weight:22},
-      {en:'There was no road on the earth to begin with — but when many walk one way, a road is made.', zh:'其实地上本没有路，走的人多了，也便成了路。', citeEn:'— Lu Xun, My Old Home', citeZh:'— 鲁迅《故乡》', weight:20},
-      {en:'Not to be a cliff for people, but to be a bridge.', zh:'不要做隔绝人们的悬崖，要做连接他们的桥。', citeEn:'— Cliff, Death Stranding', citeZh:'— 克里夫，《死亡搁浅》', weight:20}
-    ]
-  };
-
-  function pickWeighted(pool){
-    var total = pool.reduce(function(s,q){ return s + (q.weight || 1); }, 0);
-    var r = Math.random() * total;
-    for (var i = 0; i < pool.length; i++) {
-      r -= (pool[i].weight || 1);
-      if (r <= 0) return pool[i];
-    }
-    return pool[pool.length - 1];
-  }
-
-  function quoteHTML(q){
-    var cite = currentLang === 'zh' ? q.citeZh : q.citeEn;
-    var text = currentLang === 'zh' ? q.zh : q.en;
-    return '<p class="q-text">' + text + '</p>' + (cite ? '<p class="q-cite">' + cite + '</p>' : '');
-  }
-
-  var heroIndex = 0;
-  var pillarState = {1:null, 2:null, 3:null};
-
-  function flipInto(host, html){
-    var wrap = document.createElement('div');
-    wrap.className = 'q-fade';
-    wrap.innerHTML = host.innerHTML;
-    host.innerHTML = '';
-    host.appendChild(wrap);
-    requestAnimationFrame(function(){
-      setTimeout(function(){
-        host.innerHTML = html;
-        var nu = document.createElement('div');
-        nu.className = 'q-fade in';
-        nu.innerHTML = host.innerHTML;
-        host.innerHTML = '';
-        host.appendChild(nu);
-      }, 380);
-    });
-  }
-
-  function renderAllQuotes(){
-    var heroHost = document.getElementById('heroQuote');
-    if (heroHost) heroHost.innerHTML = quoteHTML(HERO_QUOTES[heroIndex]);
-    [1,2,3].forEach(function(n){
-      if (!pillarState[n]) pillarState[n] = PILLAR_QUOTES[n][0];
-      var host = document.getElementById('pillarQuote' + n);
-      if (host) host.innerHTML = quoteHTML(pillarState[n]);
-    });
-  }
-
-  function tickHero(){
-    heroIndex = (heroIndex + 1) % HERO_QUOTES.length;
-    var host = document.getElementById('heroQuote');
-    if (host) flipInto(host, quoteHTML(HERO_QUOTES[heroIndex]));
-  }
-
-  function tickPillar(n){
-    pillarState[n] = pickWeighted(PILLAR_QUOTES[n]);
-    var host = document.getElementById('pillarQuote' + n);
-    if (host) flipInto(host, quoteHTML(pillarState[n]));
-  }
-
-  setInterval(tickHero, 10000);
-  setInterval(function(){ tickPillar(1); }, 9000);
-  setInterval(function(){ tickPillar(2); }, 9600);
-  setInterval(function(){ tickPillar(3); }, 10200);
 
   function detectLang(){
     try {
