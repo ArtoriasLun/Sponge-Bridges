@@ -4,8 +4,8 @@
 <style>
   :root{
     --bg:#0c0a16; --bg2:#050409;
-    --glass:#3fd6c9; --glass-dim:rgba(63,214,201,.18); --glass-line:rgba(63,214,201,.32);
-    --fire:#f2954a; --fire-dim:#c65a2e;
+    --glass:#5C94CC; --glass-dim:rgba(92,148,204,.18); --glass-line:rgba(92,148,204,.32);
+    --fire:#D99A4E; --fire-dim:#986C37;
     --ink:#f3ede0; --ink-dim:rgba(243,237,224,.62); --ink-faint:rgba(243,237,224,.34);
     --line:rgba(243,237,224,.14);
     --display:'Fraunces','Noto Serif SC',serif;
@@ -35,7 +35,7 @@
     position:absolute; inset:0; z-index:1;
     background:
       linear-gradient(180deg, rgba(5,4,9,.35) 0%, rgba(5,4,9,.15) 30%, rgba(5,4,9,.78) 88%, var(--bg2) 100%),
-      linear-gradient(0deg, rgba(63,214,201,.10), transparent 40%);
+      linear-gradient(0deg, rgba(92,148,204,.10), transparent 40%);
   }
   .embers{position:absolute; inset:0; z-index:2; pointer-events:none}
   .ember{
@@ -207,7 +207,7 @@
     border:1px solid var(--glass-line); background:var(--glass-dim); padding:20px 34px;
     transition:border-color .3s ease, background .3s ease, transform .3s ease;
   }
-  .pitch .cta-wiki:hover{border-color:var(--glass); background:rgba(63,214,201,.28); transform:translateX(4px)}
+  .pitch .cta-wiki:hover{border-color:var(--glass); background:rgba(92,148,204,.28); transform:translateX(4px)}
   @media(max-width:760px){ .pitch{grid-template-columns:1fr} .pitch .p-art{max-width:340px; margin:0 auto} }
 
   .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
@@ -226,7 +226,7 @@
   .closing{position:relative; padding:min(18vw,170px) clamp(20px,6vw,40px) clamp(64px,9vh,100px); text-align:center; overflow:hidden}
   .closing::before{
     content:""; position:absolute; left:50%; top:50%; width:900px; height:500px; transform:translate(-50%,-50%);
-    background:radial-gradient(circle, rgba(63,214,201,.12), transparent 65%); pointer-events:none;
+    background:radial-gradient(circle, rgba(92,148,204,.12), transparent 65%); pointer-events:none;
   }
   .closing h2{font-family:var(--display); font-weight:900; font-size:clamp(38px,6.6vw,80px); line-height:1; letter-spacing:-.01em; margin-bottom:20px; text-wrap:balance; position:relative}
   .closing .sub{color:var(--ink-dim); font-size:15px; max-width:34em; margin:0 auto 30px; line-height:1.7; position:relative}
@@ -236,7 +236,7 @@
     border:1px solid var(--glass-line); background:var(--glass-dim); padding:13px 24px;
     transition:border-color .3s ease, background .3s ease;
   }
-  .notify:hover{border-color:var(--glass); background:rgba(63,214,201,.28); color:var(--ink)}
+  .notify:hover{border-color:var(--glass); background:rgba(92,148,204,.28); color:var(--ink)}
   .notify .dot{width:6px; height:6px; border-radius:50%; background:var(--glass); box-shadow:0 0 10px var(--glass); animation:blink 1.8s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:1} 50%{opacity:.35}}
 
@@ -337,8 +337,8 @@
   <span>© 2026</span>
 </footer>
 
-<script src="home-lang-en.js"></script>
-<script src="home-lang-zh.js"></script>
+<script src="js/home-lang-en.js"></script>
+<script src="js/home-lang-zh.js"></script>
 <script>
 (function(){
   var LANGS = [

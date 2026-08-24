@@ -2,20 +2,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <style>
     :root{
-    --deep:#050409; --cyan:#3fd6c9; --white:#f3ede0;
+    --deep:#050409; --cyan:#5C94CC; --white:#f3ede0;
     --dim:rgba(243,237,224,.62); --dim2:rgba(243,237,224,.36);
-    --fill:rgba(5,4,9,.72); --subtle:rgba(63,214,201,.05); --active:rgba(63,214,201,.20);
-    --lineB:rgba(63,214,201,.32); --lineD:rgba(243,237,224,.14);
-    --on:#74C9A4; --tk:#f2954a; --gap:#D95F57; --fire-dim:#c65a2e;
+    --fill:rgba(5,4,9,.72); --subtle:rgba(92,148,204,.05); --active:rgba(92,148,204,.20);
+    --lineB:rgba(92,148,204,.32); --lineD:rgba(243,237,224,.14);
+    --on:#74C9A4; --tk:#D99A4E; --gap:#D95F57; --fire-dim:#986C37;
     --raj:'Rajdhani','Noto Sans SC',sans-serif; --mono:'Share Tech Mono','Noto Sans SC',monospace;
     --cjk:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{background:var(--deep) fixed;color:var(--dim);font-family:var(--cjk);font-size:14.5px;line-height:1.78;
-    background-image:radial-gradient(1000px 600px at 20% -80px, rgba(63,214,201,.08), transparent 70%),
-      repeating-linear-gradient(0deg, rgba(63,214,201,.02) 0 1px, transparent 1px 3px),
-      linear-gradient(rgba(63,214,201,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(63,214,201,.03) 1px, transparent 1px);
+    background-image:radial-gradient(1000px 600px at 20% -80px, rgba(92,148,204,.08), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(92,148,204,.02) 0 1px, transparent 1px 3px),
+      linear-gradient(rgba(92,148,204,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(92,148,204,.03) 1px, transparent 1px);
     background-size:auto,auto,26px 26px,26px 26px}
   a{color:var(--cyan)}
   strong{color:var(--white);font-weight:500}
@@ -86,8 +86,8 @@
 
     .entry{position:relative;background:var(--subtle);border:1px solid var(--lineD);padding:16px 18px;margin:12px 0}
   .entry::before,.entry::after{content:"";position:absolute;width:7px;height:7px}
-  .entry::before{top:0;left:0;border-top:1px solid rgba(63,214,201,.6);border-left:1px solid rgba(63,214,201,.6)}
-  .entry::after{top:0;right:0;border-top:1px solid rgba(63,214,201,.6);border-right:1px solid rgba(63,214,201,.6)}
+  .entry::before{top:0;left:0;border-top:1px solid rgba(92,148,204,.6);border-left:1px solid rgba(92,148,204,.6)}
+  .entry::after{top:0;right:0;border-top:1px solid rgba(92,148,204,.6);border-right:1px solid rgba(92,148,204,.6)}
   .entry h4{font-family:var(--raj);font-weight:700;font-size:16px;color:var(--white);margin:0 0 3px;
     display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .entry .meta{font-family:var(--mono);font-size:11px;color:var(--dim2);margin-bottom:8px}
@@ -169,7 +169,11 @@
   .pillars3 h4{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white);margin:6px 0 4px}
   .pillars3 p{font-size:12.4px;margin:0;color:var(--dim)}
 
-    .tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+    .tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;
+    position:sticky;top:0;z-index:40;padding:12px 0;margin-bottom:-12px;
+    background:rgba(5,4,9,.88);backdrop-filter:blur(6px);
+    border-bottom:1px solid transparent;transition:border-color .2s ease}
+  .tabbar.stuck{border-bottom-color:var(--lineB)}
   .tabbtn{position:relative;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
     color:var(--dim);background:var(--subtle);border:1px solid var(--lineD);padding:8px 15px;cursor:pointer;
     transition:color .2s ease,border-color .2s ease,background .2s ease}
@@ -188,7 +192,7 @@
 
     .content{position:relative;perspective:1800px}
   .content::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;z-index:5;
-    background:repeating-linear-gradient(0deg, rgba(63,214,201,.10) 0 1px, transparent 1px 3px);
+    background:repeating-linear-gradient(0deg, rgba(92,148,204,.10) 0 1px, transparent 1px 3px);
     mix-blend-mode:screen}
   .content.flipping::before{animation:scanFlicker .62s steps(7) forwards}
   @keyframes scanFlicker{0%{opacity:.55}14%{opacity:.05}28%{opacity:.4}44%{opacity:.08}60%{opacity:.32}80%{opacity:.06}100%{opacity:0}}
@@ -256,6 +260,7 @@
   <div class="kicker">SPONGE BRIDGES</div>
   <h1 data-i18n="masthead.h1">幸存者手册：G市</h1>
   <p class="sub" data-i18n="masthead.sub">图鉴、道具、地点与机制。</p>
+  <div id="tabbarSentinel"></div>
   <div class="tabbar" id="tabbar" role="tablist">
     <button class="tabbtn" data-tab="0" role="tab" data-i18n="tab.0">简介</button>
     <button class="tabbtn" data-tab="1" role="tab" data-i18n="tab.1">生存指南</button>
@@ -512,8 +517,8 @@
 </main>
 </div>
 
-<script src="game-wiki-lang-en.js"></script>
-<script src="game-wiki-lang-zh.js"></script>
+<script src="js/game-wiki-lang-en.js"></script>
+<script src="js/game-wiki-lang-zh.js"></script>
 <script>
 (function(){
   var LANGS = [
@@ -604,12 +609,20 @@
     sbtoggle.textContent = collapsed ? '▶' : '◀';
     try { localStorage.setItem('sb_sidebar', collapsed ? '1' : '0'); } catch (e) {}
   }
-  var savedSidebar = '0';
-  try { savedSidebar = localStorage.getItem('sb_sidebar') || '0'; } catch (e) {}
+  var savedSidebar = '1';
+  try { savedSidebar = localStorage.getItem('sb_sidebar') || '1'; } catch (e) {}
   setSidebar(savedSidebar === '1');
   sbtoggle.addEventListener('click', function(){
     setSidebar(!shell.classList.contains('collapsed'));
   });
+
+  var tabbar = document.getElementById('tabbar');
+  var tabbarSentinel = document.getElementById('tabbarSentinel');
+  if (tabbar && tabbarSentinel && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries){
+      tabbar.classList.toggle('stuck', !entries[0].isIntersecting);
+    }, {threshold:0}).observe(tabbarSentinel);
+  }
 
   var search = document.getElementById('search');
   var count = document.getElementById('searchcount');
