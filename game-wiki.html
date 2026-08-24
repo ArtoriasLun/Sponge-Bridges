@@ -206,7 +206,6 @@
     </div>
     <div class="grp" data-tab="1"><b>入门</b>
       <a href="#start">如何开局</a>
-      <a href="#status">开发状态说明</a>
     </div>
     <div class="grp" data-tab="1"><b>生存系统</b>
       <a href="#needs">生存需求</a>
@@ -283,7 +282,6 @@
 <div class="tabpanel" data-tab="1">
 <div class="tabindex"><span class="til">本页目录</span>
   <a href="#start">如何开局</a><span class="sep">·</span>
-  <a href="#status">开发状态</a><span class="sep">·</span>
   <a href="#needs">生存需求</a><span class="sep">·</span>
   <a href="#combat">战斗与护甲</a><span class="sep">·</span>
   <a href="#ai">怪物如何找到你</a>
@@ -292,80 +290,61 @@
   <h2>如何开局</h2>
   <p class="lede">你叫 <b>Sam</b>。在 G市"无人区"边缘一栋四层出租屋的顶楼醒来，唯一的目标：<strong>活着走出小镇</strong>。时机、方向、手段全部自由——这是一个塔科夫式的高自由度撤离沙盒，不是线性关卡。</p>
 
-  <h4 class="mini">你能做什么 <span class="pill on">已实现</span></h4>
+  <h4 class="mini">你能做什么</h4>
   <ul>
     <li>主菜单：开始 / 继续（有存档才显示）/ 设置 / 退出</li>
     <li>捏人：程序化角色创建，含隐藏肢体自定义</li>
-    <li>单槽位存档/读档，含云存档冲突处理</li>
-    <li>探索、搜刮、制作（5660+ 条真实配方）、战斗、生存（饥渴疲劳）、建造（775+ 条真实 construction）</li>
+    <li>存档/读档，支持云存档</li>
+    <li>探索、搜刮、制作（5660+ 条配方）、战斗、生存（饥渴疲劳）、建造（775+ 条建造项目）</li>
   </ul>
-  <div class="gapbox"><b>已知缺口：</b>目前只有一个存档槽位；NPC 剧情标记（比如"是否已告诉波德红雾的事"）暂时不随存档保存——读档后这类进度可能需要重新触发。</div>
+  <div class="gapbox">目前只有一个存档槽位，善用它。给 NPC 说过的话、做过的选择，读档后偶尔需要重新触发一次才会被对方记住。</div>
 
   <h4 class="mini">默认角色 Sam</h4>
-  <p>深藏青工装、深棕色中分长发（垂过下颌）、短胡茬、普通体型——固定不变的默认外观，不会因为版本更新漂移。开局装备固定包含长袖衫、牛仔裤和一副货运骨架——这也是 Sam 背上标志性货物塔的由来：不是画死的美术资产，而是由你实际穿戴的装备动态推导出的渲染效果。</p>
-</section>
-
-<section id="status">
-  <h2>开发状态说明</h2>
-  <p class="lede">这是一份<strong>正在开发中的游戏</strong>的内容手册，不是成品攻略。三种诚实的现状会反复出现，提前说明白：</p>
-  <div class="tw"><table>
-    <thead><tr><th>状态</th><th>含义</th><th>例子</th></tr></thead>
-    <tbody>
-      <tr><td><span class="pill on">已实现</span></td><td>代码已接线，headless 断言通过，今天的构建里就能遇到</td><td>焦油人浩克、5A/5B/5C/5G 四条撤离路线、警局黑客、隐藏地下室</td></tr>
-      <tr><td><span class="pill tk">设计已定</span></td><td>玩法细节已经定案写进设计文档，工程票已登记，但代码还没写</td><td>智能瞄准键系统（投掷/持握/投喂三合一操作）、全局城镇门锁真实化</td></tr>
-      <tr><td><span class="pill gap">已知缺口</span></td><td>数据/资源都已经在游戏里，但缺一个环节没打通，所以现在不生效</td><td>2F 钉板陷阱（数据齐全但触发效果未接线）、爆炸对生物零伤害</td></tr>
-    </tbody>
-  </table></div>
-  <p>手册里每一条内容都会带上面这三种标签之一（或"已实现"不加标签，因为它是默认基线）。如果你在游戏里发现和手册描述不一致，大概率是手册没跟上最新一次代码合并——这是一个每天都在变化的活跃分支。</p>
+  <p>深藏青工装、深棕色中分长发（垂过下颌）、短胡茬、普通体型。开局装备固定包含长袖衫、牛仔裤和一副货运骨架——这也是 Sam 背上那座货物塔的由来：不是画死的美术资产，你穿戴什么、扛了多少，塔就长成什么样。</p>
 </section>
 
 <section id="needs">
   <h2>生存需求</h2>
-  <p class="lede">饥饿、口渴、疲劳走的是真实生存医学数值模型，不是抽象的美观进度条。</p>
+  <p class="lede">饥饿、口渴、疲劳按真实的连续数值走，惩罚是渐变的曲线，不是踩到某个数字就突然掉san的分档跳变。</p>
   <div class="tw"><table>
     <thead><tr><th>需求</th><th>阈值</th><th>影响</th></tr></thead>
     <tbody>
-      <tr><td><b>饥饿</b></td><td>以真实 kcal 计（Mifflin-St Jeor BMR 公式移植），每 5 游戏分钟结算一次</td><td>速度惩罚走真实连续曲线，不是分档跳变</td></tr>
+      <tr><td><b>饥饿</b></td><td>按热量计，每 5 游戏分钟结算一次</td><td>速度惩罚随饥饿程度连续加深</td></tr>
       <tr><td><b>口渴</b></td><td class="num">40 / 80 / 240 / 520</td><td>渴 / 很渴 / 脱水 / 极度口渴</td></tr>
       <tr><td><b>疲劳</b></td><td class="num">191 / 383 / 575</td><td>累 / 极累 / 力竭</td></tr>
     </tbody>
   </table></div>
-  <div class="gapbox"><b>已知简化：</b>没有胃/消化模型——吃东西直接加 kcal，不是逐渐消化；活动强度乘数固定在"无运动"档，不追踪你实际跑了多远。</div>
+  <div class="gapbox">吃东西是即时回复，没有慢慢消化那一说——啃一口口粮，热量立刻到账。你跑多快、扛多重目前不影响消耗速度，出门前该垫的垫上就行，不用纠结走位省不省体力。</div>
   <p>常驻 HUD 面板会显示速度/体力/情绪芯片，加上异常状态提示行；力量/敏捷/智力/感知四维属性在角色面板里查看。</p>
 </section>
 
 <section id="combat">
   <h2>战斗与护甲</h2>
-  <p class="lede">命中判定→护甲结算→弱点抽签，三层管线都是深度模拟的真实数值，但各自有一处已知简化。</p>
+  <p class="lede">命中→护甲→弱点，三层判定层层递进，每一层都值得单独了解。</p>
 
   <h4 class="mini">护甲结算</h4>
-  <p>每次命中共用一个随机数决定是否被某件装备的覆盖率"接住"，接住了再查真实材料抗性表结算穿透伤害。</p>
-  <div class="gapbox">已知简化：不做逐条护甲词条的材料细分、不支持局部覆盖部位滚动、不模拟伤害类型互相派生。</div>
+  <p>每次命中都会先判定是否被装备的覆盖部位"接住"，接住了再按材料抗性表结算能穿透多少伤害——整套护甲当一个整体滚动，不分逐件词条细算。</p>
 
   <h4 class="mini">弱点系统</h4>
-  <p>命中判定走"覆盖率加权抽签"——每个弱点占一段命中区间，命中区间内即视为打中弱点，触发对应的护甲折扣/暴击倍率/控制效果（眩晕、致盲）。以焦油人浩克为例：打头护甲打 75 折，<strong>打眼睛完全无视物理护甲</strong>。</p>
-  <div class="gapbox"><b>已知简化：</b>上游还会按玩家近战熟练度加权命中弱点，本仓没有这个数值维度——目前是纯覆盖率的平权抽签，练级不会提高你的爆头率。</div>
+  <p>每只怪身上都有明显更脆弱的部位，打中就有感——护甲会被削弱、更容易触发暴击，有时还会带出眩晕/致盲之类的控制效果。以焦油人浩克为例：<strong>打头明显更容易破防，打眼睛几乎跟没穿甲一样</strong>。命中弱点纯看瞄准和走位，练级堆数值帮不了你稳定打要害。</p>
 
   <h4 class="mini">红雾伤害</h4>
-  <p>红雾（镇外警戒环）现在走的是真实护甲结算的攻击伤害，不再是绕过装备的"纯"伤害——穿对材质的装备真的能减免一部分。</p>
-  <div class="tkbox">设计文档描述红雾同时打酸/电/热/生物四种伤害类型，本轮未能完全核实当前代码是否逐类型结算，还是按红雾种类单选一种——如需精确结论建议实机确认。</div>
+  <p>红雾（镇外警戒环）伤害也走正常的护甲结算，不是绕过装备的"无视防御"伤害——穿对材质的装备确实能帮你减免一部分。</p>
 </section>
 
 <section id="ai">
   <h2>怪物如何找到你</h2>
-  <p class="lede">没有开挂 AI——怪物靠气味场和噪音事件真实地找你，不是直接读你的坐标。</p>
+  <p class="lede">怪物不认识你的坐标——它们靠气味和声音找你，跟你玩的是真正的躲藏与欺骗。</p>
 
   <h4 class="mini">气味追踪</h4>
-  <p>你每回合在脚下印上气味值，随后整张气味场按地形做模糊扩散。带气味追踪的怪（比如焦油人浩克）沿气味梯度爬坡走向最浓处——真的是沿坡度收敛，站在你走过路线的侧面几格也测得到非零坡度。距离、时间、绕路都能稀释这份气味。</p>
-  <div class="gapbox">上游的"雨天加速气味衰减"在本仓未接入——本作的气味只靠扩散过程自然衰减，不受天气影响，这是一处已知的行为差异。</div>
+  <p>你走过的每一步都会留下气味，随后向四周扩散、随时间变淡。带气味追踪的怪（比如焦油人浩克）会沿着气味变浓的方向一路爬升，直冲你来过的地方——绕路、拉开距离、放慢脚步都能让这条气味线变淡变断。雨天不会帮你稀释气味，别指望靠天气甩开追踪。</p>
 
   <h4 class="mini">噪音追踪</h4>
-  <p>开枪、脚步声、开关门、砸门撬锁、装填弹药、投掷落地、陷阱触发、警局警报、施工声、怪物自己的吼叫——几乎每一种真实动作都会真实发出噪音事件。听见但看不见来源时，游戏会在附近随机放一个"？"标记，不会精确指向你。</p>
-  <div class="gapbox"><b>已知缺口：</b>爆炸目前<strong>不会</strong>发出噪音事件——5B 路线炸开红雾这个动作，今天对焦油人浩克来说是"静默"的，不会把它吸引过来。这与"炸得越欢浩克来得越快"的设计意图不一致，是尚未实现的部分，不是故意如此。</div>
+  <p>开枪、脚步声、开关门、砸门、装填弹药、扔东西落地、陷阱触发、警局警报、施工声、怪物自己的吼叫——几乎每个动作都会发出声音，能被附近的怪听见。听见但看不见来源时，怪物只会在声音大致方向留下一个"？"标记，不会直接扑向你的真实位置。爆炸是个例外，目前不会发出声响——炸红雾不会把焦油人浩克引过来，可以放心用炸药打开缺口而不必担心引怪。</p>
 
   <h4 class="mini">尸体复活</h4>
-  <p>尸体年龄不到 6 小时绝不复活；超过 48 小时复活概率封顶为必然，中间按概率判定。<strong>烧穿一具可复活的尸体（累计烧穿量超过其生前 hp）会让它复活成 <code>burn_into</code> 指定的另一种怪物，且满血</strong>——焦油人浩克的尸体烧穿后站起来的是一只 275 hp 的"复活体"。</p>
-  <div class="callout gap"><b>常见误解：</b>这不是"活着的浩克被烧死后当场变形"——burn_into 只影响尸体复活成谁，和削弱一只活着的浩克完全无关。</div>
+  <p>刚倒下的尸体基本不会复活；放得越久，复活的概率越高，放上一阵子基本就是板上钉钉。<strong>持续用火烧穿一具本能复活的尸体（烧穿的伤害超过它生前的血量上限），会让它满血复活成另一种更麻烦的怪</strong>——焦油人浩克的尸体烧穿后站起来的是一只更轻、没那么结实、但多一手远程拉伸攻击的"复活体"。</p>
+  <div class="callout gap"><b>别搞混：</b>这不是"把活着的浩克烧死会当场变形"——烧穿只影响尸体复活成什么，跟正面削弱一只活着的浩克是两回事，边打边烧不会让它提前"进化"。</div>
 
   <h4 class="mini">情绪与态度</h4>
   <p>每只怪携带愤怒值和士气值，会被"看见你""受伤""听到噪音""同伴死亡/受袭""附近着火""强光"等触发器影响，随后按四态阈值（敌对/跟随/无视/逃跑）决定行为。这套系统也是<b>投喂</b>机制的底层：喂饱一只怪会通过"消怒"触发器压低它的愤怒值，让它进入无视状态，受到攻击会立即重新激怒。</p>
@@ -380,14 +359,14 @@
 </div>
 <section id="bestiary">
   <h2>怪物图鉴</h2>
-  <p class="lede">本作没有"丧尸"——玩家能看到的所有文字里，怪物一律叫<strong>焦油人</strong>（英文 tar man）。这只是展示层换皮：内部机制、数值、id（<code>mon_zombie*</code>）一个字节不动，你在存档/日志里看到的仍是这套内部 id。</p>
+  <p class="lede">本作没有"丧尸"——所有文字、对话、图鉴里，怪物一律叫<strong>焦油人</strong>。</p>
 
   <div class="entry" data-search="大楼保安 crawler 焦油人 教程 3F">
-    <h4>大楼保安 <span class="pill on">已实现</span></h4>
+    <h4>大楼保安</h4>
     <div class="meta"><code>mon_zombie_crawler</code> · 教程公寓 3F 专属实例</div>
     <div class="stats">
-      <div><div class="k">HP</div><div class="v">60</div></div>
-      <div><div class="k">速度</div><div class="v">20</div></div>
+      <div><div class="k">耐久</div><div class="v" style="font-size:13px">很脆</div></div>
+      <div><div class="k">速度</div><div class="v" style="font-size:13px">很慢</div></div>
       <div><div class="k">弱点</div><div class="v" style="font-size:11px">头部(大)</div></div>
     </div>
     <p>行动极慢、只有半截身体的爬行焦油人——教程楼里你遇到的第一只怪，用来教遭遇/绕行/近战，不是教"打不过就跑"。这一只被特别标记了"大楼保安"这个名字，身上带着<strong>全部楼层的房门钥匙</strong>（但没有大门钥匙）——想搜刮这栋楼，就得搜他的尸体。</p>
@@ -395,83 +374,75 @@
   </div>
 
   <div class="entry" data-search="保安队长 brute 焦油人 教程 1F">
-    <h4>保安队长 <span class="pill on">已实现</span></h4>
+    <h4>保安队长</h4>
     <div class="meta"><code>mon_zombie_brute</code> · 教程公寓 1F 专属实例</div>
     <div class="stats">
-      <div><div class="k">HP</div><div class="v">120</div></div>
-      <div><div class="k">速度</div><div class="v">105</div></div>
-      <div><div class="k">钝击甲</div><div class="v">4</div></div>
-      <div><div class="k">穿刺甲</div><div class="v">6</div></div>
+      <div><div class="k">耐久</div><div class="v" style="font-size:13px">偏脆</div></div>
+      <div><div class="k">速度</div><div class="v" style="font-size:13px">较快</div></div>
+      <div><div class="k">护甲</div><div class="v" style="font-size:13px">弱</div></div>
       <div><div class="k">弱点</div><div class="v" style="font-size:11px">头部(小)</div></div>
     </div>
     <p>大堂驻守的第二个保安，身上有<strong>大门钥匙</strong>——想从正门体面离开就得处理他。他也是隐藏地下室冰库钥匙的携带者，同一具尸体身上叠加了两把不同的锁。</p>
   </div>
 
   <div class="entry" data-search="焦油人浩克 hulk boss 焦油人">
-    <h4>焦油人浩克 <span class="pill on">已实现 · 全程游荡</span></h4>
-    <div class="meta"><code>mon_zombie_hulk</code> · demo 的主要威胁</div>
+    <h4>焦油人浩克</h4>
+    <div class="meta"><code>mon_zombie_hulk</code> · 全程游荡的主要威胁</div>
     <div class="stats">
-      <div><div class="k">HP</div><div class="v">480</div></div>
-      <div><div class="k">速度</div><div class="v">130</div></div>
-      <div><div class="k">钝击甲</div><div class="v">8</div></div>
-      <div><div class="k">穿刺甲</div><div class="v">12</div></div>
-      <div><div class="k">子弹甲</div><div class="v">10</div></div>
-      <div><div class="k">近战</div><div class="v" style="font-size:11px">3d8+10 穿甲10</div></div>
+      <div><div class="k">耐久</div><div class="v" style="font-size:13px">极其结实</div></div>
+      <div><div class="k">速度</div><div class="v" style="font-size:13px">很快</div></div>
+      <div><div class="k">护甲</div><div class="v" style="font-size:13px">一般</div></div>
+      <div><div class="k">近战</div><div class="v" style="font-size:11px">重击，还带穿甲</div></div>
     </div>
-    <p>从开局就在镇中心游荡，比你快（你的速度约 100），靠气味和噪音找你。会砸墙推车（直线追击不绕路），特殊攻击包括抓住→举起→砸飞、横扫多格。头部是弱点（护甲打 75 折），<strong>眼睛完全无视物理护甲</strong>——精准打眼是最高效但最难命中的打法。</p>
+    <p>从开局就在镇中心游荡，明显比你快，靠气味和噪音找你。会砸墙推车（直线追击不绕路），特殊攻击包括抓住→举起→砸飞、横扫多格。头部是弱点，打头明显更容易破防，<strong>打眼睛几乎跟没穿甲一样</strong>——精准打眼是最高效但最难命中的打法。</p>
     <p>应对方式全是你的选择：绕开它的地盘、稀释气味少制造动静、正面硬刚、或者全程苟着不碰它直接撤离。</p>
-    <div class="callout gap"><b>别烧它的尸体：</b>持续焚烧累计烧穿超过 480 点后，尸体会复活成一只满血 275 HP 的"复活体"（<code>mon_zombie_fiend</code>）。这与削弱活着的浩克无关。</div>
+    <div class="callout gap"><b>别烧它的尸体：</b>打死之后如果继续用火烧，烧穿的总伤害超过它的血量上限会让它满血复活成一只"复活体"（<code>mon_zombie_fiend</code>）——想让它真正躺下，杀死之后离火源远点。</div>
   </div>
 
   <div class="entry" data-search="复活体 fiend 焦油人">
-    <h4>复活体 <span class="pill op">机制已实现，无专属摆放</span></h4>
-    <div class="meta"><code>mon_zombie_fiend</code> · 焦油人浩克尸体烧穿后的产物</div>
+    <h4>复活体</h4>
+    <div class="meta"><code>mon_zombie_fiend</code> · 只会作为焦油人浩克尸体烧穿后的产物出现，没有固定摆放点</div>
     <div class="stats">
-      <div><div class="k">HP</div><div class="v">275</div></div>
-      <div><div class="k">速度</div><div class="v">125</div></div>
-      <div><div class="k">酸抗</div><div class="v">6</div></div>
-      <div><div class="k">热抗</div><div class="v">15</div></div>
+      <div><div class="k">耐久</div><div class="v" style="font-size:13px">结实</div></div>
+      <div><div class="k">速度</div><div class="v" style="font-size:13px">较快</div></div>
+      <div><div class="k">抗性</div><div class="v" style="font-size:11px">耐火耐酸</div></div>
     </div>
     <p>比浩克本体轻得多（200kg vs 1000kg）——真的只剩焦黑骨架。多一手 2 格距离的拉伸攻击。满血复活，不会带着浩克生前的伤势。</p>
   </div>
 
   <div class="entry" data-search="重装丧尸 kevlar brute 凯夫拉 地下室">
-    <h4>重装丧尸（凯夫拉） <span class="pill on">已实现</span></h4>
+    <h4>重装丧尸（凯夫拉）</h4>
     <div class="meta"><code>mon_zombie_kevlar_1</code> · 隐藏地下室 A 组</div>
     <div class="stats">
-      <div><div class="k">HP</div><div class="v">150</div></div>
-      <div><div class="k">速度</div><div class="v">80</div></div>
-      <div><div class="k">钝击甲</div><div class="v">20</div></div>
-      <div><div class="k">穿刺甲</div><div class="v">30</div></div>
-      <div><div class="k">子弹甲</div><div class="v">24</div></div>
+      <div><div class="k">耐久</div><div class="v" style="font-size:13px">偏脆</div></div>
+      <div><div class="k">速度</div><div class="v" style="font-size:13px">中等</div></div>
+      <div><div class="k">护甲</div><div class="v" style="font-size:13px">强</div></div>
     </div>
     <p>与教程楼保安队长同一血统（继承自同一基底），但护甲远超普通焦油人——凯夫拉挡子弹和刀，不挡拳头。关押在铁窗后，可以隔窗投喂让它安静下来，也可以强攻。</p>
   </div>
 
   <div class="entry" data-search="重装丧尸浩克 kevlar hulk 凯夫拉 地下室">
-    <h4>重装丧尸浩克（凯夫拉） <span class="pill on">已实现</span></h4>
+    <h4>重装丧尸浩克（凯夫拉）</h4>
     <div class="meta"><code>mon_zombie_kevlar_2</code> · 隐藏地下室 B 组（最终关押室）</div>
     <div class="stats">
-      <div><div class="k">HP</div><div class="v">300</div></div>
-      <div><div class="k">速度</div><div class="v">75</div></div>
-      <div><div class="k">钝击甲</div><div class="v">30</div></div>
-      <div><div class="k">穿刺甲</div><div class="v">50</div></div>
-      <div><div class="k">子弹甲</div><div class="v">40</div></div>
+      <div><div class="k">耐久</div><div class="v" style="font-size:13px">结实</div></div>
+      <div><div class="k">速度</div><div class="v" style="font-size:13px">中等</div></div>
+      <div><div class="k">护甲</div><div class="v" style="font-size:13px">极强</div></div>
     </div>
-    <p>血量比焦油人浩克更低（300 vs 480），但护甲碾压级——"更难杀"的来源是防御而不是耐久。打穿它之后的里屋放着 5A 路线材料的备用来源。</p>
-    <div class="gapbox"><b>已知缺口：</b>爆炸目前对所有生物零伤害（含这两只关押怪）——今天只能靠近战/远程命中或投喂通过，炸不开。</div>
+    <p>没有焦油人浩克那么耐打，但护甲碾压级——"更难杀"的来源是防御而不是耐久。打穿它之后的里屋放着 5A 路线材料的备用来源。</p>
+    <div class="gapbox">炸药对它（以及关押室里的另一只重装丧尸）完全不生效——想过这两道关卡，靠近战、远程命中或者投喂，别指望一发炸药解决。</div>
   </div>
 
   <div class="entry" data-search="街头 游荡 monstergroup group_zombie 普通焦油人">
-    <h4>街头游荡的焦油人 <span class="pill on">已实现</span></h4>
+    <h4>街头游荡的焦油人</h4>
     <div class="meta"><code>GROUP_ZOMBIE</code> · 城镇密度刷怪，非固定摆放</div>
-    <p>镇上普通遇到的焦油人绝大多数是标准型（约占权重 47%），此外按真实概率混有肥胖型、生前强壮型、儿童型、爬行型、犬类、警察/军人/医护/消防等职业变种，偶尔（极低概率）会遇到成堆的大型焦油人潮。这是环境难度，不是"守门精英"——不掉钥匙、不解锁任何东西。</p>
+    <p>镇上普通遇到的焦油人绝大多数是标准型，此外混有肥胖型、生前强壮型、儿童型、爬行型、犬类、警察/军人/医护/消防等职业变种，偶尔会撞见成堆的大型焦油人潮。这是环境难度，不是"守门精英"——不掉钥匙、不解锁任何东西。</p>
   </div>
 </section>
 
 <section id="items">
   <h2>关键道具</h2>
-  <p class="lede">下列数值全部来自真实世界的重量/体积数据，一克不改。</p>
+  <p class="lede">重量和体积都是实打实的数字——货运骨架的承重上限不是摆设，规划路线之前先算清楚。</p>
 
   <h3 class="sub">5A 维修材料</h3>
   <div class="tw"><table>
@@ -482,7 +453,7 @@
       <tr><td><code>cable</code> / <code>e_scrap</code> / <code>duct_tape</code></td><td class="num">10g/14g/2g</td><td class="num">≤5mL</td><td>轻件，顺手搜刮</td></tr>
     </tbody>
   </table></div>
-  <p><code>cargo_frame_bridges</code>（货运骨架）主仓上限 <b>80 kg / 60 L</b>——电池+电机合计 121 kg，装不进同一趟，"两趟制"是真实承重数字算出来的结果，不是人为设的门槛。</p>
+  <p><code>cargo_frame_bridges</code>（货运骨架）主仓上限 <b>80 kg / 60 L</b>——电池加电机合计 121 kg，一趟根本扛不动，规划路线时按两趟走。</p>
 
   <h3 class="sub">5B 炸药</h3>
   <div class="tw"><table>
@@ -496,7 +467,7 @@
     </tbody>
   </table></div>
   <p>制造链：<code>molotov</code>（汽油+布，零门槛）→ <code>gunpowder</code>（拆混火药）→ <code>pipebomb</code>（管材+引信，自动学会）→ <code>dynamite</code>（需化学 5 级课本）；<code>fertilizer_commercial</code>（超市园艺区）也能一步转化成炸药原料。</p>
-  <div class="gapbox"><b>已知缺口：</b>爆炸目前不对生物造成伤害，也不发出噪音——今天炸红雾不会引来浩克，这与设计意图"炸得越欢来得越快"不符，是尚未实现的部分。</div>
+  <div class="gapbox">炸药目前打不伤怪物，也不会发出声响引怪——想用炸药凿穿红雾，尽管放心炸，不会把焦油人浩克招过来；但也别指望拿炸药清怪。</div>
 
   <h3 class="sub">5C 医疗与食物</h3>
   <div class="tw"><table>
@@ -511,25 +482,24 @@
 
   <h3 class="sub">教程楼陷阱与武器</h3>
   <div class="tw"><table>
-    <thead><tr><th>道具</th><th>数值</th><th>状态</th></tr></thead>
+    <thead><tr><th>道具</th><th>说明</th></tr></thead>
     <tbody>
-      <tr><td><code>tr_nailboard</code> 钉板陷阱</td><td>可见度 6，可绕开</td><td><span class="pill gap">缺口</span></td></tr>
-      <tr><td><code>tr_caltrops</code> 铁蒺藜</td><td>密铺封锁区域</td><td><span class="pill on">已实现</span></td></tr>
-      <tr><td><code>nailboard</code> 钉板棒（可制作）</td><td>钝击 12 / 刺 3，5 分钟自动学会</td><td><span class="pill on">已实现</span></td></tr>
+      <tr><td><code>tr_nailboard</code> 钉板陷阱</td><td>可见度 6，稍微留意就能绕开——踩上去目前不会有事，走过去也无妨</td></tr>
+      <tr><td><code>tr_caltrops</code> 铁蒺藜</td><td>密铺封锁区域，比钉板难躲得多</td></tr>
+      <tr><td><code>nailboard</code> 钉板棒（可制作）</td><td>钝器为主、略带穿刺，上手 5 分钟即可自动学会</td></tr>
     </tbody>
   </table></div>
-  <div class="gapbox"><b>已知缺口：</b>钉板陷阱的数据和拆解配方都齐全，但踩踏触发效果尚未接入引擎——当前实机踩上去不会造成任何后果，也没有玩家侧的拆解入口。</div>
 </section>
 
 <section id="crafting">
   <h2>制作与建造</h2>
 
-  <h3 class="sub">材料池系统 <span class="pill on">已实现</span></h3>
-  <p>5660+ 条真实制作配方全部可用。制作面板会自动把你身上、以及<strong>附近半径 6 格</strong>的物品都纳入候选。</p>
-  <p>额外的<strong>虚拟拆解</strong>功能是本作自创：把你"愿意牺牲"的物品拖进材料池，系统会假设性地拆解它、把拆解产出并入可用材料——需要你手动确认"托进池子"才生效，不会偷偷拆你东西。</p>
+  <h3 class="sub">材料池系统</h3>
+  <p>5660+ 条制作配方全部可用。制作面板会自动把你身上、以及<strong>附近半径 6 格</strong>的物品都纳入候选，不用一件件翻包。</p>
+  <p>还有个额外的<strong>虚拟拆解</strong>功能：把你"愿意牺牲"的物品拖进材料池，系统会假设性地拆解它、把拆解产出并入可用材料——需要你手动确认才生效，不会偷偷拆你东西。</p>
 
-  <h3 class="sub">建造系统 <span class="pill on">已实现</span></h3>
-  <p>775+ 条真实 construction 常驻编译，在可建造的地形/家具前按交互键会弹出"建造"选项。5A 路线修复去雾装置走的就是这套系统里真实的 <code>REPAIR</code> 分类构造，材料是电池+电机+电缆+电子废料+胶带，不需要任何专门为它新写的系统。</p>
+  <h3 class="sub">建造系统</h3>
+  <p>775+ 条建造项目，站在可建造的地形或家具前按交互键就会弹出"建造"选项。5A 路线修复去雾装置走的就是这套系统里的修复类构造，材料是电池、电机、电缆、电子废料、胶带。</p>
 </section>
 </div>
 
@@ -542,15 +512,15 @@
 </div>
 <section id="town">
   <h2>G市城镇</h2>
-  <p class="lede">程序生成的小镇，以中心十字路口为种子向四方向生长街道，建筑摆放分两种规则。</p>
+  <p class="lede">每一局的小镇都是重新生成的，从中心十字路口向四个方向长出街道，但有些地标你永远找得到。</p>
   <div class="tw"><table>
     <thead><tr><th>摆放方式</th><th>规则</th><th>适用建筑</th></tr></thead>
     <tbody>
-      <tr><td><b>加权随机</b></td><td>按权重从商店/公园/住宅三个池子抽取，不保证某类建筑一定出现</td><td>警局、超市、教堂</td></tr>
-      <tr><td><b>强制保留摆放</b></td><td>不走随机池，摆放失败会向外扩环重试，彻底失败才报错</td><td>新手教程公寓——保证 100% 存在</td></tr>
+      <tr><td><b>随机分布</b></td><td>从商店/公园/住宅几类建筑里按概率抽取，不保证某一类一定出现</td><td>警局、超市、教堂</td></tr>
+      <tr><td><b>固定存在</b></td><td>找不到理想位置就往外圈继续找，直到摆下为止</td><td>新手教程公寓——每一局都在</td></tr>
     </tbody>
   </table></div>
-  <p>去雾装置的选点走"超市优先、找不到超市则回退最远十字路口"的双层规则，同样保证 100% 存在。</p>
+  <p>去雾装置优先摆在超市里，找不到超市就退而求其次摆在离城镇最远的路口——同样保证每局都能找到。</p>
 </section>
 
 <section id="tutorial">
@@ -563,22 +533,20 @@
     <div class="row"><div class="fl">1F</div><div class="fc"><b style="color:var(--white)">保安队长把守大门。</b>综合考核，前三层所学在此连成一套。</div></div>
   </div>
 
-  <h3 class="sub" id="orthogonal">正交解法——不止一条路</h3>
+  <h3 class="sub" id="orthogonal">不止一条路</h3>
   <div class="tw"><table>
-    <thead><tr><th>解法</th><th>状态</th><th>说明</th></tr></thead>
+    <thead><tr><th>解法</th><th>说明</th></tr></thead>
     <tbody>
-      <tr><td><b>翻窗离楼</b></td><td><span class="pill on">已实现</span></td><td>开窗或砸窗都能通行，坠落伤自担</td></tr>
-      <tr><td><b>贯穿洞跳层</b></td><td><span class="pill on">已实现</span></td><td>4F 直落 1F，跳过全部楼层，硬扛跌落伤</td></tr>
-      <tr><td><b>噪音调虎离山</b></td><td><span class="pill on">已实现</span></td><td>扔东西制造噪音把保安引离岗位</td></tr>
-      <tr><td><b>撬锁</b></td><td><span class="pill gap">未实现</span></td><td>数据存在但交互层没有撬锁动词，目前只能砸门</td></tr>
-      <tr><td><b>床单绳垂降</b></td><td><span class="pill gap">未实现</span></td><td>原始设计前提有误——真实上游机制是抓钩+空气边缘攀爬，不是布料搓绳</td></tr>
+      <tr><td><b>翻窗离楼</b></td><td>开窗或砸窗都能通行，坠落伤自己扛</td></tr>
+      <tr><td><b>贯穿洞跳层</b></td><td>从 4F 直落 1F，跳过中间全部楼层，硬扛一次跌落伤换时间</td></tr>
+      <tr><td><b>噪音调虎离山</b></td><td>扔个东西制造声响，把保安引离岗位</td></tr>
     </tbody>
   </table></div>
-  <p>钥匙链是推荐动线，不是唯一动线——楼梯间的门永远不会上锁。</p>
+  <p>钥匙链是推荐动线，不是唯一动线——楼梯间的门永远不会上锁。锁住的门目前撬不开，堵路的只能硬砸。</p>
 </section>
 
 <section id="basement">
-  <h2>隐藏地下室 <span class="pill on">已实现</span></h2>
+  <h2>隐藏地下室</h2>
   <p class="lede">入口在教程楼 1F 楼梯间，是一条投喂教学 + 探索奖励链条。</p>
   <div class="tw"><table>
     <thead><tr><th>房间</th><th>内容</th></tr></thead>
@@ -592,15 +560,15 @@
 </section>
 
 <section id="police">
-  <h2>警局 <span class="pill on">已实现</span> <span class="pill op">可选</span></h2>
-  <p class="lede">一台真实的黑客小游戏，难度等级 3，不打也能通关。</p>
+  <h2>警局</h2>
+  <p class="lede">一台需要真本事破解的终端，难度等级 3——这条支线完全可选，不碰它也能顺利通关。</p>
   <div class="routes" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
     <div class="route" style="border-top-color:var(--on)"><h4>成功</h4><p style="font-size:12.8px">解锁军火柜：优质武器弹药 + <b>2 块 C4</b></p></div>
     <div class="route"><h4>失败·关闭终端</h4><p style="font-size:12.8px">无风险挫败，这条线就此关死</p></div>
     <div class="route" style="border-top-color:var(--tk)"><h4>失败·触发警报</h4><p style="font-size:12.8px">真实噪音事件，吸引焦油人和浩克</p></div>
     <div class="route" style="border-top-color:var(--gap)"><h4>失败·放出机器人</h4><p style="font-size:12.8px">4-8 只攻击性机器人在你附近生成</p></div>
   </div>
-  <div class="gapbox">警局真实难度等级为 3——技能为 0、智力 8 的角色理论上永远无法破解成功，这是上游真实数值，不是本项目故意调难。</div>
+  <div class="gapbox">难度等级 3 不是随口定的——电子技能和智力太低的角色可能根本破不开这台终端。真想吃军火柜里的 C4，出发前先练几级电子，或者干脆放弃这条线，走别的路子拿炸药。</div>
 </section>
 </div>
 
@@ -613,8 +581,8 @@
 </div>
 <section id="lore">
   <h2>红雾与焦油人</h2>
-  <p class="lede">红雾是镇外警戒环的叙事身份——外星焦油物质在地表的呈现，和焦油人、去雾装置同源。</p>
-  <p>被红雾接触/渗透的人被改造成焦油人；去雾装置是遏制这股力量的遗留物。这三块"外星元素"统一到同一条脉络上，机制上是真实模拟的系统，只是叙事身份换了皮。</p>
+  <p class="lede">红雾是镇外那圈警戒环真正的样子——外星焦油物质渗出地表后凝成的雾墙，和焦油人、去雾装置同出一源。</p>
+  <p>被红雾接触、渗透过的人会被改造成焦油人；去雾装置则是前人留下来对抗这股力量的遗留物。三者是同一条故事线上的三个节点，不是各自孤立的设定。</p>
 </section>
 
 <section id="npcs">
@@ -622,7 +590,7 @@
 
   <div class="entry" data-search="波德 bode 邻居 英雄">
     <h4>波德</h4>
-    <p>G市"无人区"边缘一个没有头衔、外表朴素的平民英雄——光头、亮黄连体工装、外白内红斗篷、红手套红靴。全城废土色调里唯一鲜艳成套的人，这身打扮本身就是"这个人不对劲"的线索。对力量佛系厌倦，对生活充满烟火气，出手不为名分。</p>
+    <p>G市"无人区"边缘一个没有头衔、外表朴素的平民英雄——光头、亮黄连体工装、外白内红斗篷、红手套红靴。全城废土色调里唯一鲜艳成套的人，这身打扮本身就是"这个人不对劲"的线索。他对自己的力量佛系得很，对生活却充满烟火气，出手从不图名分。</p>
   </div>
 
   <div class="entry" data-search="阿伦 alun 义体 徒弟">
