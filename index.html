@@ -2,13 +2,6 @@
 <meta name="description" content="A lone courier walks a fogbound town, carrying everything on his back. Sponge Bridges — coming soon.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
 <style>
-  /* ══ palette: pulled from header.jpg's own dusk/fire/cracked-teal key art,
-     structured through ui-style's glass grammar (right angles, corner
-     brackets, glow not shadow, one accent hue + white) so the page's
-     interactive chrome reads as the same design system as the game's UI,
-     while the editorial type (Fraunces) stays the page's own voice. Title
-     uses Rajdhani (OFL, already the project's own in-game UI typeface) —
-     not a recreation of any third party's logotype. ══ */
   :root{
     --bg:#0c0a16; --bg2:#050409;
     --glass:#3fd6c9; --glass-dim:rgba(63,214,201,.18); --glass-line:rgba(63,214,201,.32);
@@ -26,7 +19,6 @@
   ::selection{background:var(--glass);color:var(--bg2)}
   @media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important} }
 
-  /* ══ hero ══ */
   .hero{position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:center; overflow:hidden}
   .hero .frame{
     position:absolute; inset:0; z-index:0; overflow:hidden;
@@ -143,9 +135,6 @@
   }
   @keyframes flow-ln{0%{top:-40%} 100%{top:100%}}
 
-  /* ══ gallery — in-engine capture viewer. SCREENSHOTS in the script below
-     is currently empty; drop files into a screenshots/ folder and add their
-     paths to that array to populate this section, no markup changes needed ══ */
   .gallery{padding:min(12vw,110px) clamp(20px,6vw,40px) min(10vw,90px); max-width:1100px; margin:0 auto}
   .gallery-head{text-align:center; margin-bottom:36px}
   .gallery-head .eyebrow2{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:12px}
@@ -187,7 +176,6 @@
   .thumbs .thumb:hover{opacity:.85}
   @media(max-width:640px){ .viewer{gap:8px} .viewer .navbtn{width:30px; height:30px; font-size:13px} }
 
-  /* ══ pitch ══ */
   .pitch{
     max-width:1080px; margin:0 auto; padding:min(14vw,130px) clamp(20px,6vw,40px) 90px;
     display:grid; grid-template-columns:1fr 1.25fr; gap:clamp(28px,5vw,60px); align-items:center;
@@ -222,7 +210,6 @@
   .pitch .cta-wiki:hover{border-color:var(--glass); background:rgba(63,214,201,.28); transform:translateX(4px)}
   @media(max-width:760px){ .pitch{grid-template-columns:1fr} .pitch .p-art{max-width:340px; margin:0 auto} }
 
-  /* ══ pillars — ui-style modules: thin glass border, corner brackets, no fill ══ */
   .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
   .pillar{position:relative; background:var(--bg); padding:52px 26px; text-align:center; opacity:0; transform:translateY(16px)}
   .pillar.in{animation:rise .8s cubic-bezier(.16,1,.3,1) forwards}
@@ -236,7 +223,6 @@
   .pillar .q-text{font-size:13.5px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto}
   @media(max-width:760px){ .pillars{grid-template-columns:1fr} .pillar{padding:40px 24px; border-bottom:1px solid var(--line)} }
 
-  /* ══ closing ══ */
   .closing{position:relative; padding:min(18vw,170px) clamp(20px,6vw,40px) clamp(64px,9vh,100px); text-align:center; overflow:hidden}
   .closing::before{
     content:""; position:absolute; left:50%; top:50%; width:900px; height:500px; transform:translate(-50%,-50%);
@@ -353,9 +339,6 @@
 
 <script>
 (function(){
-  // ══ i18n — add a language by adding one entry to LANGS and one block to I18N.
-  // Native tongue is English; every other language falls back to en for any
-  // missing key, so a partial translation never breaks the page. ══
   var LANGS = [
     {code:'en', label:'EN'},
     {code:'zh', label:'中文'}
@@ -465,8 +448,6 @@
   });
   applyLang(detectLang());
 
-  // hero image settles from a slight right offset into center on load,
-  // then hands off to the existing slow infinite Ken Burns drift
   var heroImg = document.querySelector('.hero .frame img');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (heroImg) {
@@ -486,8 +467,6 @@
     }
   }
 
-  // title lettering — each glyph gets a thin randomized "tar drip" trailing
-  // down from it, echoing Death Stranding's logotype treatment
   (function buildDripTitle(){
     var host = document.getElementById('titleDrip');
     if (!host) return;
@@ -508,12 +487,7 @@
     host.innerHTML = dripLetters('SPONGE') + '<br><em>' + dripLetters('BRIDGES') + '</em>';
   })();
 
-  // ══ screenshot gallery — add files to a screenshots/ folder next to this
-  // page and list their paths here; the viewer shows a placeholder tile for
-  // any entry (or the whole section) until real captures exist. ══
   var SCREENSHOTS = [
-    // {src:'screenshots/01.jpg', cap:'The fog rolls in over the delivery route'},
-    // {src:'screenshots/02.jpg', cap:'A cargo tower, fully stacked'}
   ];
   (function initGallery(){
     var stage = document.getElementById('galStage');
@@ -575,7 +549,6 @@
     render();
   })();
 
-  // sparse rising embers — minimal, not a particle storm
   var host = document.getElementById('embers');
   var count = window.matchMedia('(max-width: 640px)').matches ? 7 : 14;
   for (var i = 0; i < count; i++) {
@@ -589,7 +562,6 @@
     host.appendChild(e);
   }
 
-  // reveal-on-scroll — same rise keyframe the hero already uses
   if ('IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(en, i){
