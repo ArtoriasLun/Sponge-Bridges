@@ -261,6 +261,12 @@
   .notify:hover{border-color:var(--glass); background:rgba(63,214,201,.28); color:var(--ink)}
   .notify .dot{width:6px; height:6px; border-radius:50%; background:var(--glass); box-shadow:0 0 10px var(--glass); animation:blink 1.8s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:1} 50%{opacity:.35}}
+  .wiki-link{
+    position:relative; display:block; margin-top:22px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink-faint);
+    text-decoration:none; transition:color .25s ease;
+  }
+  .wiki-link:hover{color:var(--glass)}
 
   footer{
     padding:26px clamp(20px,6vw,40px) 36px; display:flex; justify-content:space-between; align-items:center;
@@ -351,6 +357,7 @@
   <h2 data-i18n="closing.h2">The fog is waiting.</h2>
   <p class="sub" data-i18n="closing.sub">Sponge Bridges is currently in development. Follow along for the walk out.</p>
   <div class="notify"><span class="dot"></span> <span data-i18n="closing.notify">More to come</span></div>
+  <a class="wiki-link" href="game-wiki.html" data-i18n="closing.wiki">Read the survivor's handbook →</a>
 </section>
 
 <footer>
@@ -383,7 +390,8 @@
       'pillar.3.title':'Choose Your Way Out',
       'closing.h2':'The fog is waiting.',
       'closing.sub':'Sponge Bridges is currently in development. Follow along for the walk out.',
-      'closing.notify':'More to come'
+      'closing.notify':'More to come',
+      'closing.wiki':'Read the survivor\'s handbook →'
     },
     zh: {
       'nav.dev':'预备阶段',
@@ -400,7 +408,8 @@
       'pillar.3.title':'走出属于你的路',
       'closing.h2':'浓雾，仍在等你。',
       'closing.sub':'《Sponge Bridges》目前正在开发中。关注我们，一起等这场走出迷雾的旅程。',
-      'closing.notify':'敬请期待'
+      'closing.notify':'敬请期待',
+      'closing.wiki':'阅读幸存者手册 →'
     }
   };
 

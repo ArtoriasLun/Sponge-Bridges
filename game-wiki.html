@@ -1,0 +1,827 @@
+<title>幸存者手册：G市</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+  /* ══ ui-style: Glass Holographic Terminal ══
+     颜色 token 与 sponge-bridges-homepage.html 同一套（--bg/--bg2/--glass/--fire/--ink 系），
+     只是套进本页原有的变量名里，保留手册自己的玻璃终端排版/密度；
+     功能色（on/tk/gap）仍是独立的状态语义色，不跟随主视觉品牌色走。 */
+  :root{
+    --deep:#050409; --cyan:#3fd6c9; --white:#f3ede0;
+    --dim:rgba(243,237,224,.62); --dim2:rgba(243,237,224,.36);
+    --fill:rgba(5,4,9,.72); --subtle:rgba(63,214,201,.05); --active:rgba(63,214,201,.20);
+    --lineB:rgba(63,214,201,.32); --lineD:rgba(243,237,224,.14);
+    --on:#74C9A4; --tk:#f2954a; --gap:#D95F57; --fire-dim:#c65a2e;
+    --raj:'Rajdhani','Noto Sans SC',sans-serif; --mono:'Share Tech Mono','Noto Sans SC',monospace;
+    --cjk:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--deep) fixed;color:var(--dim);font-family:var(--cjk);font-size:14.5px;line-height:1.78;
+    background-image:radial-gradient(1000px 600px at 20% -80px, rgba(63,214,201,.08), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(63,214,201,.02) 0 1px, transparent 1px 3px),
+      linear-gradient(rgba(63,214,201,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(63,214,201,.03) 1px, transparent 1px);
+    background-size:auto,auto,26px 26px,26px 26px}
+  a{color:var(--cyan)}
+  code{font-family:var(--mono);font-size:.85em;background:var(--subtle);border:1px solid var(--lineD);
+    border-radius:3px;padding:0 6px;color:#a9c4dd;white-space:nowrap}
+  strong{color:var(--white);font-weight:500}
+  .num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+
+  .shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+  aside{position:sticky;top:0;height:100vh;overflow-y:auto;background:rgba(4,11,20,.5);
+    border-right:1px solid var(--lineB);padding:22px 18px 60px}
+  main{min-width:0}
+  .masthead{padding:52px clamp(20px,4vw,48px) 32px;border-bottom:1px solid var(--lineB);position:relative}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gap)}
+  .masthead h1{font-family:var(--raj);font-weight:700;font-size:clamp(28px,4vw,42px);color:var(--white);
+    text-shadow:0 0 16px rgba(255,255,255,.35);margin:10px 0 8px;letter-spacing:.02em}
+  .masthead .sub{color:var(--dim);max-width:48em;font-size:14px}
+  .content{padding:10px clamp(20px,4vw,48px) 90px;max-width:920px}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--lineB)}}
+
+  .brand{font-family:var(--raj);font-weight:700;font-size:18px;color:var(--white)}
+  .brand small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--dim2);
+    font-weight:400;margin-top:3px;text-transform:uppercase}
+  #search{width:100%;margin:16px 0 6px;padding:9px 11px;border:1px solid var(--lineB);background:var(--subtle);
+    color:var(--white);font-family:var(--cjk);font-size:13.5px}
+  #search:focus{outline:1px solid var(--cyan);outline-offset:1px}
+  .searchcount{font-family:var(--mono);font-size:11px;color:var(--dim2);margin-bottom:14px;min-height:1.4em}
+  nav.toc{font-size:13.3px}
+  nav.toc .grp{margin-top:16px}
+  nav.toc .grp>b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--dim2);margin-bottom:6px}
+  nav.toc a{display:block;color:var(--dim);text-decoration:none;padding:3px 0 3px 10px;border-left:2px solid transparent}
+  nav.toc a:hover{color:var(--white);border-left-color:var(--lineB)}
+  nav.toc a.current{color:var(--white);border-left-color:var(--cyan);font-weight:700;text-shadow:0 0 8px rgba(255,255,255,.3)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:18px 0 4px;font-size:12.5px;color:var(--dim)}
+  .legend span{display:inline-flex;gap:6px;align-items:center}
+  .pill{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;
+    padding:1px 7px;border:1px solid var(--lineD);text-transform:uppercase;vertical-align:1px;white-space:nowrap}
+  .pill.on{color:var(--on)} .pill.tk{color:var(--tk)} .pill.gap{color:var(--gap)} .pill.op{color:var(--dim2)}
+
+  section{padding:44px 0;border-bottom:1px solid var(--lineD)}
+  section:last-child{border-bottom:0}
+  section>h2{font-family:var(--raj);font-weight:700;font-size:23px;color:var(--white);letter-spacing:.03em;
+    text-shadow:0 0 12px rgba(255,255,255,.3);margin:0 0 6px;padding-bottom:9px;border-bottom:1px solid var(--lineB)}
+  section>.lede{color:var(--dim);max-width:60em;margin-bottom:20px;font-size:13.6px}
+  h3.sub{font-family:var(--raj);font-weight:700;font-size:17px;color:var(--white);margin:28px 0 8px}
+  h4.mini{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim2);margin:16px 0 6px}
+  p{margin:9px 0;font-size:13.8px}
+
+  /* ── glass module (entries, cards) ── */
+  .entry,.route{position:relative;background:var(--subtle);border:1px solid var(--lineD);padding:16px 18px;margin:12px 0}
+  .entry::before,.entry::after,.route::before,.route::after{content:"";position:absolute;width:7px;height:7px}
+  .entry::before,.route::before{top:0;left:0;border-top:1px solid rgba(63,214,201,.6);border-left:1px solid rgba(63,214,201,.6)}
+  .entry::after,.route::after{top:0;right:0;border-top:1px solid rgba(63,214,201,.6);border-right:1px solid rgba(63,214,201,.6)}
+  .entry h4{font-family:var(--raj);font-weight:700;font-size:16px;color:var(--white);margin:0 0 3px;
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .entry .meta{font-family:var(--mono);font-size:11px;color:var(--dim2);margin-bottom:8px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:1px;background:var(--lineD);
+    border:1px solid var(--lineD);margin:10px 0}
+  .stats>div{background:var(--fill);padding:6px 9px}
+  .stats .k{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim2)}
+  .stats .v{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white)}
+  .callout{margin-top:9px;padding:8px 12px;border-left:2px solid var(--gap);background:var(--subtle);font-size:12.6px}
+  .callout.gap{border-left-color:var(--gap)} .callout.ok{border-left-color:var(--on)}
+
+  .tw{overflow-x:auto;border:1px solid var(--lineD);margin:12px 0}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-align:left;
+    color:var(--dim2);padding:8px 12px;border-bottom:1px solid var(--lineB);background:var(--subtle)}
+  td{padding:8px 12px;border-bottom:1px solid var(--lineD);vertical-align:top;color:var(--dim)}
+  tr:last-child td{border-bottom:0}
+  td b{color:var(--white);font-weight:500}
+
+  .routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
+  .route{border-top:2px solid var(--lineB)}
+  .route.ra{border-top-color:var(--cyan)} .route.rb{border-top-color:var(--gap)}
+  .route.rc{border-top-color:var(--on)} .route.rg{border-top-color:var(--tk)}
+  .route h4{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white);margin-bottom:6px}
+  .route ol{margin:0;padding-left:18px;font-size:12.8px;color:var(--dim)}
+  .route li{margin:4px 0}
+
+  .tower{border:1px solid var(--lineD);margin:12px 0}
+  .tower .row{display:grid;grid-template-columns:52px 1fr;border-top:1px solid var(--lineD)}
+  .tower .row:first-child{border-top:0}
+  .tower .fl{background:var(--subtle);font-family:var(--raj);font-weight:700;font-size:17px;color:var(--white);
+    display:flex;align-items:center;justify-content:center}
+  .tower .fc{background:var(--fill);padding:9px 13px;font-size:12.8px;color:var(--dim)}
+
+  .gapbox,.tkbox,.okbox{border:1px dashed var(--lineD);padding:10px 14px;margin:14px 0;font-size:12.8px;background:var(--subtle)}
+  .gapbox{border-color:rgba(217,95,87,.4)} .gapbox b{color:var(--gap)}
+  .tkbox{border-color:rgba(217,154,78,.4)} .tkbox b{color:var(--tk)}
+  .okbox{border-color:rgba(116,201,164,.4)} .okbox b{color:var(--on)}
+
+  footer{padding:28px clamp(20px,4vw,48px) 60px;font-family:var(--mono);font-size:11px;color:var(--dim2);
+    border-top:1px solid var(--lineB)}
+  .hide{display:none!important}
+  ::selection{background:var(--active);color:var(--white)}
+
+  /* ══ 简介 tab ══ */
+  .intro-wrap{display:grid;grid-template-columns:minmax(180px,280px) 1fr;gap:28px;align-items:start}
+  @media(max-width:720px){.intro-wrap{grid-template-columns:1fr}}
+  .intro-art{position:relative;aspect-ratio:3/4;background:var(--fill);border:1px solid var(--lineD);overflow:hidden}
+  .intro-art::before,.intro-art::after{content:"";position:absolute;top:0;width:12px;height:12px;z-index:2}
+  .intro-art::before{left:0;border-top:1px solid var(--cyan);border-left:1px solid var(--cyan)}
+  .intro-art::after{right:0;border-top:1px solid var(--cyan);border-right:1px solid var(--cyan)}
+  .intro-art img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block;opacity:0;transition:opacity .5s ease}
+  .intro-art img.loaded{opacity:1}
+  .intro-art .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:16px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);
+    background:repeating-linear-gradient(135deg, rgba(243,237,224,.03) 0 2px, transparent 2px 14px), var(--fill)}
+  .intro-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--tk);margin-bottom:10px}
+  .intro-copy h3{font-family:var(--raj);font-weight:700;font-size:20px;color:var(--white);margin:0 0 10px}
+  .intro-copy p{font-size:14px;max-width:56em}
+  .tag-plat{position:relative;display:inline-flex;gap:8px;align-items:center;margin-top:18px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--cyan);border:1px solid var(--lineB);background:var(--active);padding:7px 14px}
+  .tag-plat::before,.tag-plat::after{content:"";position:absolute;top:-2px;width:5px;height:5px;border-top:1px solid var(--cyan)}
+  .tag-plat::before{left:-2px;border-left:1px solid var(--cyan)}
+  .tag-plat::after{right:-2px;border-right:1px solid var(--cyan)}
+  .tag-plat b{color:var(--white);font-weight:600;letter-spacing:.1em}
+  .pillars3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lineD);margin-top:26px;border:1px solid var(--lineD)}
+  @media(max-width:640px){.pillars3{grid-template-columns:1fr}}
+  .pillars3>div{background:var(--fill);padding:18px 16px}
+  .pillars3 .pn{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.08em}
+  .pillars3 h4{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white);margin:6px 0 4px}
+  .pillars3 p{font-size:12.4px;margin:0;color:var(--dim)}
+
+  /* ══ tab bar + 页内小索引 ══ */
+  .tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .tabbtn{position:relative;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+    color:var(--dim);background:var(--subtle);border:1px solid var(--lineD);padding:8px 15px;cursor:pointer;
+    transition:color .2s ease,border-color .2s ease,background .2s ease}
+  .tabbtn:hover{color:var(--white);border-color:var(--lineB)}
+  .tabbtn.active{color:var(--white);background:var(--active);border-color:var(--lineB)}
+  .tabbtn.active::before,.tabbtn.active::after{content:"";position:absolute;top:-2px;width:5px;height:5px;border-top:1px solid var(--cyan)}
+  .tabbtn.active::before{left:-2px;border-left:1px solid var(--cyan)}
+  .tabbtn.active::after{right:-2px;border-right:1px solid var(--cyan)}
+
+  .tabindex{display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center;margin:0 0 30px;padding:10px 14px;
+    border:1px solid var(--lineD);background:var(--subtle);font-size:12px}
+  .tabindex .til{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);margin-right:6px}
+  .tabindex a{color:var(--dim);text-decoration:none;padding:2px 8px;border:1px solid transparent}
+  .tabindex a:hover{color:var(--white);border-color:var(--lineD)}
+  .tabindex .sep{color:var(--dim2)}
+
+  /* ══ 分区间「翻页」切换：3D 翻转 + 玻璃扫描闪烁，呼应主页 q-fade 故障闪烁 ══ */
+  .content{position:relative;perspective:1800px}
+  .content::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;z-index:5;
+    background:repeating-linear-gradient(0deg, rgba(63,214,201,.10) 0 1px, transparent 1px 3px);
+    mix-blend-mode:screen}
+  .content.flipping::before{animation:scanFlicker .62s steps(7) forwards}
+  @keyframes scanFlicker{0%{opacity:.55}14%{opacity:.05}28%{opacity:.4}44%{opacity:.08}60%{opacity:.32}80%{opacity:.06}100%{opacity:0}}
+  .tabpanel{display:none;transform-style:preserve-3d}
+  .tabpanel.active{display:block}
+  .tabpanel.turn-out{display:block;animation:pageTurnOut .28s cubic-bezier(.4,0,.7,1) forwards;transform-origin:left center}
+  .tabpanel.turn-in{animation:pageTurnIn .34s cubic-bezier(.16,1,.3,1) forwards;transform-origin:left center}
+  @keyframes pageTurnOut{
+    0%{opacity:1;transform:rotateY(0deg) translateX(0);filter:brightness(1) blur(0)}
+    35%{opacity:.35;transform:rotateY(-7deg) translateX(-8px);filter:brightness(1.7) blur(1px)}
+    100%{opacity:0;transform:rotateY(-15deg) translateX(-18px);filter:brightness(.5) blur(2.5px)}
+  }
+  @keyframes pageTurnIn{
+    0%{opacity:0;transform:rotateY(15deg) translateX(18px);filter:brightness(1.7) blur(2.5px)}
+    45%{opacity:.5;transform:rotateY(-4deg) translateX(-4px);filter:brightness(1.3) blur(1px)}
+    100%{opacity:1;transform:rotateY(0deg) translateX(0);filter:brightness(1) blur(0)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .content::before{display:none}
+    .tabpanel.turn-out,.tabpanel.turn-in{animation:none!important;transform:none!important;filter:none!important;opacity:1!important}
+  }
+
+  nav.toc .grp.tab-dim{opacity:.4}
+  nav.toc .grp.tab-dim>b{color:var(--dim2)}
+</style>
+
+<div class="shell">
+<aside>
+  <div class="brand">幸存者手册<small>Survivor's Dossier · G市</small></div>
+  <input id="search" type="text" placeholder="搜索图鉴 / 道具 / 地点…" autocomplete="off">
+  <div class="searchcount" id="searchcount"></div>
+  <nav class="toc" id="toc">
+    <div class="grp" data-tab="0"><b>简介</b>
+      <a href="#intro">游戏简介</a>
+    </div>
+    <div class="grp" data-tab="1"><b>入门</b>
+      <a href="#start">如何开局</a>
+      <a href="#status">开发状态说明</a>
+    </div>
+    <div class="grp" data-tab="1"><b>生存系统</b>
+      <a href="#needs">生存需求</a>
+      <a href="#combat">战斗与护甲</a>
+      <a href="#ai">怪物如何找到你</a>
+    </div>
+    <div class="grp" data-tab="2"><b>图鉴</b>
+      <a href="#bestiary">怪物图鉴</a>
+    </div>
+    <div class="grp" data-tab="2"><b>物资</b>
+      <a href="#items">关键道具</a>
+      <a href="#crafting">制作与建造</a>
+    </div>
+    <div class="grp" data-tab="3"><b>地点</b>
+      <a href="#town">G市城镇</a>
+      <a href="#tutorial">新手教程公寓</a>
+      <a href="#basement">隐藏地下室</a>
+      <a href="#police">警局</a>
+    </div>
+    <div class="grp" data-tab="4"><b>世界与人物</b>
+      <a href="#lore">红雾与焦油人</a>
+      <a href="#npcs">重要人物</a>
+    </div>
+    <div class="grp" data-tab="4"><b>撤离</b>
+      <a href="#routes">四条撤离路线</a>
+      <a href="#orthogonal">正交逃生手段</a>
+      <a href="#ending">结局</a>
+    </div>
+  </nav>
+</aside>
+
+<main>
+<div class="masthead">
+  <a href="index.html" style="color:var(--cyan);font-family:var(--raj);font-weight:600;font-size:.85rem;text-decoration:none;border-bottom:1px solid var(--lineB);display:inline-block;margin-bottom:14px">← 路线图</a>
+  <div class="kicker">ALUNPIXEL · G市生存手册 · 中文版 v0.1（开发预览版）</div>
+  <h1>幸存者手册：G市</h1>
+  <p class="sub">一份写给玩家的内容参考——图鉴、道具、地点、机制、剧情，仿照 <em>cdda-guide</em> 的密度和诚实做法：每一条都标注今天的真实状态。这不是宣传页，遇到"票已登记但未实现"的内容我们会直说,而不是假装它已经在游戏里。</p>
+  <div class="legend">
+    <span><span class="pill on">已实现</span>今天就能在游戏里遇到/使用</span>
+    <span><span class="pill tk">设计已定</span>工程票已登记，尚未派工/未接线</span>
+    <span><span class="pill gap">已知缺口</span>数据/设计都在，但当前构建里不生效</span>
+    <span><span class="pill op">可选</span>不做也能通关</span>
+  </div>
+  <div class="tabbar" id="tabbar" role="tablist">
+    <button class="tabbtn" data-tab="0" role="tab">简介</button>
+    <button class="tabbtn" data-tab="1" role="tab">生存指南</button>
+    <button class="tabbtn" data-tab="2" role="tab">图鉴与道具</button>
+    <button class="tabbtn" data-tab="3" role="tab">城镇与探索</button>
+    <button class="tabbtn" data-tab="4" role="tab">剧情与结局</button>
+  </div>
+</div>
+
+<div class="content">
+
+<div class="tabpanel" data-tab="0">
+<section id="intro">
+  <h2>简介</h2>
+  <div class="intro-eyebrow">致敬《死亡搁浅》与《大灾变：黑暗降临》的原创重构</div>
+  <div class="intro-wrap">
+    <div class="intro-art">
+      <!-- header.jpg：与官方主页同一张关键美术图，取自本仓库根目录；找不到时优雅退化为玻璃占位块 -->
+      <img src="header.jpg" alt="信使背负着不断加高的货物塔，走过被红雾与烈焰笼罩的G市街道" id="introImg" onerror="this.style.display='none';document.getElementById('introPh').style.display='flex'">
+      <div class="ph" id="introPh" style="display:none">KEY ART<br>PLACEHOLDER</div>
+    </div>
+    <div class="intro-copy">
+      <h3>幸存者手册：G市</h3>
+      <p>你叫 <b>Sam</b>，一名信使。红雾从G市外沿升起的那天开始，这座小镇就被划成了"无人区"——道路还在，房子还在，只是再也没人愿意走进来。你醒在教程公寓的顶楼，背上是一副货运骨架，肩上很快会架起一座越叠越高的<strong>货物塔</strong>：搜刮到的物资、修复装置要用的零件、留给自己的最后一口口粮，全部实打实地扛在身上，重量和体积都算数。</p>
+      <p>没有安全屋，没有传送点。你要在饥饿、口渴、疲劳的真实数值曲线里，在气味与噪音真正会暴露你的世界里，穿过街道、公寓、警局与地下室，找到属于自己的一条出路——修好去雾装置、炸开一道缺口、硬扛穿雾，或者去找那个唯一还愿意伸手的人。四条路线谁先达成谁算数，怎么活下去、走哪条路，全部由你决定。</p>
+      <p>这是一份写给玩家的内容手册，不是宣传页——每一条内容都标注着它今天的真实状态，遇到"设计已定但还没做"的部分，我们照实说，不假装它已经在游戏里。</p>
+      <div class="tag-plat">平台 <b>仅 Steam</b></div>
+      <div class="pillars3">
+        <div><span class="pn">01</span><h4>背负</h4><p>货物塔是你的仓库，也是你的软肋——扛得越多，走得越慢，选择越少。</p></div>
+        <div><span class="pn">02</span><h4>生存</h4><p>饥渴疲劳、护甲结算、气味噪音，全是深度模拟的真实数值，不是好看的进度条。</p></div>
+        <div><span class="pn">03</span><h4>走出属于你的路</h4><p>四条撤离路线并行开放，时机、方向、手段全部自由。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="1">
+<div class="tabindex"><span class="til">本页目录</span>
+  <a href="#start">如何开局</a><span class="sep">·</span>
+  <a href="#status">开发状态</a><span class="sep">·</span>
+  <a href="#needs">生存需求</a><span class="sep">·</span>
+  <a href="#combat">战斗与护甲</a><span class="sep">·</span>
+  <a href="#ai">怪物如何找到你</a>
+</div>
+<section id="start">
+  <h2>如何开局</h2>
+  <p class="lede">你叫 <b>Sam</b>。在 G市"无人区"边缘一栋四层出租屋的顶楼醒来，唯一的目标：<strong>活着走出小镇</strong>。时机、方向、手段全部自由——这是一个塔科夫式的高自由度撤离沙盒，不是线性关卡。</p>
+
+  <h4 class="mini">你能做什么 <span class="pill on">已实现</span></h4>
+  <ul>
+    <li>主菜单：开始 / 继续（有存档才显示）/ 设置 / 退出</li>
+    <li>捏人：程序化角色创建，含隐藏肢体自定义</li>
+    <li>单槽位存档/读档，含云存档冲突处理</li>
+    <li>探索、搜刮、制作（5660+ 条真实配方）、战斗、生存（饥渴疲劳）、建造（775+ 条真实 construction）</li>
+  </ul>
+  <div class="gapbox"><b>已知缺口：</b>目前只有一个存档槽位；NPC 剧情标记（比如"是否已告诉波德红雾的事"）暂时不随存档保存——读档后这类进度可能需要重新触发。</div>
+
+  <h4 class="mini">默认角色 Sam</h4>
+  <p>深藏青工装、深棕色中分长发（垂过下颌）、短胡茬、普通体型——固定不变的默认外观，不会因为版本更新漂移。开局装备固定包含长袖衫、牛仔裤和一副货运骨架——这也是 Sam 背上标志性货物塔的由来：不是画死的美术资产，而是由你实际穿戴的装备动态推导出的渲染效果。</p>
+</section>
+
+<section id="status">
+  <h2>开发状态说明</h2>
+  <p class="lede">这是一份<strong>正在开发中的游戏</strong>的内容手册，不是成品攻略。三种诚实的现状会反复出现，提前说明白：</p>
+  <div class="tw"><table>
+    <thead><tr><th>状态</th><th>含义</th><th>例子</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill on">已实现</span></td><td>代码已接线，headless 断言通过，今天的构建里就能遇到</td><td>焦油人浩克、5A/5B/5C/5G 四条撤离路线、警局黑客、隐藏地下室</td></tr>
+      <tr><td><span class="pill tk">设计已定</span></td><td>玩法细节已经定案写进设计文档，工程票已登记，但代码还没写</td><td>智能瞄准键系统（投掷/持握/投喂三合一操作）、全局城镇门锁真实化</td></tr>
+      <tr><td><span class="pill gap">已知缺口</span></td><td>数据/资源都已经在游戏里，但缺一个环节没打通，所以现在不生效</td><td>2F 钉板陷阱（数据齐全但触发效果未接线）、爆炸对生物零伤害</td></tr>
+    </tbody>
+  </table></div>
+  <p>手册里每一条内容都会带上面这三种标签之一（或"已实现"不加标签，因为它是默认基线）。如果你在游戏里发现和手册描述不一致，大概率是手册没跟上最新一次代码合并——这是一个每天都在变化的活跃分支。</p>
+</section>
+
+<section id="needs">
+  <h2>生存需求</h2>
+  <p class="lede">饥饿、口渴、疲劳走的是真实生存医学数值模型，不是抽象的美观进度条。</p>
+  <div class="tw"><table>
+    <thead><tr><th>需求</th><th>阈值</th><th>影响</th></tr></thead>
+    <tbody>
+      <tr><td><b>饥饿</b></td><td>以真实 kcal 计（Mifflin-St Jeor BMR 公式移植），每 5 游戏分钟结算一次</td><td>速度惩罚走真实连续曲线，不是分档跳变</td></tr>
+      <tr><td><b>口渴</b></td><td class="num">40 / 80 / 240 / 520</td><td>渴 / 很渴 / 脱水 / 极度口渴</td></tr>
+      <tr><td><b>疲劳</b></td><td class="num">191 / 383 / 575</td><td>累 / 极累 / 力竭</td></tr>
+    </tbody>
+  </table></div>
+  <div class="gapbox"><b>已知简化：</b>没有胃/消化模型——吃东西直接加 kcal，不是逐渐消化；活动强度乘数固定在"无运动"档，不追踪你实际跑了多远。</div>
+  <p>常驻 HUD 面板会显示速度/体力/情绪芯片，加上异常状态提示行；力量/敏捷/智力/感知四维属性在角色面板里查看。</p>
+</section>
+
+<section id="combat">
+  <h2>战斗与护甲</h2>
+  <p class="lede">命中判定→护甲结算→弱点抽签，三层管线都是深度模拟的真实数值，但各自有一处已知简化。</p>
+
+  <h4 class="mini">护甲结算</h4>
+  <p>每次命中共用一个随机数决定是否被某件装备的覆盖率"接住"，接住了再查真实材料抗性表结算穿透伤害。</p>
+  <div class="gapbox">已知简化：不做逐条护甲词条的材料细分、不支持局部覆盖部位滚动、不模拟伤害类型互相派生。</div>
+
+  <h4 class="mini">弱点系统</h4>
+  <p>命中判定走"覆盖率加权抽签"——每个弱点占一段命中区间，命中区间内即视为打中弱点，触发对应的护甲折扣/暴击倍率/控制效果（眩晕、致盲）。以焦油人浩克为例：打头护甲打 75 折，<strong>打眼睛完全无视物理护甲</strong>。</p>
+  <div class="gapbox"><b>已知简化：</b>上游还会按玩家近战熟练度加权命中弱点，本仓没有这个数值维度——目前是纯覆盖率的平权抽签，练级不会提高你的爆头率。</div>
+
+  <h4 class="mini">红雾伤害</h4>
+  <p>红雾（镇外警戒环）现在走的是真实护甲结算的攻击伤害，不再是绕过装备的"纯"伤害——穿对材质的装备真的能减免一部分。</p>
+  <div class="tkbox">设计文档描述红雾同时打酸/电/热/生物四种伤害类型，本轮未能完全核实当前代码是否逐类型结算，还是按红雾种类单选一种——如需精确结论建议实机确认。</div>
+</section>
+
+<section id="ai">
+  <h2>怪物如何找到你</h2>
+  <p class="lede">没有开挂 AI——怪物靠气味场和噪音事件真实地找你，不是直接读你的坐标。</p>
+
+  <h4 class="mini">气味追踪</h4>
+  <p>你每回合在脚下印上气味值，随后整张气味场按地形做模糊扩散。带气味追踪的怪（比如焦油人浩克）沿气味梯度爬坡走向最浓处——真的是沿坡度收敛，站在你走过路线的侧面几格也测得到非零坡度。距离、时间、绕路都能稀释这份气味。</p>
+  <div class="gapbox">上游的"雨天加速气味衰减"在本仓未接入——本作的气味只靠扩散过程自然衰减，不受天气影响，这是一处已知的行为差异。</div>
+
+  <h4 class="mini">噪音追踪</h4>
+  <p>开枪、脚步声、开关门、砸门撬锁、装填弹药、投掷落地、陷阱触发、警局警报、施工声、怪物自己的吼叫——几乎每一种真实动作都会真实发出噪音事件。听见但看不见来源时，游戏会在附近随机放一个"？"标记，不会精确指向你。</p>
+  <div class="gapbox"><b>已知缺口：</b>爆炸目前<strong>不会</strong>发出噪音事件——5B 路线炸开红雾这个动作，今天对焦油人浩克来说是"静默"的，不会把它吸引过来。这与"炸得越欢浩克来得越快"的设计意图不一致，是尚未实现的部分，不是故意如此。</div>
+
+  <h4 class="mini">尸体复活</h4>
+  <p>尸体年龄不到 6 小时绝不复活；超过 48 小时复活概率封顶为必然，中间按概率判定。<strong>烧穿一具可复活的尸体（累计烧穿量超过其生前 hp）会让它复活成 <code>burn_into</code> 指定的另一种怪物，且满血</strong>——焦油人浩克的尸体烧穿后站起来的是一只 275 hp 的"复活体"。</p>
+  <div class="callout gap"><b>常见误解：</b>这不是"活着的浩克被烧死后当场变形"——burn_into 只影响尸体复活成谁，和削弱一只活着的浩克完全无关。</div>
+
+  <h4 class="mini">情绪与态度</h4>
+  <p>每只怪携带愤怒值和士气值，会被"看见你""受伤""听到噪音""同伴死亡/受袭""附近着火""强光"等触发器影响，随后按四态阈值（敌对/跟随/无视/逃跑）决定行为。这套系统也是<b>投喂</b>机制的底层：喂饱一只怪会通过"消怒"触发器压低它的愤怒值，让它进入无视状态，受到攻击会立即重新激怒。</p>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="2">
+<div class="tabindex"><span class="til">本页目录</span>
+  <a href="#bestiary">怪物图鉴</a><span class="sep">·</span>
+  <a href="#items">关键道具</a><span class="sep">·</span>
+  <a href="#crafting">制作与建造</a>
+</div>
+<section id="bestiary">
+  <h2>怪物图鉴</h2>
+  <p class="lede">本作没有"丧尸"——玩家能看到的所有文字里，怪物一律叫<strong>焦油人</strong>（英文 tar man）。这只是展示层换皮：内部机制、数值、id（<code>mon_zombie*</code>）一个字节不动，你在存档/日志里看到的仍是这套内部 id。</p>
+
+  <div class="entry" data-search="大楼保安 crawler 焦油人 教程 3F">
+    <h4>大楼保安 <span class="pill on">已实现</span></h4>
+    <div class="meta"><code>mon_zombie_crawler</code> · 教程公寓 3F 专属实例</div>
+    <div class="stats">
+      <div><div class="k">HP</div><div class="v">60</div></div>
+      <div><div class="k">速度</div><div class="v">20</div></div>
+      <div><div class="k">弱点</div><div class="v" style="font-size:11px">头部(大)</div></div>
+    </div>
+    <p>行动极慢、只有半截身体的爬行焦油人——教程楼里你遇到的第一只怪，用来教遭遇/绕行/近战，不是教"打不过就跑"。这一只被特别标记了"大楼保安"这个名字，身上带着<strong>全部楼层的房门钥匙</strong>（但没有大门钥匙）——想搜刮这栋楼，就得搜他的尸体。</p>
+    <div class="callout ok">名字覆盖不改数据：只有这一个具体坐标上的实例叫"大楼保安"，其他地方遇到的同类怪物仍是普通显示。</div>
+  </div>
+
+  <div class="entry" data-search="保安队长 brute 焦油人 教程 1F">
+    <h4>保安队长 <span class="pill on">已实现</span></h4>
+    <div class="meta"><code>mon_zombie_brute</code> · 教程公寓 1F 专属实例</div>
+    <div class="stats">
+      <div><div class="k">HP</div><div class="v">120</div></div>
+      <div><div class="k">速度</div><div class="v">105</div></div>
+      <div><div class="k">钝击甲</div><div class="v">4</div></div>
+      <div><div class="k">穿刺甲</div><div class="v">6</div></div>
+      <div><div class="k">弱点</div><div class="v" style="font-size:11px">头部(小)</div></div>
+    </div>
+    <p>大堂驻守的第二个保安，身上有<strong>大门钥匙</strong>——想从正门体面离开就得处理他。他也是隐藏地下室冰库钥匙的携带者，同一具尸体身上叠加了两把不同的锁。</p>
+  </div>
+
+  <div class="entry" data-search="焦油人浩克 hulk boss 焦油人">
+    <h4>焦油人浩克 <span class="pill on">已实现 · 全程游荡</span></h4>
+    <div class="meta"><code>mon_zombie_hulk</code> · demo 的主要威胁</div>
+    <div class="stats">
+      <div><div class="k">HP</div><div class="v">480</div></div>
+      <div><div class="k">速度</div><div class="v">130</div></div>
+      <div><div class="k">钝击甲</div><div class="v">8</div></div>
+      <div><div class="k">穿刺甲</div><div class="v">12</div></div>
+      <div><div class="k">子弹甲</div><div class="v">10</div></div>
+      <div><div class="k">近战</div><div class="v" style="font-size:11px">3d8+10 穿甲10</div></div>
+    </div>
+    <p>从开局就在镇中心游荡，比你快（你的速度约 100），靠气味和噪音找你。会砸墙推车（直线追击不绕路），特殊攻击包括抓住→举起→砸飞、横扫多格。头部是弱点（护甲打 75 折），<strong>眼睛完全无视物理护甲</strong>——精准打眼是最高效但最难命中的打法。</p>
+    <p>应对方式全是你的选择：绕开它的地盘、稀释气味少制造动静、正面硬刚、或者全程苟着不碰它直接撤离。</p>
+    <div class="callout gap"><b>别烧它的尸体：</b>持续焚烧累计烧穿超过 480 点后，尸体会复活成一只满血 275 HP 的"复活体"（<code>mon_zombie_fiend</code>）。这与削弱活着的浩克无关。</div>
+  </div>
+
+  <div class="entry" data-search="复活体 fiend 焦油人">
+    <h4>复活体 <span class="pill op">机制已实现，无专属摆放</span></h4>
+    <div class="meta"><code>mon_zombie_fiend</code> · 焦油人浩克尸体烧穿后的产物</div>
+    <div class="stats">
+      <div><div class="k">HP</div><div class="v">275</div></div>
+      <div><div class="k">速度</div><div class="v">125</div></div>
+      <div><div class="k">酸抗</div><div class="v">6</div></div>
+      <div><div class="k">热抗</div><div class="v">15</div></div>
+    </div>
+    <p>比浩克本体轻得多（200kg vs 1000kg）——真的只剩焦黑骨架。多一手 2 格距离的拉伸攻击。满血复活，不会带着浩克生前的伤势。</p>
+  </div>
+
+  <div class="entry" data-search="重装丧尸 kevlar brute 凯夫拉 地下室">
+    <h4>重装丧尸（凯夫拉） <span class="pill on">已实现</span></h4>
+    <div class="meta"><code>mon_zombie_kevlar_1</code> · 隐藏地下室 A 组</div>
+    <div class="stats">
+      <div><div class="k">HP</div><div class="v">150</div></div>
+      <div><div class="k">速度</div><div class="v">80</div></div>
+      <div><div class="k">钝击甲</div><div class="v">20</div></div>
+      <div><div class="k">穿刺甲</div><div class="v">30</div></div>
+      <div><div class="k">子弹甲</div><div class="v">24</div></div>
+    </div>
+    <p>与教程楼保安队长同一血统（继承自同一基底），但护甲远超普通焦油人——凯夫拉挡子弹和刀，不挡拳头。关押在铁窗后，可以隔窗投喂让它安静下来，也可以强攻。</p>
+  </div>
+
+  <div class="entry" data-search="重装丧尸浩克 kevlar hulk 凯夫拉 地下室">
+    <h4>重装丧尸浩克（凯夫拉） <span class="pill on">已实现</span></h4>
+    <div class="meta"><code>mon_zombie_kevlar_2</code> · 隐藏地下室 B 组（最终关押室）</div>
+    <div class="stats">
+      <div><div class="k">HP</div><div class="v">300</div></div>
+      <div><div class="k">速度</div><div class="v">75</div></div>
+      <div><div class="k">钝击甲</div><div class="v">30</div></div>
+      <div><div class="k">穿刺甲</div><div class="v">50</div></div>
+      <div><div class="k">子弹甲</div><div class="v">40</div></div>
+    </div>
+    <p>血量比焦油人浩克更低（300 vs 480），但护甲碾压级——"更难杀"的来源是防御而不是耐久。打穿它之后的里屋放着 5A 路线材料的备用来源。</p>
+    <div class="gapbox"><b>已知缺口：</b>爆炸目前对所有生物零伤害（含这两只关押怪）——今天只能靠近战/远程命中或投喂通过，炸不开。</div>
+  </div>
+
+  <div class="entry" data-search="街头 游荡 monstergroup group_zombie 普通焦油人">
+    <h4>街头游荡的焦油人 <span class="pill on">已实现</span></h4>
+    <div class="meta"><code>GROUP_ZOMBIE</code> · 城镇密度刷怪，非固定摆放</div>
+    <p>镇上普通遇到的焦油人绝大多数是标准型（约占权重 47%），此外按真实概率混有肥胖型、生前强壮型、儿童型、爬行型、犬类、警察/军人/医护/消防等职业变种，偶尔（极低概率）会遇到成堆的大型焦油人潮。这是环境难度，不是"守门精英"——不掉钥匙、不解锁任何东西。</p>
+  </div>
+</section>
+
+<section id="items">
+  <h2>关键道具</h2>
+  <p class="lede">下列数值全部来自真实世界的重量/体积数据，一克不改。</p>
+
+  <h3 class="sub">5A 维修材料</h3>
+  <div class="tw"><table>
+    <thead><tr><th>道具</th><th>重量</th><th>体积</th><th>用途</th></tr></thead>
+    <tbody>
+      <tr><td><code>storage_battery</code> 大型蓄电池</td><td class="num">75 kg</td><td class="num">25 L</td><td>固定刷在浩克出生点</td></tr>
+      <tr><td><code>motor</code> 电动机</td><td class="num">46 kg</td><td class="num">30 L</td><td>固定刷在浩克出生点</td></tr>
+      <tr><td><code>cable</code> / <code>e_scrap</code> / <code>duct_tape</code></td><td class="num">10g/14g/2g</td><td class="num">≤5mL</td><td>轻件，顺手搜刮</td></tr>
+    </tbody>
+  </table></div>
+  <p><code>cargo_frame_bridges</code>（货运骨架）主仓上限 <b>80 kg / 60 L</b>——电池+电机合计 121 kg，装不进同一趟，"两趟制"是真实承重数字算出来的结果，不是人为设的门槛。</p>
+
+  <h3 class="sub">5B 炸药</h3>
+  <div class="tw"><table>
+    <thead><tr><th>道具</th><th>爆炸威力</th><th>获取方式</th></tr></thead>
+    <tbody>
+      <tr><td><code>c4</code></td><td class="num">2000</td><td>警局军火柜黑客成功奖励（2 块，合计 4000）</td></tr>
+      <tr><td><code>dynamite</code> / <code>dynamite_bomb</code></td><td class="num">938</td><td>制造线终点，需化学 5 级+专业课本</td></tr>
+      <tr><td><code>grenade</code></td><td class="num">240</td><td>散装搜刮</td></tr>
+      <tr><td><code>pipebomb</code></td><td class="num">300</td><td>制造线中段，无难度门槛，自动学会</td></tr>
+      <tr><td><code>molotov</code></td><td class="num">纵火效果，非冲击</td><td>制造线起点，30 秒即可做出</td></tr>
+    </tbody>
+  </table></div>
+  <p>制造链：<code>molotov</code>（汽油+布，零门槛）→ <code>gunpowder</code>（拆混火药）→ <code>pipebomb</code>（管材+引信，自动学会）→ <code>dynamite</code>（需化学 5 级课本）；<code>fertilizer_commercial</code>（超市园艺区）也能一步转化成炸药原料。</p>
+  <div class="gapbox"><b>已知缺口：</b>爆炸目前不对生物造成伤害，也不发出噪音——今天炸红雾不会引来浩克，这与设计意图"炸得越欢来得越快"不符，是尚未实现的部分。</div>
+
+  <h3 class="sub">5C 医疗与食物</h3>
+  <div class="tw"><table>
+    <thead><tr><th>道具</th><th>数值</th></tr></thead>
+    <tbody>
+      <tr><td><code>bandages</code> 绷带</td><td>止血 4，减免出血 15</td></tr>
+      <tr><td><code>quikclot</code> 止血粉</td><td>减免出血 20（最强单件止血）</td></tr>
+      <tr><td><code>meat_cooked</code> 熟肉</td><td class="num">402 kcal</td></tr>
+      <tr><td><code>protein_bar_evac</code> 多蛋白口粮</td><td class="num">800 kcal</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="sub">教程楼陷阱与武器</h3>
+  <div class="tw"><table>
+    <thead><tr><th>道具</th><th>数值</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><code>tr_nailboard</code> 钉板陷阱</td><td>可见度 6，可绕开</td><td><span class="pill gap">缺口</span></td></tr>
+      <tr><td><code>tr_caltrops</code> 铁蒺藜</td><td>密铺封锁区域</td><td><span class="pill on">已实现</span></td></tr>
+      <tr><td><code>nailboard</code> 钉板棒（可制作）</td><td>钝击 12 / 刺 3，5 分钟自动学会</td><td><span class="pill on">已实现</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="gapbox"><b>已知缺口：</b>钉板陷阱的数据和拆解配方都齐全，但踩踏触发效果尚未接入引擎——当前实机踩上去不会造成任何后果，也没有玩家侧的拆解入口。</div>
+</section>
+
+<section id="crafting">
+  <h2>制作与建造</h2>
+
+  <h3 class="sub">材料池系统 <span class="pill on">已实现</span></h3>
+  <p>5660+ 条真实制作配方全部可用。制作面板会自动把你身上、以及<strong>附近半径 6 格</strong>的物品都纳入候选。</p>
+  <p>额外的<strong>虚拟拆解</strong>功能是本作自创：把你"愿意牺牲"的物品拖进材料池，系统会假设性地拆解它、把拆解产出并入可用材料——需要你手动确认"托进池子"才生效，不会偷偷拆你东西。</p>
+
+  <h3 class="sub">建造系统 <span class="pill on">已实现</span></h3>
+  <p>775+ 条真实 construction 常驻编译，在可建造的地形/家具前按交互键会弹出"建造"选项。5A 路线修复去雾装置走的就是这套系统里真实的 <code>REPAIR</code> 分类构造，材料是电池+电机+电缆+电子废料+胶带，不需要任何专门为它新写的系统。</p>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="3">
+<div class="tabindex"><span class="til">本页目录</span>
+  <a href="#town">G市城镇</a><span class="sep">·</span>
+  <a href="#tutorial">新手教程公寓</a><span class="sep">·</span>
+  <a href="#basement">隐藏地下室</a><span class="sep">·</span>
+  <a href="#police">警局</a>
+</div>
+<section id="town">
+  <h2>G市城镇</h2>
+  <p class="lede">程序生成的小镇，以中心十字路口为种子向四方向生长街道，建筑摆放分两种规则。</p>
+  <div class="tw"><table>
+    <thead><tr><th>摆放方式</th><th>规则</th><th>适用建筑</th></tr></thead>
+    <tbody>
+      <tr><td><b>加权随机</b></td><td>按权重从商店/公园/住宅三个池子抽取，不保证某类建筑一定出现</td><td>警局、超市、教堂</td></tr>
+      <tr><td><b>强制保留摆放</b></td><td>不走随机池，摆放失败会向外扩环重试，彻底失败才报错</td><td>新手教程公寓——保证 100% 存在</td></tr>
+    </tbody>
+  </table></div>
+  <p>去雾装置的选点走"超市优先、找不到超市则回退最远十字路口"的双层规则，同样保证 100% 存在。</p>
+</section>
+
+<section id="tutorial">
+  <h2>新手教程公寓</h2>
+  <p class="lede">唯一、固定、手工排布的四层教程楼——不走随机商店池，每局内容完全一致。</p>
+  <div class="tower">
+    <div class="row"><div class="fl">4F</div><div class="fc"><b style="color:var(--white)">醒来层。</b>阿伦重伤躺在楼梯口，救不救是你的选择。一处贯穿大洞逼你绕道大厅——大厅里有本层的全部搜刮内容。</div></div>
+    <div class="row"><div class="fl">3F</div><div class="fc"><b style="color:var(--white)">大楼保安把守。</b>教遇怪+搜尸——他身上有全部房门钥匙。</div></div>
+    <div class="row"><div class="fl">2F</div><div class="fc"><b style="color:var(--white)">陷阱场。</b>钉板稀摆在咽喉处（拆解学制作），其余密铺铁蒺藜。</div></div>
+    <div class="row"><div class="fl">1F</div><div class="fc"><b style="color:var(--white)">保安队长把守大门。</b>综合考核，前三层所学在此连成一套。</div></div>
+  </div>
+
+  <h3 class="sub" id="orthogonal">正交解法——不止一条路</h3>
+  <div class="tw"><table>
+    <thead><tr><th>解法</th><th>状态</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><b>翻窗离楼</b></td><td><span class="pill on">已实现</span></td><td>开窗或砸窗都能通行，坠落伤自担</td></tr>
+      <tr><td><b>贯穿洞跳层</b></td><td><span class="pill on">已实现</span></td><td>4F 直落 1F，跳过全部楼层，硬扛跌落伤</td></tr>
+      <tr><td><b>噪音调虎离山</b></td><td><span class="pill on">已实现</span></td><td>扔东西制造噪音把保安引离岗位</td></tr>
+      <tr><td><b>撬锁</b></td><td><span class="pill gap">未实现</span></td><td>数据存在但交互层没有撬锁动词，目前只能砸门</td></tr>
+      <tr><td><b>床单绳垂降</b></td><td><span class="pill gap">未实现</span></td><td>原始设计前提有误——真实上游机制是抓钩+空气边缘攀爬，不是布料搓绳</td></tr>
+    </tbody>
+  </table></div>
+  <p>钥匙链是推荐动线，不是唯一动线——楼梯间的门永远不会上锁。</p>
+</section>
+
+<section id="basement">
+  <h2>隐藏地下室 <span class="pill on">已实现</span></h2>
+  <p class="lede">入口在教程楼 1F 楼梯间，是一条投喂教学 + 探索奖励链条。</p>
+  <div class="tw"><table>
+    <thead><tr><th>房间</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><b>冰库</b>（室 C）</td><td>需要保安队长身上的钥匙开锁，内有真实肉类，是投喂两组关押怪的粮食来源</td></tr>
+      <tr><td><b>A 组关押室</b></td><td>重装丧尸（凯夫拉）+ 铁窗（可隔窗投喂）+ 少量武器；内门后藏着开启 B 组的卡片</td></tr>
+      <tr><td><b>B 组关押室</b></td><td>重装丧尸浩克（凯夫拉）+ 铁窗；内门后是最终奖励——额外的电池+电机（5A 材料的备用来源，不替代浩克出生点那份保证摆放）</td></tr>
+    </tbody>
+  </table></div>
+  <p>免战方式是投喂——两只怪出场时怒气值被刻意调低，喂饱真实肉类会让它们进入无视状态，安全通过或搜刮；也可以直接强攻。</p>
+</section>
+
+<section id="police">
+  <h2>警局 <span class="pill on">已实现</span> <span class="pill op">可选</span></h2>
+  <p class="lede">一台真实的黑客小游戏，难度等级 3，不打也能通关。</p>
+  <div class="routes" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
+    <div class="route" style="border-top-color:var(--on)"><h4>成功</h4><p style="font-size:12.8px">解锁军火柜：优质武器弹药 + <b>2 块 C4</b></p></div>
+    <div class="route"><h4>失败·关闭终端</h4><p style="font-size:12.8px">无风险挫败，这条线就此关死</p></div>
+    <div class="route" style="border-top-color:var(--tk)"><h4>失败·触发警报</h4><p style="font-size:12.8px">真实噪音事件，吸引焦油人和浩克</p></div>
+    <div class="route" style="border-top-color:var(--gap)"><h4>失败·放出机器人</h4><p style="font-size:12.8px">4-8 只攻击性机器人在你附近生成</p></div>
+  </div>
+  <div class="gapbox">警局真实难度等级为 3——技能为 0、智力 8 的角色理论上永远无法破解成功，这是上游真实数值，不是本项目故意调难。</div>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="4">
+<div class="tabindex"><span class="til">本页目录</span>
+  <a href="#lore">红雾与焦油人</a><span class="sep">·</span>
+  <a href="#npcs">重要人物</a><span class="sep">·</span>
+  <a href="#routes">四条撤离路线</a><span class="sep">·</span>
+  <a href="#ending">结局</a>
+</div>
+<section id="lore">
+  <h2>红雾与焦油人</h2>
+  <p class="lede">红雾是镇外警戒环的叙事身份——外星焦油物质在地表的呈现，和焦油人、去雾装置同源。</p>
+  <p>被红雾接触/渗透的人被改造成焦油人；去雾装置是遏制这股力量的遗留物。这三块"外星元素"统一到同一条脉络上，机制上是真实模拟的系统，只是叙事身份换了皮。</p>
+</section>
+
+<section id="npcs">
+  <h2>重要人物</h2>
+
+  <div class="entry" data-search="波德 bode 邻居 英雄">
+    <h4>波德</h4>
+    <p>G市"无人区"边缘一个没有头衔、外表朴素的平民英雄——光头、亮黄连体工装、外白内红斗篷、红手套红靴。全城废土色调里唯一鲜艳成套的人，这身打扮本身就是"这个人不对劲"的线索。对力量佛系厌倦，对生活充满烟火气，出手不为名分。</p>
+  </div>
+
+  <div class="entry" data-search="阿伦 alun 义体 徒弟">
+    <h4>阿伦</h4>
+    <p>波德的（自封）徒弟，义体改造幸存者——双腿、一条手臂、头部和部分躯干是机械，另一条手臂和部分躯干是肉身。独自挑战焦油人浩克证明自己而重伤，倒在你出生的教程公寓楼梯口。救不救、救了要不要和他说话，会分出两条完全不同的命运线。</p>
+  </div>
+</section>
+
+<section id="routes">
+  <h2>四条撤离路线</h2>
+  <p class="lede">处理红雾是撤离唯一的必经步骤，四选一，谁先达成谁算数。</p>
+  <div class="routes">
+    <div class="route ra"><h4>5A · 修好装置</h4><ol>
+      <li>找到去雾装置（超市优先，没超市则最远路口）</li>
+      <li>去浩克出生点取电池+电机</li>
+      <li>分两趟扛（真实负重上限）</li>
+      <li>真实建造菜单修复 → 整圈永久解除</li>
+    </ol></div>
+    <div class="route rb"><h4>5B · 炸药凿穿</h4><ol>
+      <li>凑齐任意真实炸药</li>
+      <li>在雾中引爆</li>
+      <li>爆心一块永久驱散，可多次凿穿</li>
+    </ol></div>
+    <div class="route rc"><h4>5C · 硬扛穿雾</h4><ol>
+      <li>备足医疗物资与食水</li>
+      <li>顶着伤害走穿，回血跑赢流失</li>
+      <li>每次穿越都要重新消耗物资</li>
+    </ol></div>
+    <div class="route rg"><h4>5G · 借力波德</h4><ol>
+      <li>先亲眼见过红雾</li>
+      <li>找到波德，告知红雾存在</li>
+      <li>再次靠近红雾边缘，他一拳全清</li>
+    </ol></div>
+  </div>
+  <p>红雾消失不等于通关——你还得自己走出去。</p>
+
+  <h3 class="sub" id="ending">结局</h3>
+  <p>越过红雾外沿的第一帧即判定通关，弹出结算画面：游玩时长、生存天数、击杀数、使用的路线、搜刮物品数。</p>
+</section>
+</div>
+
+</div>
+<footer>中文版 v0.1 · 英文版计划下个版本支持 · 内容随开发进度持续更新</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var search = document.getElementById('search');
+  var count = document.getElementById('searchcount');
+  var entries = Array.prototype.slice.call(document.querySelectorAll('.entry'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section'));
+  var content = document.querySelector('.content');
+  var tabpanels = Array.prototype.slice.call(document.querySelectorAll('.tabpanel'));
+  var tabbtns = Array.prototype.slice.call(document.querySelectorAll('.tabbtn'));
+  var groups = Array.prototype.slice.call(document.querySelectorAll('nav.toc .grp'));
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var currentTab = '0';
+  var animating = false;
+
+  // ── 分区（Tab）切换：翻页式 3D 翻转 + 玻璃扫描闪烁，尊重 prefers-reduced-motion ──
+  function setTabUI(idx){
+    tabbtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tab')===idx); });
+    groups.forEach(function(g){ g.classList.toggle('tab-dim', g.getAttribute('data-tab')!==idx); });
+    currentTab = idx;
+  }
+
+  function switchTab(idxRaw, after){
+    var idx = String(idxRaw);
+    var newPanel = document.querySelector('.tabpanel[data-tab="'+idx+'"]');
+    if(!newPanel) return;
+    if(idx === currentTab){ if(after) after(); return; }
+    var oldPanel = document.querySelector('.tabpanel.active');
+    setTabUI(idx);
+
+    if(reduceMotion || animating){
+      if(oldPanel) oldPanel.classList.remove('active');
+      newPanel.classList.add('active');
+      if(after) after();
+      return;
+    }
+    animating = true;
+    content.classList.add('flipping');
+    if(!oldPanel){
+      newPanel.classList.add('active');
+      animating = false;
+      content.classList.remove('flipping');
+      if(after) after();
+      return;
+    }
+    oldPanel.classList.add('turn-out');
+    oldPanel.addEventListener('animationend', function onOut(){
+      oldPanel.removeEventListener('animationend', onOut);
+      oldPanel.classList.remove('active','turn-out');
+      newPanel.classList.add('active','turn-in');
+      newPanel.addEventListener('animationend', function onIn(){
+        newPanel.removeEventListener('animationend', onIn);
+        newPanel.classList.remove('turn-in');
+        content.classList.remove('flipping');
+        animating = false;
+        if(after) after();
+      });
+    });
+  }
+
+  tabbtns.forEach(function(b){
+    b.addEventListener('click', function(){ switchTab(b.getAttribute('data-tab')); });
+  });
+
+  // 侧栏 / 页内目录链接：同分区内用原生锚点跳转；跨分区先翻页再跳转
+  var allTocLinks = Array.prototype.slice.call(document.querySelectorAll('nav.toc a, .tabindex a'));
+  allTocLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var hash = a.getAttribute('href');
+      var target = document.querySelector(hash);
+      if(!target) return;
+      var panel = target.closest('.tabpanel');
+      if(!panel) return;
+      var tab = panel.getAttribute('data-tab');
+      if(tab !== currentTab){
+        e.preventDefault();
+        switchTab(tab, function(){
+          target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block:'start'});
+        });
+      }
+    });
+  });
+
+  // ── 搜索：过滤逻辑不变；回车跳到第一条匹配项，自动切到它所在的分区 ──
+  search.addEventListener('input', function(){
+    var q = search.value.trim().toLowerCase();
+    if(!q){
+      entries.forEach(function(e){ e.classList.remove('hide'); });
+      sections.forEach(function(s){ s.classList.remove('hide'); });
+      count.textContent = '';
+      return;
+    }
+    var shown = 0;
+    entries.forEach(function(e){
+      var hay = (e.getAttribute('data-search')||'') + ' ' + e.textContent;
+      var match = hay.toLowerCase().indexOf(q) !== -1;
+      e.classList.toggle('hide', !match);
+      if(match) shown++;
+    });
+    var entrySections = ['bestiary','items'];
+    sections.forEach(function(s){
+      if(entrySections.indexOf(s.id) === -1) return;
+      var anyVisible = s.querySelectorAll('.entry:not(.hide)').length > 0;
+      s.classList.toggle('hide', !anyVisible);
+    });
+    count.textContent = shown + ' 条匹配' + (shown ? '（回车跳转到第一条）' : '');
+  });
+
+  search.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter') return;
+    var firstMatch = entries.filter(function(en){ return !en.classList.contains('hide'); })[0];
+    if(!firstMatch) return;
+    var panel = firstMatch.closest('.tabpanel');
+    var tab = panel ? panel.getAttribute('data-tab') : currentTab;
+    switchTab(tab, function(){
+      firstMatch.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block:'center'});
+    });
+  });
+
+  // ── 阅读进度高亮（仅当前可见分区内的 section 会真正触发 intersect）──
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var obs = new IntersectionObserver(function(entriesList){
+    entriesList.forEach(function(en){
+      if(en.isIntersecting){
+        links.forEach(function(l){ l.classList.remove('current'); });
+        var id = en.target.getAttribute('id');
+        var link = document.querySelector('nav.toc a[href="#'+id+'"]');
+        if(link) link.classList.add('current');
+      }
+    });
+  }, {rootMargin:'-10% 0px -80% 0px'});
+  sections.forEach(function(s){ if(s.id) obs.observe(s); });
+
+  // ── 初始激活分区：默认「简介」，若带 #hash 直接命中某个分区则直接开在那 ──
+  var initialTab = '0';
+  if(location.hash){
+    var ht = document.querySelector(location.hash);
+    if(ht){
+      var hp = ht.closest('.tabpanel');
+      if(hp) initialTab = hp.getAttribute('data-tab');
+    }
+  }
+  setTabUI(initialTab);
+  tabpanels.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-tab')===initialTab); });
+  if(location.hash){
+    var ht2 = document.querySelector(location.hash);
+    if(ht2) setTimeout(function(){ ht2.scrollIntoView({block:'start'}); }, 0);
+  }
+})();
+</script>
