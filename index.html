@@ -64,45 +64,29 @@
 
   nav{
     position:absolute; top:0; left:0; right:0; z-index:6;
-    display:flex; justify-content:space-between; align-items:flex-start;
     padding:20px clamp(18px,4vw,40px);
     background:linear-gradient(180deg, rgba(5,4,9,.55), transparent);
     backdrop-filter:blur(3px);
   }
-  nav .navleft{display:flex; flex-direction:column; gap:10px}
-  nav .mark{font-family:var(--mono); font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink)}
-  nav .tag{
-    position:relative; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--glass); border:1px solid var(--glass-line); background:var(--glass-dim);
-    padding:6px 13px;
+  nav .navleft{display:flex; flex-direction:column; align-items:flex-start; gap:10px}
+  nav .mark{font-family:var(--mono); font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); margin-bottom:2px}
+  nav .navlink{
+    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); text-decoration:none; background:none; border:none; padding:0; cursor:pointer;
+    transition:color .25s ease;
   }
-  nav .tag::before,nav .tag::after{content:"";position:absolute;top:-2px;width:5px;height:5px;border-top:1px solid var(--glass);}
-  nav .tag::before{left:-2px;border-left:1px solid var(--glass)}
-  nav .tag::after{right:-2px;border-right:1px solid var(--glass)}
-  nav .devstatus{display:flex; align-items:center; gap:9px}
-  nav .devstatus .bar{position:relative; width:36px; height:3px; background:rgba(243,237,224,.12); overflow:hidden}
+  nav .navlink:hover{color:var(--fire)}
+  nav .navlink.active{color:var(--glass)}
+  nav .devstatus{display:flex; align-items:center; gap:9px; color:var(--ink-faint); font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase}
+  nav .devstatus .bar{position:relative; width:30px; height:2px; background:rgba(243,237,224,.14); overflow:hidden}
   nav .devstatus .bar::after{
     content:""; position:absolute; top:0; left:0; height:100%; width:40%;
     background:var(--glass); box-shadow:0 0 6px var(--glass);
     animation:devsweep 2.2s ease-in-out infinite;
   }
   @keyframes devsweep{0%{left:-40%} 100%{left:100%}}
-  nav .support-link{
-    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--ink-faint); text-decoration:none; width:fit-content;
-    transition:color .25s ease;
-  }
-  nav .support-link:hover{color:var(--fire)}
-  nav .navright{display:flex; align-items:center; gap:14px}
-  nav .langsw{display:flex; border:1px solid var(--line)}
-  nav .langsw button{
-    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--ink-faint); background:transparent; border:none; padding:6px 11px; cursor:pointer;
-    transition:color .25s ease, background .25s ease;
-  }
-  nav .langsw button+button{border-left:1px solid var(--line)}
-  nav .langsw button:hover{color:var(--ink)}
-  nav .langsw button.active{color:var(--glass); background:var(--glass-dim)}
+  nav .langsw{display:flex; align-items:center; gap:8px}
+  nav .langsw .sep{color:var(--ink-faint); opacity:.4; font-family:var(--mono); font-size:10px}
 
   .herobody{
     position:relative; z-index:5; padding:0 clamp(20px,6vw,64px) clamp(60px,9vh,110px);
@@ -307,10 +291,8 @@
   <nav>
     <div class="navleft">
       <div class="mark">Alun Games</div>
-      <a class="support-link" href="support.html" data-i18n="nav.support">Contact Support</a>
-    </div>
-    <div class="navright">
-      <div class="tag devstatus">
+      <a class="navlink" href="support.html" data-i18n="nav.support">Contact Support</a>
+      <div class="devstatus">
         <span data-i18n="nav.dev">Pre-Alpha</span>
         <span class="bar"></span>
       </div>
@@ -584,9 +566,16 @@
   }
 
   var sw = document.getElementById('langsw');
-  LANGS.forEach(function(l){
+  LANGS.forEach(function(l, i){
+    if (i > 0) {
+      var sep = document.createElement('span');
+      sep.className = 'sep';
+      sep.textContent = '/';
+      sw.appendChild(sep);
+    }
     var b = document.createElement('button');
     b.type = 'button';
+    b.className = 'navlink';
     b.dataset.lang = l.code;
     b.textContent = l.label;
     b.addEventListener('click', function(){ applyLang(l.code); });
