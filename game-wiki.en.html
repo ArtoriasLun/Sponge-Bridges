@@ -1,0 +1,658 @@
+<title>Survivor's Dossier: City G</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+  /* ══ ui-style: Glass Holographic Terminal ══
+     Same color-token set as sponge-bridges-homepage.html (--bg/--bg2/--glass/--fire/--ink family),
+     just poured into this page's own variable names, keeping the dossier's own glass-terminal
+     layout/density; functional colors (on/tk/gap) stay independent status semantics and don't
+     follow the primary brand palette. */
+  :root{
+    --deep:#050409; --cyan:#3fd6c9; --white:#f3ede0;
+    --dim:rgba(243,237,224,.62); --dim2:rgba(243,237,224,.36);
+    --fill:rgba(5,4,9,.72); --subtle:rgba(63,214,201,.05); --active:rgba(63,214,201,.20);
+    --lineB:rgba(63,214,201,.32); --lineD:rgba(243,237,224,.14);
+    --on:#74C9A4; --tk:#f2954a; --gap:#D95F57; --fire-dim:#c65a2e;
+    --raj:'Rajdhani','Noto Sans SC',sans-serif; --mono:'Share Tech Mono','Noto Sans SC',monospace;
+    --cjk:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--deep) fixed;color:var(--dim);font-family:var(--cjk);font-size:14.5px;line-height:1.78;
+    background-image:radial-gradient(1000px 600px at 20% -80px, rgba(63,214,201,.08), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(63,214,201,.02) 0 1px, transparent 1px 3px),
+      linear-gradient(rgba(63,214,201,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(63,214,201,.03) 1px, transparent 1px);
+    background-size:auto,auto,26px 26px,26px 26px}
+  a{color:var(--cyan)}
+  code{font-family:var(--mono);font-size:.85em;background:var(--subtle);border:1px solid var(--lineD);
+    border-radius:3px;padding:0 6px;color:#a9c4dd;white-space:nowrap}
+  strong{color:var(--white);font-weight:500}
+  .num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+
+  .shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+  aside{position:sticky;top:0;height:100vh;overflow-y:auto;background:rgba(4,11,20,.5);
+    border-right:1px solid var(--lineB);padding:22px 18px 60px}
+  main{min-width:0}
+  .masthead{padding:52px clamp(20px,4vw,48px) 32px;border-bottom:1px solid var(--lineB);position:relative}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gap)}
+  .masthead h1{font-family:var(--raj);font-weight:700;font-size:clamp(28px,4vw,42px);color:var(--white);
+    text-shadow:0 0 16px rgba(255,255,255,.35);margin:10px 0 8px;letter-spacing:.02em}
+  .masthead .sub{color:var(--dim);max-width:48em;font-size:14px}
+  .content{padding:10px clamp(20px,4vw,48px) 90px;max-width:920px}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--lineB)}}
+
+  .brand{font-family:var(--raj);font-weight:700;font-size:18px;color:var(--white)}
+  .brand small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--dim2);
+    font-weight:400;margin-top:3px;text-transform:uppercase}
+  #search{width:100%;margin:16px 0 6px;padding:9px 11px;border:1px solid var(--lineB);background:var(--subtle);
+    color:var(--white);font-family:var(--cjk);font-size:13.5px}
+  #search:focus{outline:1px solid var(--cyan);outline-offset:1px}
+  .searchcount{font-family:var(--mono);font-size:11px;color:var(--dim2);margin-bottom:14px;min-height:1.4em}
+  nav.toc{font-size:13.3px}
+  nav.toc .grp{margin-top:16px}
+  nav.toc .grp>b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--dim2);margin-bottom:6px}
+  nav.toc a{display:block;color:var(--dim);text-decoration:none;padding:3px 0 3px 10px;border-left:2px solid transparent}
+  nav.toc a:hover{color:var(--white);border-left-color:var(--lineB)}
+  nav.toc a.current{color:var(--white);border-left-color:var(--cyan);font-weight:700;text-shadow:0 0 8px rgba(255,255,255,.3)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:18px 0 4px;font-size:12.5px;color:var(--dim)}
+  .legend span{display:inline-flex;gap:6px;align-items:center}
+  .pill{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;
+    padding:1px 7px;border:1px solid var(--lineD);text-transform:uppercase;vertical-align:1px;white-space:nowrap}
+  .pill.on{color:var(--on)} .pill.tk{color:var(--tk)} .pill.gap{color:var(--gap)} .pill.op{color:var(--dim2)}
+
+  section{padding:44px 0;border-bottom:1px solid var(--lineD)}
+  section:last-child{border-bottom:0}
+  section>h2{font-family:var(--raj);font-weight:700;font-size:23px;color:var(--white);letter-spacing:.03em;
+    text-shadow:0 0 12px rgba(255,255,255,.3);margin:0 0 6px;padding-bottom:9px;border-bottom:1px solid var(--lineB);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  section>.lede{color:var(--dim);max-width:60em;margin-bottom:20px;font-size:13.6px}
+  h3.sub{font-family:var(--raj);font-weight:700;font-size:17px;color:var(--white);margin:28px 0 8px}
+  h4.mini{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim2);margin:16px 0 6px}
+  p{margin:9px 0;font-size:13.8px}
+
+  /* ── glass module (entries, cards) ── */
+  .entry{position:relative;background:var(--subtle);border:1px solid var(--lineD);padding:16px 18px;margin:12px 0}
+  .entry::before,.entry::after{content:"";position:absolute;width:7px;height:7px}
+  .entry::before{top:0;left:0;border-top:1px solid rgba(63,214,201,.6);border-left:1px solid rgba(63,214,201,.6)}
+  .entry::after{top:0;right:0;border-top:1px solid rgba(63,214,201,.6);border-right:1px solid rgba(63,214,201,.6)}
+  .entry h4{font-family:var(--raj);font-weight:700;font-size:16px;color:var(--white);margin:0 0 3px;
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .entry .meta{font-family:var(--mono);font-size:11px;color:var(--dim2);margin-bottom:8px}
+  .callout{margin-top:9px;padding:8px 12px;border-left:2px solid var(--gap);background:var(--subtle);font-size:12.6px}
+  .callout.gap{border-left-color:var(--gap)} .callout.ok{border-left-color:var(--on)}
+
+  .tower{border:1px solid var(--lineD);margin:12px 0}
+  .tower .row{display:grid;grid-template-columns:52px 1fr;border-top:1px solid var(--lineD)}
+  .tower .row:first-child{border-top:0}
+  .tower .fl{background:var(--subtle);font-family:var(--raj);font-weight:700;font-size:17px;color:var(--white);
+    display:flex;align-items:center;justify-content:center}
+  .tower .fc{background:var(--fill);padding:9px 13px;font-size:12.8px;color:var(--dim)}
+
+  .gapbox,.tkbox,.okbox{border:1px dashed var(--lineD);padding:10px 14px;margin:14px 0;font-size:12.8px;background:var(--subtle)}
+  .gapbox{border-color:rgba(217,95,87,.4)} .gapbox b{color:var(--gap)}
+  .tkbox{border-color:rgba(217,154,78,.4)} .tkbox b{color:var(--tk)}
+  .okbox{border-color:rgba(116,201,164,.4)} .okbox b{color:var(--on)}
+
+  footer{padding:28px clamp(20px,4vw,48px) 60px;font-family:var(--mono);font-size:11px;color:var(--dim2);
+    border-top:1px solid var(--lineB)}
+  .hide{display:none!important}
+  ::selection{background:var(--active);color:var(--white)}
+
+  /* ══ HUD status-color vocabulary: GlassCyan(normal)/SignalOrange(alert)/VitalRed(critical)/SignalGreen(good) ══
+     Same semantic set as csrc/UI/StatusGlyphs.cs — every bar/pip component on this page follows it,
+     no new color language invented here ══ */
+
+  /* ── tiered pip bar (tierpips): finite-step remaining-amount stats like thirst/fatigue ── */
+  .tierpips{display:flex;gap:4px;align-items:center}
+  .tierpips i{width:11px;height:11px;border:1px solid var(--lineD);background:transparent;display:inline-block}
+  .tierpips i.s0{background:var(--cyan);border-color:var(--cyan)}
+  .tierpips i.s1{background:var(--tk);border-color:var(--tk)}
+  .tierpips i.s2{background:var(--gap);border-color:var(--gap)}
+  .tierlabels{display:flex;gap:4px;font-family:var(--mono);font-size:9.5px;color:var(--dim2);margin-top:5px}
+  .tierlabels span{flex:1;text-align:center;min-width:11px}
+
+  /* ── need row: hunger is a continuous curve, so a gradient bar instead of stepped pips ── */
+  .needrow{margin:16px 0}
+  .needlbl{font-family:var(--raj);font-weight:700;font-size:14px;color:var(--white);margin-bottom:7px}
+  .gradientbar{height:11px;border:1px solid var(--lineD);background:linear-gradient(90deg,var(--cyan),var(--tk) 55%,var(--gap));opacity:.9}
+  .neednote{font-size:11.5px;color:var(--dim2);margin-top:5px}
+
+  /* ── comparison bar (mbar): intensity values like armor coverage — width only, no numbers ── */
+  .mbar{display:flex;align-items:center;gap:10px;margin:7px 0}
+  .mlbl{width:78px;font-family:var(--mono);font-size:10.5px;color:var(--dim2);flex-shrink:0}
+  .mtrack{flex:1;height:9px;border:1px solid var(--lineD);background:var(--fill);position:relative}
+  .mfill{height:100%}
+  .mfill.ok{background:var(--cyan)}
+  .mfill.crit{background:var(--gap)}
+
+  /* ── bestiary stat pips (mstats): shorthand for intensity stats like durability/speed/armor ── */
+  .mstats{display:flex;flex-wrap:wrap;gap:16px 20px;margin:10px 0}
+  .mstat{display:flex;align-items:center;gap:6px}
+  .mstat .ml{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim2)}
+  .mstat .mp{display:flex;gap:2px}
+  .mstat .mp i{width:7px;height:7px;border:1px solid var(--lineD);display:inline-block}
+  .mstat .mp i.f{background:var(--cyan);border-color:var(--cyan)}
+  .mstat.weak .mp i.f{background:var(--gap);border-color:var(--gap)}
+  .mstat .txt{font-family:var(--mono);font-size:10px;color:var(--dim)}
+
+  /* ══ Overview tab ══ */
+  .intro-wrap{display:grid;grid-template-columns:minmax(180px,280px) 1fr;gap:28px;align-items:start}
+  @media(max-width:720px){.intro-wrap{grid-template-columns:1fr}}
+  .intro-art{position:relative;aspect-ratio:3/4;background:var(--fill);border:1px solid var(--lineD);overflow:hidden}
+  .intro-art::before,.intro-art::after{content:"";position:absolute;top:0;width:12px;height:12px;z-index:2}
+  .intro-art::before{left:0;border-top:1px solid var(--cyan);border-left:1px solid var(--cyan)}
+  .intro-art::after{right:0;border-top:1px solid var(--cyan);border-right:1px solid var(--cyan)}
+  .intro-art img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block;opacity:0;transition:opacity .5s ease}
+  .intro-art img.loaded{opacity:1}
+  .intro-art .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:16px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);
+    background:repeating-linear-gradient(135deg, rgba(243,237,224,.03) 0 2px, transparent 2px 14px), var(--fill)}
+  .intro-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--tk);margin-bottom:10px}
+  .intro-copy h3{font-family:var(--raj);font-weight:700;font-size:20px;color:var(--white);margin:0 0 10px}
+  .intro-copy p{font-size:14px;max-width:56em}
+  .tag-plat{position:relative;display:inline-flex;gap:8px;align-items:center;margin-top:18px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--cyan);border:1px solid var(--lineB);background:var(--active);padding:7px 14px}
+  .tag-plat::before,.tag-plat::after{content:"";position:absolute;top:-2px;width:5px;height:5px;border-top:1px solid var(--cyan)}
+  .tag-plat::before{left:-2px;border-left:1px solid var(--cyan)}
+  .tag-plat::after{right:-2px;border-right:1px solid var(--cyan)}
+  .tag-plat b{color:var(--white);font-weight:600;letter-spacing:.1em}
+  .pillars3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lineD);margin-top:26px;border:1px solid var(--lineD)}
+  @media(max-width:640px){.pillars3{grid-template-columns:1fr}}
+  .pillars3>div{background:var(--fill);padding:18px 16px}
+  .pillars3 .pn{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.08em}
+  .pillars3 h4{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white);margin:6px 0 4px}
+  .pillars3 p{font-size:12.4px;margin:0;color:var(--dim)}
+
+  /* ══ tab bar + in-page mini index ══ */
+  .tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .tabbtn{position:relative;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+    color:var(--dim);background:var(--subtle);border:1px solid var(--lineD);padding:8px 15px;cursor:pointer;
+    transition:color .2s ease,border-color .2s ease,background .2s ease}
+  .tabbtn:hover{color:var(--white);border-color:var(--lineB)}
+  .tabbtn.active{color:var(--white);background:var(--active);border-color:var(--lineB)}
+  .tabbtn.active::before,.tabbtn.active::after{content:"";position:absolute;top:-2px;width:5px;height:5px;border-top:1px solid var(--cyan)}
+  .tabbtn.active::before{left:-2px;border-left:1px solid var(--cyan)}
+  .tabbtn.active::after{right:-2px;border-right:1px solid var(--cyan)}
+
+  .tabindex{display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center;margin:0 0 30px;padding:10px 14px;
+    border:1px solid var(--lineD);background:var(--subtle);font-size:12px}
+  .tabindex .til{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);margin-right:6px}
+  .tabindex a{color:var(--dim);text-decoration:none;padding:2px 8px;border:1px solid transparent}
+  .tabindex a:hover{color:var(--white);border-color:var(--lineD)}
+  .tabindex .sep{color:var(--dim2)}
+
+  /* ══ inter-section "page turn" transition: 3D flip + glass scan flicker, echoing the homepage's q-fade glitch flicker ══ */
+  .content{position:relative;perspective:1800px}
+  .content::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;z-index:5;
+    background:repeating-linear-gradient(0deg, rgba(63,214,201,.10) 0 1px, transparent 1px 3px);
+    mix-blend-mode:screen}
+  .content.flipping::before{animation:scanFlicker .62s steps(7) forwards}
+  @keyframes scanFlicker{0%{opacity:.55}14%{opacity:.05}28%{opacity:.4}44%{opacity:.08}60%{opacity:.32}80%{opacity:.06}100%{opacity:0}}
+  .tabpanel{display:none;transform-style:preserve-3d}
+  .tabpanel.active{display:block}
+  .tabpanel.turn-out{display:block;animation:pageTurnOut .28s cubic-bezier(.4,0,.7,1) forwards;transform-origin:left center}
+  .tabpanel.turn-in{animation:pageTurnIn .34s cubic-bezier(.16,1,.3,1) forwards;transform-origin:left center}
+  @keyframes pageTurnOut{
+    0%{opacity:1;transform:rotateY(0deg) translateX(0);filter:brightness(1) blur(0)}
+    35%{opacity:.35;transform:rotateY(-7deg) translateX(-8px);filter:brightness(1.7) blur(1px)}
+    100%{opacity:0;transform:rotateY(-15deg) translateX(-18px);filter:brightness(.5) blur(2.5px)}
+  }
+  @keyframes pageTurnIn{
+    0%{opacity:0;transform:rotateY(15deg) translateX(18px);filter:brightness(1.7) blur(2.5px)}
+    45%{opacity:.5;transform:rotateY(-4deg) translateX(-4px);filter:brightness(1.3) blur(1px)}
+    100%{opacity:1;transform:rotateY(0deg) translateX(0);filter:brightness(1) blur(0)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .content::before{display:none}
+    .tabpanel.turn-out,.tabpanel.turn-in{animation:none!important;transform:none!important;filter:none!important;opacity:1!important}
+  }
+
+  nav.toc .grp.tab-dim{opacity:.4}
+  nav.toc .grp.tab-dim>b{color:var(--dim2)}
+</style>
+
+<div class="shell">
+<aside>
+  <div class="brand">Survivor's Dossier<small>Survivor's Dossier · City G</small></div>
+  <input id="search" type="text" placeholder="Search bestiary / locations…" autocomplete="off">
+  <div class="searchcount" id="searchcount"></div>
+  <nav class="toc" id="toc">
+    <div class="grp" data-tab="0"><b>Overview</b>
+      <a href="#intro">Game Overview</a>
+    </div>
+    <div class="grp" data-tab="1"><b>Survival Systems</b>
+      <a href="#needs">Survival Needs</a>
+      <a href="#combat">Combat &amp; Armor</a>
+      <a href="#ai">How Monsters Find You</a>
+    </div>
+    <div class="grp" data-tab="2"><b>Bestiary &amp; Supplies</b>
+      <a href="#bestiary">Bestiary</a>
+      <a href="#crafting">Crafting &amp; Building</a>
+    </div>
+    <div class="grp" data-tab="3"><b>Locations</b>
+      <a href="#town">The Town of City G</a>
+      <a href="#tutorial">Tutorial Apartment Tower</a>
+      <a href="#basement">Hidden Basement</a>
+      <a href="#police">Police Station</a>
+    </div>
+    <div class="grp" data-tab="4"><b>World &amp; Characters</b>
+      <a href="#lore">Red Fog &amp; Tar Men</a>
+      <a href="#npcs">Key Characters</a>
+    </div>
+  </nav>
+</aside>
+
+<main>
+<div class="masthead">
+  <a href="index.html" style="color:var(--cyan);font-family:var(--raj);font-weight:600;font-size:.85rem;text-decoration:none;border-bottom:1px solid var(--lineB);display:inline-block;margin-bottom:14px">← Back to Home</a>
+  <div class="kicker">SPONGE BRIDGES</div>
+  <h1>Survivor's Dossier: City G</h1>
+  <p class="sub">Bestiary, gear, locations, and mechanics — everything you need to survive City G is right here.</p>
+  <div class="tabbar" id="tabbar" role="tablist">
+    <button class="tabbtn" data-tab="0" role="tab">Overview</button>
+    <button class="tabbtn" data-tab="1" role="tab">Survival Guide</button>
+    <button class="tabbtn" data-tab="2" role="tab">Bestiary &amp; Supplies</button>
+    <button class="tabbtn" data-tab="3" role="tab">Town &amp; Locations</button>
+    <button class="tabbtn" data-tab="4" role="tab">World &amp; Characters</button>
+  </div>
+</div>
+
+<div class="content">
+
+<div class="tabpanel" data-tab="0">
+<section id="intro">
+  <h2>Overview</h2>
+  <div class="intro-eyebrow">A Tribute to DEATH STRANDING &amp; Cataclysm: DDA — An Original Reimagining</div>
+  <div class="intro-wrap">
+    <div class="intro-art">
+      <!-- header.jpg: same key art as the official homepage, taken from this repo's root; degrades gracefully to a glass placeholder if missing -->
+      <img src="images/header.jpg" alt="A courier carries an ever-taller cargo tower through City G's streets, wrapped in red fog and fire" id="introImg" onerror="this.style.display='none';document.getElementById('introPh').style.display='flex'">
+      <div class="ph" id="introPh" style="display:none">KEY ART<br>PLACEHOLDER</div>
+    </div>
+    <div class="intro-copy">
+      <h3>Survivor's Dossier: City G</h3>
+      <p>You're <b>Sam</b>, a courier. The day the red fog rose past the town limits, City G became a dead zone. You wake up strapped into a cargo frame, and soon a <strong>cargo tower</strong> stacks up on your back — every item you carry counts, in real weight and real volume.</p>
+      <p>No safehouses, no waypoints. Hunger, thirst, and fatigue are real numbers, and the scent and sound you leave behind get tracked by tar men for real.</p>
+      <div class="tag-plat">Platform <b>Steam Only</b></div>
+      <div class="pillars3">
+        <div><span class="pn">01</span><h4>Soaked Through</h4><p>The more you carry, the more you soak up — the weight is a cost you chose yourself.</p></div>
+        <div><span class="pn">02</span><h4>Absorb</h4><p>Absorb, not destroy.</p></div>
+        <div><span class="pn">03</span><h4>Connect</h4><p>From rope to bridge: mending a broken world through connection.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="1">
+<div class="tabindex"><span class="til">On this page</span>
+  <a href="#needs">Survival Needs</a><span class="sep">·</span>
+  <a href="#combat">Combat &amp; Armor</a><span class="sep">·</span>
+  <a href="#ai">How Monsters Find You</a>
+</div>
+<section id="needs">
+  <h2>Survival Needs</h2>
+  <p class="lede">Hunger, thirst, and fatigue run on real numbers — the penalty is a gradual curve, not a sudden state change at some threshold.</p>
+
+  <div class="needrow">
+    <div class="needlbl">Hunger</div>
+    <div class="gradientbar"></div>
+    <div class="neednote">A continuous curve: the hungrier you are, the deeper the speed penalty — no stepped jumps</div>
+  </div>
+
+  <div class="needrow">
+    <div class="needlbl">Thirst</div>
+    <div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s1"></i><i class="s2"></i></div>
+    <div class="tierlabels"><span>Thirsty</span><span>Very Thirsty</span><span>Dehydrated</span><span>Parched</span></div>
+  </div>
+
+  <div class="needrow">
+    <div class="needlbl">Fatigue</div>
+    <div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s2"></i></div>
+    <div class="tierlabels"><span>Tired</span><span>Exhausted</span><span>Spent</span></div>
+  </div>
+
+  <div class="okbox"><b>Eating pays off instantly:</b> take a bite of rations and the calories land right away — no need to fret over whether moving around burns it off.</div>
+  <p>The always-on HUD panel shows speed, stamina, and mood with the same glowing icon set, plus a status-effect readout line.</p>
+</section>
+
+<section id="combat">
+  <h2>Combat &amp; Armor</h2>
+  <p class="lede">Hit → armor → weak point: three layers of resolution, one after another.</p>
+
+  <h4 class="mini">Armor Resolution</h4>
+  <p>A hit first checks whether your gear covers the struck location; only if it's covered does the material resistance table decide how much damage gets through — the whole suit rolls as one unit, not piece by piece.</p>
+
+  <h4 class="mini">Weak Point System</h4>
+  <div class="mbar"><span class="mlbl">Normal spot</span><div class="mtrack"><div class="mfill ok" style="width:70%"></div></div></div>
+  <div class="mbar"><span class="mlbl">Weak spot</span><div class="mtrack"><div class="mfill crit" style="width:14%"></div></div></div>
+  <p>Hitting a weak point breaks armor more easily, triggers criticals, and sometimes carries a control effect. Take the Tar Hulk: <strong>a headshot noticeably cracks its armor faster, and an eye shot lands almost like it's wearing nothing</strong> — it all comes down to aim and positioning; stacking stats won't help you land hits consistently.</p>
+
+  <h4 class="mini">Red Fog Damage</h4>
+  <p>Red fog damage resolves through the normal armor pipeline too — it's not an "ignore defense" effect that skips your gear. Wearing the right material genuinely mitigates part of it.</p>
+</section>
+
+<section id="ai">
+  <h2>How Monsters Find You</h2>
+  <p class="lede">Monsters don't know your coordinates — they find you by scent and sound.</p>
+
+  <h4 class="mini">Scent Tracking</h4>
+  <p>Every step you take leaves scent, which then spreads and fades over time. Monsters with tracking ability (like the Tar Hulk) climb up the gradient toward stronger scent; taking a detour, opening distance, or slowing down all let it fade and break.</p>
+
+  <h4 class="mini">Noise Tracking</h4>
+  <p>Gunfire, footsteps, doors, reloading, alarms — nearly every action makes noise. When something is heard but not seen, the monster only marks a rough direction, a puzzled guess, not a beeline to your real position. Explosions are the one exception — they currently make no sound at all.</p>
+
+  <h4 class="mini">Corpse Revival</h4>
+  <p>A freshly downed corpse almost never gets back up — the longer it sits, the higher the odds climb. <strong>Keep burning through a corpse that was destined to revive, and it comes back at full health as something worse</strong> — this doesn't touch anything still alive and fighting; it only decides what the corpse turns into.</p>
+
+  <h4 class="mini">Mood &amp; Attitude</h4>
+  <p>Every monster carries an anger value and a morale value. Getting hurt, hearing noise, a companion dying — triggers like these push it between hostile / following / ignoring / fleeing. <b>Feeding it</b> can lower anger enough to make it ignore you, but any attack on it re-triggers full aggression instantly.</p>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="2">
+<div class="tabindex"><span class="til">On this page</span>
+  <a href="#bestiary">Bestiary</a><span class="sep">·</span>
+  <a href="#crafting">Crafting &amp; Building</a>
+</div>
+<section id="bestiary">
+  <h2>Bestiary</h2>
+  <p class="lede">This game has no "zombies" — in every line of text, dialogue, and this bestiary, they're called <strong>tar men</strong>.</p>
+
+  <div class="entry" data-search="building security crawler tar man tutorial 3F 大楼保安">
+    <h4>Building Security</h4>
+    <div class="meta"><code>mon_zombie_crawler</code> · unique instance, Tutorial Apartment 3F</div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">Durability</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml">Speed</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="mstat weak"><span class="ml">Weak Point</span><span class="mp"><i class="f"></i></span><span class="txt">Head</span></div>
+    </div>
+    <p>The first crawling tar man you meet in the tutorial tower — slow-moving, and carrying keys to every door on the floor.</p>
+  </div>
+
+  <div class="entry" data-search="security captain brute tar man tutorial 1F 保安队长">
+    <h4>Security Captain</h4>
+    <div class="meta"><code>mon_zombie_brute</code> · unique instance, Tutorial Apartment 1F</div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">Durability</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml">Speed</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat weak"><span class="ml">Weak Point</span><span class="mp"><i class="f"></i></span><span class="txt">Head</span></div>
+    </div>
+    <p>The second guard, stationed in the lobby — thinner armor but faster, carrying keys to the front gate and the basement cold-storage room.</p>
+  </div>
+
+  <div class="entry" data-search="tar hulk boss tar man 焦油人浩克">
+    <h4>Tar Hulk</h4>
+    <div class="meta"><code>mon_zombie_hulk</code> · main roaming threat, present from the start</div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">Durability</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+      <div class="mstat"><span class="ml">Speed</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+      <div class="mstat weak"><span class="ml">Weak Point</span><span class="mp"><i class="f"></i></span><span class="txt">Head / Eyes</span></div>
+    </div>
+    <p>Roams the town center from the opening moments, noticeably faster than you, hunts by scent and sound, and hits hard in melee with armor penetration.</p>
+  </div>
+
+  <div class="entry" data-search="revenant fiend tar man 复活体">
+    <h4>Revenant</h4>
+    <div class="meta"><code>mon_zombie_fiend</code> · what a Tar Hulk corpse becomes after being burned through; no fixed spawn point</div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">Durability</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml">Speed</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+    </div>
+    <p>Much lighter than the Hulk it came from, revives at full health, adds a reach attack, and resists fire and acid.</p>
+  </div>
+
+  <div class="entry" data-search="heavy tar man kevlar brute basement 重装焦油人 凯夫拉">
+    <h4>Heavy Tar Man (Kevlar)</h4>
+    <div class="meta"><code>mon_zombie_kevlar_1</code> · Hidden Basement, Group A</div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">Durability</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml">Armor</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+    </div>
+    <p>Same lineage as the Security Captain, but its kevlar armor far outclasses a standard tar man's — stops bullets and blades, not fists.</p>
+  </div>
+
+  <div class="entry" data-search="heavy tar hulk kevlar basement 重装焦油人浩克 凯夫拉">
+    <h4>Heavy Tar Hulk (Kevlar)</h4>
+    <div class="meta"><code>mon_zombie_kevlar_2</code> · Hidden Basement, Group B (final holding cell)</div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">Durability</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml">Armor</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+    </div>
+    <p>Less durable than the base Hulk, but its armor is on another level — explosives do nothing against it; you'll need melee, ranged fire, or feeding it instead.</p>
+  </div>
+
+  <div class="entry" data-search="tar men roaming streets group_zombie standard 街头 游荡 焦油人">
+    <h4>Tar Men Roaming the Streets</h4>
+    <div class="meta"><code>GROUP_ZOMBIE</code> · town density spawns, not fixed placements</div>
+    <p>Most of the town is standard-type tar men, mixed with several job and body-type variants — ambient difficulty, no keys drop, nothing unlocks from them.</p>
+  </div>
+</section>
+
+<section id="crafting">
+  <h2>Crafting &amp; Building</h2>
+  <p>Simulates thousands of real-world crafting recipes; materials are pulled automatically from your inventory and surroundings.</p>
+  <h3 class="sub">Building System <span class="pill op">In Development</span></h3>
+  <p>The building system is still in development and not yet available.</p>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="3">
+<div class="tabindex"><span class="til">On this page</span>
+  <a href="#town">The Town of City G</a><span class="sep">·</span>
+  <a href="#tutorial">Tutorial Apartment Tower</a><span class="sep">·</span>
+  <a href="#basement">Hidden Basement</a><span class="sep">·</span>
+  <a href="#police">Police Station</a>
+</div>
+<section id="town">
+  <h2>The Town of City G</h2>
+  <p>The town regenerates every run — streets, buildings, and supplies all differ, but a handful of landmarks always stay put.</p>
+</section>
+
+<section id="tutorial">
+  <h2>Tutorial Apartment Tower</h2>
+  <p class="lede">The one fixed, hand-authored four-floor tutorial tower — the same content every run.</p>
+  <div class="tower">
+    <div class="row"><div class="fl">4F</div><div class="fc"><b style="color:var(--white)">Wake-up floor.</b> Alun lies badly hurt at the stairwell — saving him is your call.</div></div>
+    <div class="row"><div class="fl">3F</div><div class="fc"><b style="color:var(--white)">Guarded by Building Security.</b> Teaches encounters and looting corpses.</div></div>
+    <div class="row"><div class="fl">2F</div><div class="fc"><b style="color:var(--white)">Trap floor.</b> Spike boards and caltrops mixed in.</div></div>
+    <div class="row"><div class="fl">1F</div><div class="fc"><b style="color:var(--white)">Security Captain guards the front gate.</b> Everything from the three floors above comes together here.</div></div>
+  </div>
+
+  <p>The tower isn't a one-path building, and the key isn't the only route through — how you get downstairs is yours to figure out.</p>
+</section>
+
+<section id="basement">
+  <h2>Hidden Basement</h2>
+  <p class="lede">The entrance is hidden inside the tutorial tower — a chain that teaches feeding and rewards exploration; finding your way through it is on you.</p>
+</section>
+
+<section id="police">
+  <h2>Police Station</h2>
+  <p class="lede">A terminal that takes real skill to crack, entirely optional — skip it and it changes nothing about the run.</p>
+  <div class="mbar" style="max-width:260px"><span class="mlbl">Hack Difficulty</span><div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s2"></i></div></div>
+  <p>If your electronics skill isn't sharp enough, you might not crack this terminal at all — good or bad, the outcome is yours to find out by trying.</p>
+</section>
+</div>
+
+<div class="tabpanel" data-tab="4">
+<div class="tabindex"><span class="til">On this page</span>
+  <a href="#lore">Red Fog &amp; Tar Men</a><span class="sep">·</span>
+  <a href="#npcs">Key Characters</a>
+</div>
+<section id="lore">
+  <h2>Red Fog &amp; Tar Men</h2>
+  <p class="lede">The red fog is the true shape of the quarantine ring outside town — a wall of mist condensed from alien tar seeping up from the ground, sharing one source with the tar men.</p>
+  <p>People touched and soaked by the red fog get remade into tar men. All three are nodes on the same storyline, not separate settings bolted together.</p>
+</section>
+
+<section id="npcs">
+  <h2>Key Characters</h2>
+
+  <div class="entry" data-search="bode neighbor hero 波德">
+    <h4>Bode</h4>
+    <p>A low-key civilian hero at the edge of City G's dead zone, dressed in colors that pop against the wasteland palette, easygoing to the point of indifference.</p>
+  </div>
+
+  <div class="entry" data-search="alun cybernetic apprentice 阿伦">
+    <h4>Alun</h4>
+    <p>Bode's (self-declared) apprentice, a cybernetically augmented survivor badly hurt after taking on a Tar Hulk alone.</p>
+  </div>
+</section>
+</div>
+
+</div>
+</main>
+</div>
+
+<script>
+(function(){
+  var search = document.getElementById('search');
+  var count = document.getElementById('searchcount');
+  var entries = Array.prototype.slice.call(document.querySelectorAll('.entry'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section'));
+  var content = document.querySelector('.content');
+  var tabpanels = Array.prototype.slice.call(document.querySelectorAll('.tabpanel'));
+  var tabbtns = Array.prototype.slice.call(document.querySelectorAll('.tabbtn'));
+  var groups = Array.prototype.slice.call(document.querySelectorAll('nav.toc .grp'));
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var currentTab = '0';
+  var animating = false;
+
+  // ── Tab switching: page-turn 3D flip + glass scan flicker, respects prefers-reduced-motion ──
+  function setTabUI(idx){
+    tabbtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tab')===idx); });
+    groups.forEach(function(g){ g.classList.toggle('tab-dim', g.getAttribute('data-tab')!==idx); });
+    currentTab = idx;
+  }
+
+  function switchTab(idxRaw, after){
+    var idx = String(idxRaw);
+    var newPanel = document.querySelector('.tabpanel[data-tab="'+idx+'"]');
+    if(!newPanel) return;
+    if(idx === currentTab){ if(after) after(); return; }
+    var oldPanel = document.querySelector('.tabpanel.active');
+    setTabUI(idx);
+
+    if(reduceMotion || animating){
+      if(oldPanel) oldPanel.classList.remove('active');
+      newPanel.classList.add('active');
+      if(after) after();
+      return;
+    }
+    animating = true;
+    content.classList.add('flipping');
+    if(!oldPanel){
+      newPanel.classList.add('active');
+      animating = false;
+      content.classList.remove('flipping');
+      if(after) after();
+      return;
+    }
+    oldPanel.classList.add('turn-out');
+    oldPanel.addEventListener('animationend', function onOut(){
+      oldPanel.removeEventListener('animationend', onOut);
+      oldPanel.classList.remove('active','turn-out');
+      newPanel.classList.add('active','turn-in');
+      newPanel.addEventListener('animationend', function onIn(){
+        newPanel.removeEventListener('animationend', onIn);
+        newPanel.classList.remove('turn-in');
+        content.classList.remove('flipping');
+        animating = false;
+        if(after) after();
+      });
+    });
+  }
+
+  tabbtns.forEach(function(b){
+    b.addEventListener('click', function(){ switchTab(b.getAttribute('data-tab')); });
+  });
+
+  // Sidebar / in-page TOC links: native anchor jump within the same tab; switch tab first if crossing tabs
+  var allTocLinks = Array.prototype.slice.call(document.querySelectorAll('nav.toc a, .tabindex a'));
+  allTocLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var hash = a.getAttribute('href');
+      var target = document.querySelector(hash);
+      if(!target) return;
+      var panel = target.closest('.tabpanel');
+      if(!panel) return;
+      var tab = panel.getAttribute('data-tab');
+      if(tab !== currentTab){
+        e.preventDefault();
+        switchTab(tab, function(){
+          target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block:'start'});
+        });
+      }
+    });
+  });
+
+  // ── Search: filter logic unchanged; Enter jumps to the first match, auto-switching to its tab ──
+  search.addEventListener('input', function(){
+    var q = search.value.trim().toLowerCase();
+    if(!q){
+      entries.forEach(function(e){ e.classList.remove('hide'); });
+      sections.forEach(function(s){ s.classList.remove('hide'); });
+      count.textContent = '';
+      return;
+    }
+    var shown = 0;
+    entries.forEach(function(e){
+      var hay = (e.getAttribute('data-search')||'') + ' ' + e.textContent;
+      var match = hay.toLowerCase().indexOf(q) !== -1;
+      e.classList.toggle('hide', !match);
+      if(match) shown++;
+    });
+    var entrySections = ['bestiary','npcs'];
+    sections.forEach(function(s){
+      if(entrySections.indexOf(s.id) === -1) return;
+      var anyVisible = s.querySelectorAll('.entry:not(.hide)').length > 0;
+      s.classList.toggle('hide', !anyVisible);
+    });
+    count.textContent = shown + ' match' + (shown === 1 ? '' : 'es') + (shown ? ' (press Enter to jump to the first)' : '');
+  });
+
+  search.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter') return;
+    var firstMatch = entries.filter(function(en){ return !en.classList.contains('hide'); })[0];
+    if(!firstMatch) return;
+    var panel = firstMatch.closest('.tabpanel');
+    var tab = panel ? panel.getAttribute('data-tab') : currentTab;
+    switchTab(tab, function(){
+      firstMatch.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block:'center'});
+    });
+  });
+
+  // ── Reading-progress highlight (only sections in the currently visible tab actually intersect) ──
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var obs = new IntersectionObserver(function(entriesList){
+    entriesList.forEach(function(en){
+      if(en.isIntersecting){
+        links.forEach(function(l){ l.classList.remove('current'); });
+        var id = en.target.getAttribute('id');
+        var link = document.querySelector('nav.toc a[href="#'+id+'"]');
+        if(link) link.classList.add('current');
+      }
+    });
+  }, {rootMargin:'-10% 0px -80% 0px'});
+  sections.forEach(function(s){ if(s.id) obs.observe(s); });
+
+  // ── Initial active tab: defaults to Overview, or opens directly on the tab matching a #hash ──
+  var initialTab = '0';
+  if(location.hash){
+    var ht = document.querySelector(location.hash);
+    if(ht){
+      var hp = ht.closest('.tabpanel');
+      if(hp) initialTab = hp.getAttribute('data-tab');
+    }
+  }
+  setTabUI(initialTab);
+  tabpanels.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-tab')===initialTab); });
+  if(location.hash){
+    var ht2 = document.querySelector(location.hash);
+    if(ht2) setTimeout(function(){ ht2.scrollIntoView({block:'start'}); }, 0);
+  }
+})();
+</script>
