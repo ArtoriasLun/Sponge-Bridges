@@ -63,43 +63,23 @@
   section{padding:44px 0;border-bottom:1px solid var(--lineD)}
   section:last-child{border-bottom:0}
   section>h2{font-family:var(--raj);font-weight:700;font-size:23px;color:var(--white);letter-spacing:.03em;
-    text-shadow:0 0 12px rgba(255,255,255,.3);margin:0 0 6px;padding-bottom:9px;border-bottom:1px solid var(--lineB)}
+    text-shadow:0 0 12px rgba(255,255,255,.3);margin:0 0 6px;padding-bottom:9px;border-bottom:1px solid var(--lineB);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   section>.lede{color:var(--dim);max-width:60em;margin-bottom:20px;font-size:13.6px}
   h3.sub{font-family:var(--raj);font-weight:700;font-size:17px;color:var(--white);margin:28px 0 8px}
   h4.mini{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim2);margin:16px 0 6px}
   p{margin:9px 0;font-size:13.8px}
 
   /* ── glass module (entries, cards) ── */
-  .entry,.route{position:relative;background:var(--subtle);border:1px solid var(--lineD);padding:16px 18px;margin:12px 0}
-  .entry::before,.entry::after,.route::before,.route::after{content:"";position:absolute;width:7px;height:7px}
-  .entry::before,.route::before{top:0;left:0;border-top:1px solid rgba(63,214,201,.6);border-left:1px solid rgba(63,214,201,.6)}
-  .entry::after,.route::after{top:0;right:0;border-top:1px solid rgba(63,214,201,.6);border-right:1px solid rgba(63,214,201,.6)}
+  .entry{position:relative;background:var(--subtle);border:1px solid var(--lineD);padding:16px 18px;margin:12px 0}
+  .entry::before,.entry::after{content:"";position:absolute;width:7px;height:7px}
+  .entry::before{top:0;left:0;border-top:1px solid rgba(63,214,201,.6);border-left:1px solid rgba(63,214,201,.6)}
+  .entry::after{top:0;right:0;border-top:1px solid rgba(63,214,201,.6);border-right:1px solid rgba(63,214,201,.6)}
   .entry h4{font-family:var(--raj);font-weight:700;font-size:16px;color:var(--white);margin:0 0 3px;
     display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .entry .meta{font-family:var(--mono);font-size:11px;color:var(--dim2);margin-bottom:8px}
-  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:1px;background:var(--lineD);
-    border:1px solid var(--lineD);margin:10px 0}
-  .stats>div{background:var(--fill);padding:6px 9px}
-  .stats .k{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim2)}
-  .stats .v{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white)}
   .callout{margin-top:9px;padding:8px 12px;border-left:2px solid var(--gap);background:var(--subtle);font-size:12.6px}
   .callout.gap{border-left-color:var(--gap)} .callout.ok{border-left-color:var(--on)}
-
-  .tw{overflow-x:auto;border:1px solid var(--lineD);margin:12px 0}
-  table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
-  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-align:left;
-    color:var(--dim2);padding:8px 12px;border-bottom:1px solid var(--lineB);background:var(--subtle)}
-  td{padding:8px 12px;border-bottom:1px solid var(--lineD);vertical-align:top;color:var(--dim)}
-  tr:last-child td{border-bottom:0}
-  td b{color:var(--white);font-weight:500}
-
-  .routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
-  .route{border-top:2px solid var(--lineB)}
-  .route.ra{border-top-color:var(--cyan)} .route.rb{border-top-color:var(--gap)}
-  .route.rc{border-top-color:var(--on)} .route.rg{border-top-color:var(--tk)}
-  .route h4{font-family:var(--raj);font-weight:700;font-size:15px;color:var(--white);margin-bottom:6px}
-  .route ol{margin:0;padding-left:18px;font-size:12.8px;color:var(--dim)}
-  .route li{margin:4px 0}
 
   .tower{border:1px solid var(--lineD);margin:12px 0}
   .tower .row{display:grid;grid-template-columns:52px 1fr;border-top:1px solid var(--lineD)}
@@ -117,6 +97,42 @@
     border-top:1px solid var(--lineB)}
   .hide{display:none!important}
   ::selection{background:var(--active);color:var(--white)}
+
+  /* ══ HUD 状态色词汇：GlassCyan(常态)/SignalOrange(警戒)/VitalRed(危急)/SignalGreen(良好) ══
+     与 csrc/UI/StatusGlyphs.cs 同一套语义色，本页所有条形/像素点组件都遵循这套配色，不额外发明新语言 ══ */
+
+  /* ── 分级像素点条（tierpips）：口渴/疲劳这类有限阶梯的剩余量指标 ── */
+  .tierpips{display:flex;gap:4px;align-items:center}
+  .tierpips i{width:11px;height:11px;border:1px solid var(--lineD);background:transparent;display:inline-block}
+  .tierpips i.s0{background:var(--cyan);border-color:var(--cyan)}
+  .tierpips i.s1{background:var(--tk);border-color:var(--tk)}
+  .tierpips i.s2{background:var(--gap);border-color:var(--gap)}
+  .tierlabels{display:flex;gap:4px;font-family:var(--mono);font-size:9.5px;color:var(--dim2);margin-top:5px}
+  .tierlabels span{flex:1;text-align:center;min-width:11px}
+
+  /* ── 需求行：饥饿是连续曲线，用渐变条而非阶梯点 ── */
+  .needrow{margin:16px 0}
+  .needlbl{font-family:var(--raj);font-weight:700;font-size:14px;color:var(--white);margin-bottom:7px}
+  .gradientbar{height:11px;border:1px solid var(--lineD);background:linear-gradient(90deg,var(--cyan),var(--tk) 55%,var(--gap));opacity:.9}
+  .neednote{font-size:11.5px;color:var(--dim2);margin-top:5px}
+
+  /* ── 对比条（mbar）：强度类数值，如护甲覆盖差异，只用宽度表达相对关系，不写数字 ── */
+  .mbar{display:flex;align-items:center;gap:10px;margin:7px 0}
+  .mlbl{width:78px;font-family:var(--mono);font-size:10.5px;color:var(--dim2);flex-shrink:0}
+  .mtrack{flex:1;height:9px;border:1px solid var(--lineD);background:var(--fill);position:relative}
+  .mfill{height:100%}
+  .mfill.ok{background:var(--cyan)}
+  .mfill.crit{background:var(--gap)}
+
+  /* ── 图鉴属性像素点（mstats）：耐久/速度/护甲这类强度类简写 ── */
+  .mstats{display:flex;flex-wrap:wrap;gap:16px 20px;margin:10px 0}
+  .mstat{display:flex;align-items:center;gap:6px}
+  .mstat .ml{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim2)}
+  .mstat .mp{display:flex;gap:2px}
+  .mstat .mp i{width:7px;height:7px;border:1px solid var(--lineD);display:inline-block}
+  .mstat .mp i.f{background:var(--cyan);border-color:var(--cyan)}
+  .mstat.weak .mp i.f{background:var(--gap);border-color:var(--gap)}
+  .mstat .txt{font-family:var(--mono);font-size:10px;color:var(--dim)}
 
   /* ══ 简介 tab ══ */
   .intro-wrap{display:grid;grid-template-columns:minmax(180px,280px) 1fr;gap:28px;align-items:start}
@@ -198,25 +214,19 @@
 <div class="shell">
 <aside>
   <div class="brand">幸存者手册<small>Survivor's Dossier · G市</small></div>
-  <input id="search" type="text" placeholder="搜索图鉴 / 道具 / 地点…" autocomplete="off">
+  <input id="search" type="text" placeholder="搜索图鉴 / 地点…" autocomplete="off">
   <div class="searchcount" id="searchcount"></div>
   <nav class="toc" id="toc">
     <div class="grp" data-tab="0"><b>简介</b>
       <a href="#intro">游戏简介</a>
-    </div>
-    <div class="grp" data-tab="1"><b>入门</b>
-      <a href="#start">如何开局</a>
     </div>
     <div class="grp" data-tab="1"><b>生存系统</b>
       <a href="#needs">生存需求</a>
       <a href="#combat">战斗与护甲</a>
       <a href="#ai">怪物如何找到你</a>
     </div>
-    <div class="grp" data-tab="2"><b>图鉴</b>
+    <div class="grp" data-tab="2"><b>图鉴与物资</b>
       <a href="#bestiary">怪物图鉴</a>
-    </div>
-    <div class="grp" data-tab="2"><b>物资</b>
-      <a href="#items">关键道具</a>
       <a href="#crafting">制作与建造</a>
     </div>
     <div class="grp" data-tab="3"><b>地点</b>
@@ -229,11 +239,6 @@
       <a href="#lore">红雾与焦油人</a>
       <a href="#npcs">重要人物</a>
     </div>
-    <div class="grp" data-tab="4"><b>撤离</b>
-      <a href="#routes">四条撤离路线</a>
-      <a href="#orthogonal">正交逃生手段</a>
-      <a href="#ending">结局</a>
-    </div>
   </nav>
 </aside>
 
@@ -242,13 +247,13 @@
   <a href="index.html" style="color:var(--cyan);font-family:var(--raj);font-weight:600;font-size:.85rem;text-decoration:none;border-bottom:1px solid var(--lineB);display:inline-block;margin-bottom:14px">← 返回首页</a>
   <div class="kicker">SPONGE BRIDGES</div>
   <h1>幸存者手册：G市</h1>
-  <p class="sub">图鉴、道具、地点、机制、剧情——想活着走出G市，你需要知道的一切都在这里。</p>
+  <p class="sub">图鉴、道具、地点与机制——想在G市活下去，你需要知道的都在这里。</p>
   <div class="tabbar" id="tabbar" role="tablist">
     <button class="tabbtn" data-tab="0" role="tab">简介</button>
     <button class="tabbtn" data-tab="1" role="tab">生存指南</button>
-    <button class="tabbtn" data-tab="2" role="tab">图鉴与道具</button>
-    <button class="tabbtn" data-tab="3" role="tab">城镇与探索</button>
-    <button class="tabbtn" data-tab="4" role="tab">剧情与结局</button>
+    <button class="tabbtn" data-tab="2" role="tab">图鉴与物资</button>
+    <button class="tabbtn" data-tab="3" role="tab">城镇与地点</button>
+    <button class="tabbtn" data-tab="4" role="tab">世界与人物</button>
   </div>
 </div>
 
@@ -266,13 +271,13 @@
     </div>
     <div class="intro-copy">
       <h3>幸存者手册：G市</h3>
-      <p>你叫 <b>Sam</b>，一名信使。红雾从小镇外沿升起那天起，这里就成了无人区——路还在，房子还在，只是没人愿意再走进来。你背着一副货运骨架醒来，肩上很快会架起一座越叠越高的<strong>货物塔</strong>：物资、零件、最后一口口粮，重量和体积都实打实地算数。</p>
-      <p>没有安全屋，没有传送点。饥饿、口渴、疲劳都是真实数值，气味和噪音会真正暴露你。穿过街道、公寓、警局与地下室，找到你的出路——修好去雾装置、炸开一道缺口、硬扛穿雾，或者找那个唯一愿意伸手的人。四条路，谁先走通谁算数。</p>
+      <p>你叫 <b>Sam</b>，一名信使。红雾从镇外升起那天起，G市就成了无人区。你背着一副货运骨架醒来，肩上很快会架起一座越叠越高的<strong>货物塔</strong>——扛的每一件物资，都实打实地计入重量与体积。</p>
+      <p>没有安全屋，没有传送点。饥饿、口渴、疲劳都是真实数值，你留下的气味和声响会被焦油人真正循迹追来。</p>
       <div class="tag-plat">平台 <b>仅 Steam</b></div>
       <div class="pillars3">
-        <div><span class="pn">01</span><h4>背负</h4><p>货物塔是你的仓库，也是你的软肋——扛得越多，走得越慢，选择越少。</p></div>
-        <div><span class="pn">02</span><h4>生存</h4><p>饥渴疲劳、护甲结算、气味噪音，全是深度模拟的真实数值，不是好看的进度条。</p></div>
-        <div><span class="pn">03</span><h4>走出属于你的路</h4><p>四条撤离路线并行开放，时机、方向、手段全部自由。</p></div>
+        <div><span class="pn">01</span><h4>浸透</h4><p>扛得越多，吸得越透——重量是你自己选的代价。</p></div>
+        <div><span class="pn">02</span><h4>吸收</h4><p>吸收，而非毁灭。</p></div>
+        <div><span class="pn">03</span><h4>连接</h4><p>从绳索到桥梁：用连接重新缝合断裂的世界。</p></div>
       </div>
     </div>
   </div>
@@ -281,80 +286,73 @@
 
 <div class="tabpanel" data-tab="1">
 <div class="tabindex"><span class="til">本页目录</span>
-  <a href="#start">如何开局</a><span class="sep">·</span>
   <a href="#needs">生存需求</a><span class="sep">·</span>
   <a href="#combat">战斗与护甲</a><span class="sep">·</span>
   <a href="#ai">怪物如何找到你</a>
 </div>
-<section id="start">
-  <h2>如何开局</h2>
-  <p class="lede">你叫 <b>Sam</b>。在 G市"无人区"边缘一栋四层出租屋的顶楼醒来，唯一的目标：<strong>活着走出小镇</strong>。时机、方向、手段全部自由——这是一个塔科夫式的高自由度撤离沙盒，不是线性关卡。</p>
-
-  <h4 class="mini">你能做什么</h4>
-  <ul>
-    <li>主菜单：开始 / 继续（有存档才显示）/ 设置 / 退出</li>
-    <li>捏人：程序化角色创建，含隐藏肢体自定义</li>
-    <li>存档/读档，支持云存档</li>
-    <li>探索、搜刮、制作（5660+ 条配方）、战斗、生存（饥渴疲劳）、建造（775+ 条建造项目）</li>
-  </ul>
-  <div class="gapbox">目前只有一个存档槽位，善用它。给 NPC 说过的话、做过的选择，读档后偶尔需要重新触发一次才会被对方记住。</div>
-
-  <h4 class="mini">默认角色 Sam</h4>
-  <p>深藏青工装、深棕色中分长发（垂过下颌）、短胡茬、普通体型。开局装备固定包含长袖衫、牛仔裤和一副货运骨架——这也是 Sam 背上那座货物塔的由来：不是画死的美术资产，你穿戴什么、扛了多少，塔就长成什么样。</p>
-</section>
-
 <section id="needs">
   <h2>生存需求</h2>
-  <p class="lede">饥饿、口渴、疲劳按真实的连续数值走，惩罚是渐变的曲线，不是踩到某个数字就突然掉san的分档跳变。</p>
-  <div class="tw"><table>
-    <thead><tr><th>需求</th><th>阈值</th><th>影响</th></tr></thead>
-    <tbody>
-      <tr><td><b>饥饿</b></td><td>按热量计，每 5 游戏分钟结算一次</td><td>速度惩罚随饥饿程度连续加深</td></tr>
-      <tr><td><b>口渴</b></td><td class="num">40 / 80 / 240 / 520</td><td>渴 / 很渴 / 脱水 / 极度口渴</td></tr>
-      <tr><td><b>疲劳</b></td><td class="num">191 / 383 / 575</td><td>累 / 极累 / 力竭</td></tr>
-    </tbody>
-  </table></div>
-  <div class="gapbox">吃东西是即时回复，没有慢慢消化那一说——啃一口口粮，热量立刻到账。你跑多快、扛多重目前不影响消耗速度，出门前该垫的垫上就行，不用纠结走位省不省体力。</div>
-  <p>常驻 HUD 面板会显示速度/体力/情绪芯片，加上异常状态提示行；力量/敏捷/智力/感知四维属性在角色面板里查看。</p>
+  <p class="lede">饥饿、口渴、疲劳按真实数值走，惩罚是渐变的曲线，不是踩到某个点就突然掉状态的跳变。</p>
+
+  <div class="needrow">
+    <div class="needlbl">饥饿</div>
+    <div class="gradientbar"></div>
+    <div class="neednote">连续曲线：越饿，速度惩罚越深，没有分级跳变</div>
+  </div>
+
+  <div class="needrow">
+    <div class="needlbl">口渴</div>
+    <div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s1"></i><i class="s2"></i></div>
+    <div class="tierlabels"><span>渴</span><span>很渴</span><span>脱水</span><span>极渴</span></div>
+  </div>
+
+  <div class="needrow">
+    <div class="needlbl">疲劳</div>
+    <div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s2"></i></div>
+    <div class="tierlabels"><span>累</span><span>极累</span><span>力竭</span></div>
+  </div>
+
+  <div class="okbox"><b>进食即时回复：</b>啃一口口粮，热量立刻到账，不用纠结走位省不省体力。</div>
+  <p>常驻 HUD 面板会用同一套发光图标显示速度、体力与情绪状态，附带异常状态提示行。</p>
 </section>
 
 <section id="combat">
   <h2>战斗与护甲</h2>
-  <p class="lede">命中→护甲→弱点，三层判定层层递进，每一层都值得单独了解。</p>
+  <p class="lede">命中→护甲→弱点，三层判定层层递进。</p>
 
   <h4 class="mini">护甲结算</h4>
-  <p>每次命中都会先判定是否被装备的覆盖部位"接住"，接住了再按材料抗性表结算能穿透多少伤害——整套护甲当一个整体滚动，不分逐件词条细算。</p>
+  <p>命中先看装备能否覆盖到中弹部位，覆盖住才按材质抗性表结算能穿透多少伤害——整套护甲当一个整体滚动，不分逐件细算。</p>
 
   <h4 class="mini">弱点系统</h4>
-  <p>每只怪身上都有明显更脆弱的部位，打中就有感——护甲会被削弱、更容易触发暴击，有时还会带出眩晕/致盲之类的控制效果。以焦油人浩克为例：<strong>打头明显更容易破防，打眼睛几乎跟没穿甲一样</strong>。命中弱点纯看瞄准和走位，练级堆数值帮不了你稳定打要害。</p>
+  <div class="mbar"><span class="mlbl">普通部位</span><div class="mtrack"><div class="mfill ok" style="width:70%"></div></div></div>
+  <div class="mbar"><span class="mlbl">弱点部位</span><div class="mtrack"><div class="mfill crit" style="width:14%"></div></div></div>
+  <p>命中弱点更容易破防、触发暴击，有时还带控制效果。以焦油人浩克为例：<strong>打头明显更容易破防，打眼睛几乎跟没穿甲一样</strong>——全靠瞄准和走位，堆数值帮不了你稳定打要害。</p>
 
   <h4 class="mini">红雾伤害</h4>
-  <p>红雾（镇外警戒环）伤害也走正常的护甲结算，不是绕过装备的"无视防御"伤害——穿对材质的装备确实能帮你减免一部分。</p>
+  <p>红雾伤害也走正常的护甲结算，不是绕过装备的"无视防御"——穿对材质的装备确实能帮你减免一部分。</p>
 </section>
 
 <section id="ai">
   <h2>怪物如何找到你</h2>
-  <p class="lede">怪物不认识你的坐标——它们靠气味和声音找你，跟你玩的是真正的躲藏与欺骗。</p>
+  <p class="lede">怪物不认识你的坐标——它们靠气味和声音找你。</p>
 
   <h4 class="mini">气味追踪</h4>
-  <p>你走过的每一步都会留下气味，随后向四周扩散、随时间变淡。带气味追踪的怪（比如焦油人浩克）会沿着气味变浓的方向一路爬升，直冲你来过的地方——绕路、拉开距离、放慢脚步都能让这条气味线变淡变断。雨天不会帮你稀释气味，别指望靠天气甩开追踪。</p>
+  <p>你走过的每一步都会留下气味，随后扩散、随时间变淡。带追踪能力的怪（比如焦油人浩克）会沿气味变浓的方向爬升；绕路、拉开距离、放慢脚步都能让它变淡变断。</p>
 
   <h4 class="mini">噪音追踪</h4>
-  <p>开枪、脚步声、开关门、砸门、装填弹药、扔东西落地、陷阱触发、警局警报、施工声、怪物自己的吼叫——几乎每个动作都会发出声音，能被附近的怪听见。听见但看不见来源时，怪物只会在声音大致方向留下一个"？"标记，不会直接扑向你的真实位置。爆炸是个例外，目前不会发出声响——炸红雾不会把焦油人浩克引过来，可以放心用炸药打开缺口而不必担心引怪。</p>
+  <p>开枪、脚步、开关门、装填弹药、警报——几乎每个动作都会发声，被听见但看不见来源时，怪物只会在大致方向留下一个疑惑标记，不会直扑你的真实位置。爆炸是个例外，目前不会发出声响。</p>
 
   <h4 class="mini">尸体复活</h4>
-  <p>刚倒下的尸体基本不会复活；放得越久，复活的概率越高，放上一阵子基本就是板上钉钉。<strong>持续用火烧穿一具本能复活的尸体（烧穿的伤害超过它生前的血量上限），会让它满血复活成另一种更麻烦的怪</strong>——焦油人浩克的尸体烧穿后站起来的是一只更轻、没那么结实、但多一手远程拉伸攻击的"复活体"。</p>
-  <div class="callout gap"><b>别搞混：</b>这不是"把活着的浩克烧死会当场变形"——烧穿只影响尸体复活成什么，跟正面削弱一只活着的浩克是两回事，边打边烧不会让它提前"进化"。</div>
+  <p>刚倒下的尸体基本不会复活，放得越久概率越高。<strong>持续用火把一具本能复活的尸体烧穿，会让它满血复活成另一种更麻烦的怪</strong>——这不影响正在战斗中的活体，只影响尸体复活成什么。</p>
 
   <h4 class="mini">情绪与态度</h4>
-  <p>每只怪携带愤怒值和士气值，会被"看见你""受伤""听到噪音""同伴死亡/受袭""附近着火""强光"等触发器影响，随后按四态阈值（敌对/跟随/无视/逃跑）决定行为。这套系统也是<b>投喂</b>机制的底层：喂饱一只怪会通过"消怒"触发器压低它的愤怒值，让它进入无视状态，受到攻击会立即重新激怒。</p>
+  <p>每只怪携带愤怒值和士气值，受伤、听到噪音、同伴死亡等触发器会推动它在敌对/跟随/无视/逃跑间切换。<b>投喂</b>能压低愤怒值让怪进入无视状态，但受到攻击会立刻重新激怒。</p>
 </section>
 </div>
 
 <div class="tabpanel" data-tab="2">
 <div class="tabindex"><span class="til">本页目录</span>
   <a href="#bestiary">怪物图鉴</a><span class="sep">·</span>
-  <a href="#items">关键道具</a><span class="sep">·</span>
   <a href="#crafting">制作与建造</a>
 </div>
 <section id="bestiary">
@@ -364,142 +362,78 @@
   <div class="entry" data-search="大楼保安 crawler 焦油人 教程 3F">
     <h4>大楼保安</h4>
     <div class="meta"><code>mon_zombie_crawler</code> · 教程公寓 3F 专属实例</div>
-    <div class="stats">
-      <div><div class="k">耐久</div><div class="v" style="font-size:13px">很脆</div></div>
-      <div><div class="k">速度</div><div class="v" style="font-size:13px">很慢</div></div>
-      <div><div class="k">弱点</div><div class="v" style="font-size:11px">头部(大)</div></div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="mstat weak"><span class="ml">弱点</span><span class="mp"><i class="f"></i></span><span class="txt">头部</span></div>
     </div>
-    <p>行动极慢、只有半截身体的爬行焦油人——教程楼里你遇到的第一只怪，用来教遭遇/绕行/近战，不是教"打不过就跑"。这一只被特别标记了"大楼保安"这个名字，身上带着<strong>全部楼层的房门钥匙</strong>（但没有大门钥匙）——想搜刮这栋楼，就得搜他的尸体。</p>
-    <div class="callout ok">名字覆盖不改数据：只有这一个具体坐标上的实例叫"大楼保安"，其他地方遇到的同类怪物仍是普通显示。</div>
+    <p>教程楼里最先遇到的爬行焦油人，行动迟缓，身上带着全楼房门钥匙。</p>
   </div>
 
   <div class="entry" data-search="保安队长 brute 焦油人 教程 1F">
     <h4>保安队长</h4>
     <div class="meta"><code>mon_zombie_brute</code> · 教程公寓 1F 专属实例</div>
-    <div class="stats">
-      <div><div class="k">耐久</div><div class="v" style="font-size:13px">偏脆</div></div>
-      <div><div class="k">速度</div><div class="v" style="font-size:13px">较快</div></div>
-      <div><div class="k">护甲</div><div class="v" style="font-size:13px">弱</div></div>
-      <div><div class="k">弱点</div><div class="v" style="font-size:11px">头部(小)</div></div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat weak"><span class="ml">弱点</span><span class="mp"><i class="f"></i></span><span class="txt">头部</span></div>
     </div>
-    <p>大堂驻守的第二个保安，身上有<strong>大门钥匙</strong>——想从正门体面离开就得处理他。他也是隐藏地下室冰库钥匙的携带者，同一具尸体身上叠加了两把不同的锁。</p>
+    <p>大堂驻守的第二个保安，护甲单薄但速度更快，身上带着大门与地下室冰库的钥匙。</p>
   </div>
 
   <div class="entry" data-search="焦油人浩克 hulk boss 焦油人">
     <h4>焦油人浩克</h4>
     <div class="meta"><code>mon_zombie_hulk</code> · 全程游荡的主要威胁</div>
-    <div class="stats">
-      <div><div class="k">耐久</div><div class="v" style="font-size:13px">极其结实</div></div>
-      <div><div class="k">速度</div><div class="v" style="font-size:13px">很快</div></div>
-      <div><div class="k">护甲</div><div class="v" style="font-size:13px">一般</div></div>
-      <div><div class="k">近战</div><div class="v" style="font-size:11px">重击，还带穿甲</div></div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
+      <div class="mstat weak"><span class="ml">弱点</span><span class="mp"><i class="f"></i></span><span class="txt">头部 / 眼睛</span></div>
     </div>
-    <p>从开局就在镇中心游荡，明显比你快，靠气味和噪音找你。会砸墙推车（直线追击不绕路），特殊攻击包括抓住→举起→砸飞、横扫多格。头部是弱点，打头明显更容易破防，<strong>打眼睛几乎跟没穿甲一样</strong>——精准打眼是最高效但最难命中的打法。</p>
-    <p>应对方式全是你的选择：绕开它的地盘、稀释气味少制造动静、正面硬刚、或者全程苟着不碰它直接撤离。</p>
-    <div class="callout gap"><b>别烧它的尸体：</b>打死之后如果继续用火烧，烧穿的总伤害超过它的血量上限会让它满血复活成一只"复活体"（<code>mon_zombie_fiend</code>）——想让它真正躺下，杀死之后离火源远点。</div>
+    <p>从开局就在镇中心游荡，速度明显比你快，靠气味和噪音找你，近战沉重且带穿甲。</p>
   </div>
 
   <div class="entry" data-search="复活体 fiend 焦油人">
     <h4>复活体</h4>
-    <div class="meta"><code>mon_zombie_fiend</code> · 只会作为焦油人浩克尸体烧穿后的产物出现，没有固定摆放点</div>
-    <div class="stats">
-      <div><div class="k">耐久</div><div class="v" style="font-size:13px">结实</div></div>
-      <div><div class="k">速度</div><div class="v" style="font-size:13px">较快</div></div>
-      <div><div class="k">抗性</div><div class="v" style="font-size:11px">耐火耐酸</div></div>
+    <div class="meta"><code>mon_zombie_fiend</code> · 焦油人浩克尸体烧穿后的产物，没有固定摆放点</div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml">速度</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
     </div>
-    <p>比浩克本体轻得多（200kg vs 1000kg）——真的只剩焦黑骨架。多一手 2 格距离的拉伸攻击。满血复活，不会带着浩克生前的伤势。</p>
+    <p>比浩克本体轻得多，满血复活，多一手拉伸攻击，耐火耐酸。</p>
   </div>
 
-  <div class="entry" data-search="重装丧尸 kevlar brute 凯夫拉 地下室">
-    <h4>重装丧尸（凯夫拉）</h4>
+  <div class="entry" data-search="重装焦油人 kevlar brute 凯夫拉 地下室">
+    <h4>重装焦油人（凯夫拉）</h4>
     <div class="meta"><code>mon_zombie_kevlar_1</code> · 隐藏地下室 A 组</div>
-    <div class="stats">
-      <div><div class="k">耐久</div><div class="v" style="font-size:13px">偏脆</div></div>
-      <div><div class="k">速度</div><div class="v" style="font-size:13px">中等</div></div>
-      <div><div class="k">护甲</div><div class="v" style="font-size:13px">强</div></div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></div>
+      <div class="mstat"><span class="ml">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
     </div>
-    <p>与教程楼保安队长同一血统（继承自同一基底），但护甲远超普通焦油人——凯夫拉挡子弹和刀，不挡拳头。关押在铁窗后，可以隔窗投喂让它安静下来，也可以强攻。</p>
+    <p>与保安队长同一血统，但凯夫拉护甲远超普通焦油人——挡子弹和刀，不挡拳头。</p>
   </div>
 
-  <div class="entry" data-search="重装丧尸浩克 kevlar hulk 凯夫拉 地下室">
-    <h4>重装丧尸浩克（凯夫拉）</h4>
+  <div class="entry" data-search="重装焦油人浩克 kevlar hulk 凯夫拉 地下室">
+    <h4>重装焦油人浩克（凯夫拉）</h4>
     <div class="meta"><code>mon_zombie_kevlar_2</code> · 隐藏地下室 B 组（最终关押室）</div>
-    <div class="stats">
-      <div><div class="k">耐久</div><div class="v" style="font-size:13px">结实</div></div>
-      <div><div class="k">速度</div><div class="v" style="font-size:13px">中等</div></div>
-      <div><div class="k">护甲</div><div class="v" style="font-size:13px">极强</div></div>
+    <div class="mstats">
+      <div class="mstat"><span class="ml">耐久</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></div>
+      <div class="mstat"><span class="ml">护甲</span><span class="mp"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></div>
     </div>
-    <p>没有焦油人浩克那么耐打，但护甲碾压级——"更难杀"的来源是防御而不是耐久。打穿它之后的里屋放着 5A 路线材料的备用来源。</p>
-    <div class="gapbox">炸药对它（以及关押室里的另一只重装丧尸）完全不生效——想过这两道关卡，靠近战、远程命中或者投喂，别指望一发炸药解决。</div>
+    <p>耐久不及浩克本体，但护甲碾压级——炸药对它完全不生效，得靠近战、远程或投喂。</p>
   </div>
 
   <div class="entry" data-search="街头 游荡 monstergroup group_zombie 普通焦油人">
     <h4>街头游荡的焦油人</h4>
     <div class="meta"><code>GROUP_ZOMBIE</code> · 城镇密度刷怪，非固定摆放</div>
-    <p>镇上普通遇到的焦油人绝大多数是标准型，此外混有肥胖型、生前强壮型、儿童型、爬行型、犬类、警察/军人/医护/消防等职业变种，偶尔会撞见成堆的大型焦油人潮。这是环境难度，不是"守门精英"——不掉钥匙、不解锁任何东西。</p>
+    <p>镇上大多是标准型，混有多种职业与体型变体，属于环境难度，不掉钥匙、不解锁任何东西。</p>
   </div>
-</section>
-
-<section id="items">
-  <h2>关键道具</h2>
-  <p class="lede">重量和体积都是实打实的数字——货运骨架的承重上限不是摆设，规划路线之前先算清楚。</p>
-
-  <h3 class="sub">5A 维修材料</h3>
-  <div class="tw"><table>
-    <thead><tr><th>道具</th><th>重量</th><th>体积</th><th>用途</th></tr></thead>
-    <tbody>
-      <tr><td><code>storage_battery</code> 大型蓄电池</td><td class="num">75 kg</td><td class="num">25 L</td><td>固定刷在浩克出生点</td></tr>
-      <tr><td><code>motor</code> 电动机</td><td class="num">46 kg</td><td class="num">30 L</td><td>固定刷在浩克出生点</td></tr>
-      <tr><td><code>cable</code> / <code>e_scrap</code> / <code>duct_tape</code></td><td class="num">10g/14g/2g</td><td class="num">≤5mL</td><td>轻件，顺手搜刮</td></tr>
-    </tbody>
-  </table></div>
-  <p><code>cargo_frame_bridges</code>（货运骨架）主仓上限 <b>80 kg / 60 L</b>——电池加电机合计 121 kg，一趟根本扛不动，规划路线时按两趟走。</p>
-
-  <h3 class="sub">5B 炸药</h3>
-  <div class="tw"><table>
-    <thead><tr><th>道具</th><th>爆炸威力</th><th>获取方式</th></tr></thead>
-    <tbody>
-      <tr><td><code>c4</code></td><td class="num">2000</td><td>警局军火柜黑客成功奖励（2 块，合计 4000）</td></tr>
-      <tr><td><code>dynamite</code> / <code>dynamite_bomb</code></td><td class="num">938</td><td>制造线终点，需化学 5 级+专业课本</td></tr>
-      <tr><td><code>grenade</code></td><td class="num">240</td><td>散装搜刮</td></tr>
-      <tr><td><code>pipebomb</code></td><td class="num">300</td><td>制造线中段，无难度门槛，自动学会</td></tr>
-      <tr><td><code>molotov</code></td><td class="num">纵火效果，非冲击</td><td>制造线起点，30 秒即可做出</td></tr>
-    </tbody>
-  </table></div>
-  <p>制造链：<code>molotov</code>（汽油+布，零门槛）→ <code>gunpowder</code>（拆混火药）→ <code>pipebomb</code>（管材+引信，自动学会）→ <code>dynamite</code>（需化学 5 级课本）；<code>fertilizer_commercial</code>（超市园艺区）也能一步转化成炸药原料。</p>
-  <div class="gapbox">炸药目前打不伤怪物，也不会发出声响引怪——想用炸药凿穿红雾，尽管放心炸，不会把焦油人浩克招过来；但也别指望拿炸药清怪。</div>
-
-  <h3 class="sub">5C 医疗与食物</h3>
-  <div class="tw"><table>
-    <thead><tr><th>道具</th><th>数值</th></tr></thead>
-    <tbody>
-      <tr><td><code>bandages</code> 绷带</td><td>止血 4，减免出血 15</td></tr>
-      <tr><td><code>quikclot</code> 止血粉</td><td>减免出血 20（最强单件止血）</td></tr>
-      <tr><td><code>meat_cooked</code> 熟肉</td><td class="num">402 kcal</td></tr>
-      <tr><td><code>protein_bar_evac</code> 多蛋白口粮</td><td class="num">800 kcal</td></tr>
-    </tbody>
-  </table></div>
-
-  <h3 class="sub">教程楼陷阱与武器</h3>
-  <div class="tw"><table>
-    <thead><tr><th>道具</th><th>说明</th></tr></thead>
-    <tbody>
-      <tr><td><code>tr_nailboard</code> 钉板陷阱</td><td>可见度 6，稍微留意就能绕开——踩上去目前不会有事，走过去也无妨</td></tr>
-      <tr><td><code>tr_caltrops</code> 铁蒺藜</td><td>密铺封锁区域，比钉板难躲得多</td></tr>
-      <tr><td><code>nailboard</code> 钉板棒（可制作）</td><td>钝器为主、略带穿刺，上手 5 分钟即可自动学会</td></tr>
-    </tbody>
-  </table></div>
 </section>
 
 <section id="crafting">
   <h2>制作与建造</h2>
-
-  <h3 class="sub">材料池系统</h3>
-  <p>5660+ 条制作配方全部可用。制作面板会自动把你身上、以及<strong>附近半径 6 格</strong>的物品都纳入候选，不用一件件翻包。</p>
-  <p>还有个额外的<strong>虚拟拆解</strong>功能：把你"愿意牺牲"的物品拖进材料池，系统会假设性地拆解它、把拆解产出并入可用材料——需要你手动确认才生效，不会偷偷拆你东西。</p>
-
-  <h3 class="sub">建造系统</h3>
-  <p>775+ 条建造项目，站在可建造的地形或家具前按交互键就会弹出"建造"选项。5A 路线修复去雾装置走的就是这套系统里的修复类构造，材料是电池、电机、电缆、电子废料、胶带。</p>
+  <p>模拟真实世界的数千种制作配方，材料自动从随身与周边搜集。</p>
+  <h3 class="sub">建造系统 <span class="pill op">开发中</span></h3>
+  <p>建造系统尚在开发中，暂未开放。</p>
 </section>
 </div>
 
@@ -512,77 +446,44 @@
 </div>
 <section id="town">
   <h2>G市城镇</h2>
-  <p class="lede">每一局的小镇都是重新生成的，从中心十字路口向四个方向长出街道，但有些地标你永远找得到。</p>
-  <div class="tw"><table>
-    <thead><tr><th>摆放方式</th><th>规则</th><th>适用建筑</th></tr></thead>
-    <tbody>
-      <tr><td><b>随机分布</b></td><td>从商店/公园/住宅几类建筑里按概率抽取，不保证某一类一定出现</td><td>警局、超市、教堂</td></tr>
-      <tr><td><b>固定存在</b></td><td>找不到理想位置就往外圈继续找，直到摆下为止</td><td>新手教程公寓——每一局都在</td></tr>
-    </tbody>
-  </table></div>
-  <p>去雾装置优先摆在超市里，找不到超市就退而求其次摆在离城镇最远的路口——同样保证每局都能找到。</p>
+  <p>每一局的小镇都会重新生成——街道、建筑与物资各不相同，但少数地标始终存在。</p>
 </section>
 
 <section id="tutorial">
   <h2>新手教程公寓</h2>
-  <p class="lede">唯一、固定、手工排布的四层教程楼——不走随机商店池，每局内容完全一致。</p>
+  <p class="lede">唯一、固定、手工排布的四层教程楼，每局内容一致。</p>
   <div class="tower">
-    <div class="row"><div class="fl">4F</div><div class="fc"><b style="color:var(--white)">醒来层。</b>阿伦重伤躺在楼梯口，救不救是你的选择。一处贯穿大洞逼你绕道大厅——大厅里有本层的全部搜刮内容。</div></div>
-    <div class="row"><div class="fl">3F</div><div class="fc"><b style="color:var(--white)">大楼保安把守。</b>教遇怪+搜尸——他身上有全部房门钥匙。</div></div>
-    <div class="row"><div class="fl">2F</div><div class="fc"><b style="color:var(--white)">陷阱场。</b>钉板稀摆在咽喉处（拆解学制作），其余密铺铁蒺藜。</div></div>
-    <div class="row"><div class="fl">1F</div><div class="fc"><b style="color:var(--white)">保安队长把守大门。</b>综合考核，前三层所学在此连成一套。</div></div>
+    <div class="row"><div class="fl">4F</div><div class="fc"><b style="color:var(--white)">醒来层。</b>阿伦重伤躺在楼梯口，救不救是你的选择。</div></div>
+    <div class="row"><div class="fl">3F</div><div class="fc"><b style="color:var(--white)">大楼保安把守。</b>教遭遇与搜尸。</div></div>
+    <div class="row"><div class="fl">2F</div><div class="fc"><b style="color:var(--white)">陷阱场。</b>钉板与铁蒺藜混布。</div></div>
+    <div class="row"><div class="fl">1F</div><div class="fc"><b style="color:var(--white)">保安队长把守大门。</b>前三层所学在此汇总。</div></div>
   </div>
 
-  <h3 class="sub" id="orthogonal">不止一条路</h3>
-  <div class="tw"><table>
-    <thead><tr><th>解法</th><th>说明</th></tr></thead>
-    <tbody>
-      <tr><td><b>翻窗离楼</b></td><td>开窗或砸窗都能通行，坠落伤自己扛</td></tr>
-      <tr><td><b>贯穿洞跳层</b></td><td>从 4F 直落 1F，跳过中间全部楼层，硬扛一次跌落伤换时间</td></tr>
-      <tr><td><b>噪音调虎离山</b></td><td>扔个东西制造声响，把保安引离岗位</td></tr>
-    </tbody>
-  </table></div>
-  <p>钥匙链是推荐动线，不是唯一动线——楼梯间的门永远不会上锁。锁住的门目前撬不开，堵路的只能硬砸。</p>
+  <p>这栋楼不止一条通关方式，钥匙不是唯一动线——怎么下楼，你自己想办法。</p>
 </section>
 
 <section id="basement">
   <h2>隐藏地下室</h2>
-  <p class="lede">入口在教程楼 1F 楼梯间，是一条投喂教学 + 探索奖励链条。</p>
-  <div class="tw"><table>
-    <thead><tr><th>房间</th><th>内容</th></tr></thead>
-    <tbody>
-      <tr><td><b>冰库</b>（室 C）</td><td>需要保安队长身上的钥匙开锁，内有真实肉类，是投喂两组关押怪的粮食来源</td></tr>
-      <tr><td><b>A 组关押室</b></td><td>重装丧尸（凯夫拉）+ 铁窗（可隔窗投喂）+ 少量武器；内门后藏着开启 B 组的卡片</td></tr>
-      <tr><td><b>B 组关押室</b></td><td>重装丧尸浩克（凯夫拉）+ 铁窗；内门后是最终奖励——额外的电池+电机（5A 材料的备用来源，不替代浩克出生点那份保证摆放）</td></tr>
-    </tbody>
-  </table></div>
-  <p>免战方式是投喂——两只怪出场时怒气值被刻意调低，喂饱真实肉类会让它们进入无视状态，安全通过或搜刮；也可以直接强攻。</p>
+  <p class="lede">入口藏在教程楼里，是一条投喂教学 + 探索奖励链条，怎么走由你自己发现。</p>
 </section>
 
 <section id="police">
   <h2>警局</h2>
-  <p class="lede">一台需要真本事破解的终端，难度等级 3——这条支线完全可选，不碰它也能顺利通关。</p>
-  <div class="routes" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
-    <div class="route" style="border-top-color:var(--on)"><h4>成功</h4><p style="font-size:12.8px">解锁军火柜：优质武器弹药 + <b>2 块 C4</b></p></div>
-    <div class="route"><h4>失败·关闭终端</h4><p style="font-size:12.8px">无风险挫败，这条线就此关死</p></div>
-    <div class="route" style="border-top-color:var(--tk)"><h4>失败·触发警报</h4><p style="font-size:12.8px">真实噪音事件，吸引焦油人和浩克</p></div>
-    <div class="route" style="border-top-color:var(--gap)"><h4>失败·放出机器人</h4><p style="font-size:12.8px">4-8 只攻击性机器人在你附近生成</p></div>
-  </div>
-  <div class="gapbox">难度等级 3 不是随口定的——电子技能和智力太低的角色可能根本破不开这台终端。真想吃军火柜里的 C4，出发前先练几级电子，或者干脆放弃这条线，走别的路子拿炸药。</div>
+  <p class="lede">一台需要真本事破解的终端，完全可选，不碰它也不影响游玩。</p>
+  <div class="mbar" style="max-width:260px"><span class="mlbl">破解难度</span><div class="tierpips"><i class="s0"></i><i class="s1"></i><i class="s2"></i></div></div>
+  <p>电子技能不够扎实，可能根本破不开这台终端——结果好坏都由你自己去试。</p>
 </section>
 </div>
 
 <div class="tabpanel" data-tab="4">
 <div class="tabindex"><span class="til">本页目录</span>
   <a href="#lore">红雾与焦油人</a><span class="sep">·</span>
-  <a href="#npcs">重要人物</a><span class="sep">·</span>
-  <a href="#routes">四条撤离路线</a><span class="sep">·</span>
-  <a href="#ending">结局</a>
+  <a href="#npcs">重要人物</a>
 </div>
 <section id="lore">
   <h2>红雾与焦油人</h2>
-  <p class="lede">红雾是镇外那圈警戒环真正的样子——外星焦油物质渗出地表后凝成的雾墙，和焦油人、去雾装置同出一源。</p>
-  <p>被红雾接触、渗透过的人会被改造成焦油人；去雾装置则是前人留下来对抗这股力量的遗留物。三者是同一条故事线上的三个节点，不是各自孤立的设定。</p>
+  <p class="lede">红雾是镇外那圈警戒环真正的样子——外星焦油物质渗出地表后凝成的雾墙，和焦油人同出一源。</p>
+  <p>被红雾接触、渗透过的人会被改造成焦油人。三者是同一条故事线上的节点，不是各自孤立的设定。</p>
 </section>
 
 <section id="npcs">
@@ -590,50 +491,17 @@
 
   <div class="entry" data-search="波德 bode 邻居 英雄">
     <h4>波德</h4>
-    <p>G市"无人区"边缘一个没有头衔、外表朴素的平民英雄——光头、亮黄连体工装、外白内红斗篷、红手套红靴。全城废土色调里唯一鲜艳成套的人，这身打扮本身就是"这个人不对劲"的线索。他对自己的力量佛系得很，对生活却充满烟火气，出手从不图名分。</p>
+    <p>G市"无人区"边缘一位低调的平民英雄，装束在废土色调里格外鲜艳，行事佛系。</p>
   </div>
 
   <div class="entry" data-search="阿伦 alun 义体 徒弟">
     <h4>阿伦</h4>
-    <p>波德的（自封）徒弟，义体改造幸存者——双腿、一条手臂、头部和部分躯干是机械，另一条手臂和部分躯干是肉身。独自挑战焦油人浩克证明自己而重伤，倒在你出生的教程公寓楼梯口。救不救、救了要不要和他说话，会分出两条完全不同的命运线。</p>
+    <p>波德的（自封）徒弟，义体改造幸存者，因独自挑战焦油人浩克而重伤。</p>
   </div>
-</section>
-
-<section id="routes">
-  <h2>四条撤离路线</h2>
-  <p class="lede">处理红雾是撤离唯一的必经步骤，四选一，谁先达成谁算数。</p>
-  <div class="routes">
-    <div class="route ra"><h4>5A · 修好装置</h4><ol>
-      <li>找到去雾装置（超市优先，没超市则最远路口）</li>
-      <li>去浩克出生点取电池+电机</li>
-      <li>分两趟扛（真实负重上限）</li>
-      <li>真实建造菜单修复 → 整圈永久解除</li>
-    </ol></div>
-    <div class="route rb"><h4>5B · 炸药凿穿</h4><ol>
-      <li>凑齐任意真实炸药</li>
-      <li>在雾中引爆</li>
-      <li>爆心一块永久驱散，可多次凿穿</li>
-    </ol></div>
-    <div class="route rc"><h4>5C · 硬扛穿雾</h4><ol>
-      <li>备足医疗物资与食水</li>
-      <li>顶着伤害走穿，回血跑赢流失</li>
-      <li>每次穿越都要重新消耗物资</li>
-    </ol></div>
-    <div class="route rg"><h4>5G · 借力波德</h4><ol>
-      <li>先亲眼见过红雾</li>
-      <li>找到波德，告知红雾存在</li>
-      <li>再次靠近红雾边缘，他一拳全清</li>
-    </ol></div>
-  </div>
-  <p>红雾消失不等于通关——你还得自己走出去。</p>
-
-  <h3 class="sub" id="ending">结局</h3>
-  <p>越过红雾外沿的第一帧即判定通关，弹出结算画面：游玩时长、生存天数、击杀数、使用的路线、搜刮物品数。</p>
 </section>
 </div>
 
 </div>
-<footer>中文版 v0.1 · 英文版计划下个版本支持 · 内容随开发进度持续更新</footer>
 </main>
 </div>
 
@@ -735,7 +603,7 @@
       e.classList.toggle('hide', !match);
       if(match) shown++;
     });
-    var entrySections = ['bestiary','items'];
+    var entrySections = ['bestiary','npcs'];
     sections.forEach(function(s){
       if(entrySections.indexOf(s.id) === -1) return;
       var anyVisible = s.querySelectorAll('.entry:not(.hide)').length > 0;
