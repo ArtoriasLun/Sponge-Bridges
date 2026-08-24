@@ -1,0 +1,178 @@
+<title>Sponge Bridges — Support</title>
+<meta name="description" content="Contact support for Sponge Bridges.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
+<style>
+  :root{
+    --bg:#0c0a16; --bg2:#050409;
+    --glass:#3fd6c9; --glass-dim:rgba(63,214,201,.18); --glass-line:rgba(63,214,201,.32);
+    --fire:#f2954a; --fire-dim:#c65a2e;
+    --ink:#f3ede0; --ink-dim:rgba(243,237,224,.62); --ink-faint:rgba(243,237,224,.34);
+    --line:rgba(243,237,224,.14);
+    --err:#e2725a;
+    --display:'Fraunces','Noto Serif SC',serif;
+    --body:'Archivo','Noto Sans SC',sans-serif;
+    --mono:'Share Tech Mono','Noto Sans SC',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(900px 500px at 15% -10%, rgba(63,214,201,.08), transparent 60%),
+      radial-gradient(700px 500px at 100% 0%, rgba(242,149,74,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--body); min-height:100svh;
+  }
+  ::selection{background:var(--glass);color:var(--bg2)}
+
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px clamp(18px,4vw,40px); border-bottom:1px solid var(--line);
+  }
+  nav a.mark{font-family:var(--mono); font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); text-decoration:none}
+  nav a.back{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-faint); text-decoration:none; border:1px solid var(--line); padding:6px 13px;
+    transition:color .25s ease, border-color .25s ease;
+  }
+  nav a.back:hover{color:var(--glass); border-color:var(--glass-line)}
+
+  main{max-width:640px; margin:0 auto; padding:clamp(48px,9vh,96px) clamp(18px,5vw,24px) 100px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:16px}
+  h1{
+    font-family:var(--display); font-weight:900; font-size:clamp(38px,7vw,64px);
+    line-height:1; letter-spacing:-.01em; margin-bottom:18px; text-wrap:balance;
+  }
+  .lede{color:var(--ink-dim); font-size:15.5px; line-height:1.75; max-width:38em; margin-bottom:44px}
+  .lede em{font-style:italic; color:var(--glass)}
+
+  form{position:relative; border:1px solid var(--line); padding:clamp(22px,4vw,36px)}
+  form::before,form::after{content:"";position:absolute;top:0;width:11px;height:11px}
+  form::before{left:0;border-top:1px solid var(--glass);border-left:1px solid var(--glass)}
+  form::after{right:0;border-top:1px solid var(--glass);border-right:1px solid var(--glass)}
+
+  .field{margin-bottom:22px}
+  .field label{
+    display:block; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:9px;
+  }
+  .field .req{color:var(--fire)}
+  input,select,textarea{
+    width:100%; background:rgba(243,237,224,.04); border:1px solid var(--line); color:var(--ink);
+    font-family:var(--body); font-size:14.5px; padding:12px 14px; outline:none;
+    transition:border-color .25s ease, background .25s ease;
+  }
+  input::placeholder,textarea::placeholder{color:var(--ink-faint)}
+  input:focus,select:focus,textarea:focus{border-color:var(--glass-line); background:rgba(63,214,201,.05)}
+  textarea{resize:vertical; min-height:120px; line-height:1.6}
+  select{appearance:none; cursor:pointer; background-image:linear-gradient(45deg,transparent 50%,var(--ink-faint) 50%),linear-gradient(135deg,var(--ink-faint) 50%,transparent 50%); background-position:calc(100% - 20px) center,calc(100% - 15px) center; background-size:5px 5px,5px 5px; background-repeat:no-repeat}
+  select option{background:var(--bg2); color:var(--ink)}
+
+  .row{display:flex; gap:16px; flex-wrap:wrap}
+  .row .field{flex:1; min-width:200px}
+
+  .submit{
+    display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink);
+    border:1px solid var(--glass-line); background:var(--glass-dim); padding:14px 26px;
+    transition:border-color .3s ease, background .3s ease;
+  }
+  .submit:hover{border-color:var(--glass); background:rgba(63,214,201,.28)}
+  .submit .dot{width:6px; height:6px; border-radius:50%; background:var(--glass); box-shadow:0 0 8px var(--glass)}
+
+  .note{margin-top:16px; font-size:12.5px; color:var(--ink-faint); line-height:1.7; display:none}
+  .note.show{display:block}
+  .note a{color:var(--glass)}
+
+  .direct{
+    margin-top:44px; padding-top:28px; border-top:1px solid var(--line);
+    font-size:13px; color:var(--ink-faint); line-height:1.8;
+  }
+  .direct a{color:var(--glass); text-decoration:none; border-bottom:1px solid var(--glass-line)}
+  .direct a:hover{border-bottom-color:var(--glass)}
+
+  footer{
+    padding:26px clamp(18px,6vw,40px) 36px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:10px; color:var(--ink-faint); font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.06em; border-top:1px solid var(--line);
+  }
+</style>
+
+<nav>
+  <a class="mark" href="index.html">Sponge Bridges</a>
+  <a class="back" href="index.html">← Home</a>
+</nav>
+
+<main>
+  <div class="eyebrow">Support</div>
+  <h1>Need a hand<br>through the fog?</h1>
+  <p class="lede">Tell us what's going on and we'll get back to you. <em>Be as specific as you can</em> — your system, what you were doing, what happened instead.</p>
+
+  <form id="supportForm">
+    <div class="row">
+      <div class="field">
+        <label for="name">Name <span class="req">*</span></label>
+        <input id="name" name="name" type="text" placeholder="Your name" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Your Email <span class="req">*</span></label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="category">Topic <span class="req">*</span></label>
+      <select id="category" name="category" required>
+        <option value="" disabled selected>Choose one…</option>
+        <option value="Bug Report">Bug Report</option>
+        <option value="Purchase or Refund">Purchase / Refund</option>
+        <option value="Press or Business">Press / Business Inquiry</option>
+        <option value="General Question">General Question</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="message">Message <span class="req">*</span></label>
+      <textarea id="message" name="message" placeholder="What happened, and what were you expecting instead?" required></textarea>
+    </div>
+
+    <button class="submit" type="submit"><span class="dot"></span> Send</button>
+    <p class="note" id="note">Opening your email client with everything filled in — just hit send there. If nothing opens, use the direct address below instead.</p>
+  </form>
+
+  <div class="direct">
+    Prefer to write directly? <a href="mailto:artorias.lun@gmail.com?subject=%5BSponge%20Bridges%5D%20General%20Question">artorias.lun@gmail.com</a>
+  </div>
+</main>
+
+<footer>
+  <span>Sponge Bridges</span>
+  <span>© 2026</span>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('supportForm');
+  var note = document.getElementById('note');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var category = document.getElementById('category').value;
+    var message = document.getElementById('message').value.trim();
+    if (!name || !email || !category || !message) return;
+
+    var subject = '[Sponge Bridges] ' + category;
+    var body =
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Topic: ' + category + '\n\n' +
+      message;
+
+    var mailto = 'mailto:artorias.lun@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+    note.classList.add('show');
+  });
+})();
+</script>
