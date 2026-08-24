@@ -21,10 +21,20 @@
   strong{color:var(--white);font-weight:500}
   .num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
 
-  .shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
-  aside{position:sticky;top:0;height:100vh;overflow-y:auto;background:rgba(4,11,20,.5);
-    border-right:1px solid var(--lineB);padding:22px 18px 60px}
+  .shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh;transition:grid-template-columns .3s ease}
+  .shell.collapsed{grid-template-columns:0 1fr}
+  aside{position:sticky;top:0;height:100vh;overflow-y:auto;overflow-x:hidden;background:rgba(4,11,20,.5);
+    border-right:1px solid var(--lineB);padding:22px 18px 60px;transition:padding .3s ease}
+  .shell.collapsed aside{padding:22px 0 60px;border-right:0}
+  .shell.collapsed aside>*{opacity:0;pointer-events:none;transition:opacity .12s ease}
   main{min-width:0}
+  .sbtoggle{position:fixed;left:270px;top:18px;z-index:60;width:20px;height:36px;
+    display:flex;align-items:center;justify-content:center;background:rgba(4,11,20,.75);
+    border:1px solid var(--lineB);border-left:0;color:var(--cyan);cursor:pointer;
+    font-size:9px;line-height:1;transition:left .3s ease;padding:0}
+  .sbtoggle:hover{background:var(--active)}
+  .shell.collapsed .sbtoggle{left:0}
+  @media(max-width:900px){.sbtoggle{display:none}}
   .masthead{padding:52px clamp(20px,4vw,48px) 32px;border-bottom:1px solid var(--lineB);position:relative}
   .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gap)}
   .masthead h1{font-family:var(--raj);font-weight:700;font-size:clamp(28px,4vw,42px);color:var(--white);
@@ -205,7 +215,8 @@
   nav.toc .grp.tab-dim>b{color:var(--dim2)}
 </style>
 
-<div class="shell">
+<div class="shell" id="shell">
+<button class="sbtoggle" id="sbtoggle" type="button" aria-label="Toggle sidebar">◀</button>
 <aside>
   <div class="brand"><span data-i18n="brand.title">幸存者手册</span><small data-i18n="brand.small">Survivor's Dossier · G市</small></div>
   <input id="search" type="text" placeholder="搜索图鉴 / 地点…" data-i18n-placeholder="search.placeholder" autocomplete="off">
@@ -585,6 +596,20 @@
     sw.appendChild(b);
   });
   applyLang(detectLang());
+
+  var shell = document.getElementById('shell');
+  var sbtoggle = document.getElementById('sbtoggle');
+  function setSidebar(collapsed){
+    shell.classList.toggle('collapsed', collapsed);
+    sbtoggle.textContent = collapsed ? '▶' : '◀';
+    try { localStorage.setItem('sb_sidebar', collapsed ? '1' : '0'); } catch (e) {}
+  }
+  var savedSidebar = '0';
+  try { savedSidebar = localStorage.getItem('sb_sidebar') || '0'; } catch (e) {}
+  setSidebar(savedSidebar === '1');
+  sbtoggle.addEventListener('click', function(){
+    setSidebar(!shell.classList.contains('collapsed'));
+  });
 
   var search = document.getElementById('search');
   var count = document.getElementById('searchcount');
