@@ -7,11 +7,11 @@ h1 = Image.open(f'{SRC}/H1.jpg').convert('RGB')
 h2 = Image.open(f'{SRC}/H2.jpg').convert('RGB')
 h3 = Image.open(f'{SRC}/H3.jpg').convert('RGB')
 
-# Lower CROP_H = scene shifts further up / tighter crop from the bottom.
-# Source images (H1/H2/H3) are 2706px tall. y0 is already 0 (top of each
-# source image) for all three panels, so the only way to shift the visible
-# scene further up is to shorten CROP_H (crops more off the bottom).
-CROP_H = 1650
+# Vertical position on the actual page is now controlled by the
+# --hero-img-top CSS variable in sponge-bridges-homepage.html / index.html
+# (edit one number there + refresh, no need to rerun this script). So this
+# stays at the full source height -- no vertical cropping baked in here.
+CROP_H = 2706
 W = 1536
 panels = [
     (h1, 0),
