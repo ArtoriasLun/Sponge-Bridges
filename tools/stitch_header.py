@@ -11,7 +11,7 @@ h3 = Image.open(f'{SRC}/H3.jpg').convert('RGB')
 # Source images (H1/H2/H3) are 2706px tall. y0 is already 0 (top of each
 # source image) for all three panels, so the only way to shift the visible
 # scene further up is to shorten CROP_H (crops more off the bottom).
-CROP_H = 256
+CROP_H = 2706
 W = 1536
 panels = [
     (h1, 0),
