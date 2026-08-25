@@ -12,6 +12,14 @@
     --title:'Rajdhani','Noto Sans SC',sans-serif;
     --body:'Archivo','Noto Sans SC',sans-serif;
     --mono:'Share Tech Mono','Noto Sans SC',monospace;
+    /* Vertical position of the hero banner image. The image is a wide
+       triptych stitch (much wider than the hero area is tall), so it's
+       shown at its natural width-driven height instead of cropped to
+       cover the full hero height -- this is what makes --hero-img-top
+       an actually adjustable single number (edit + refresh, no rebuild).
+       More negative = image shifts further up (more of the top of the
+       artwork shows, more solid background revealed below it). */
+    --hero-img-top: -8%;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -24,13 +32,21 @@
     position:absolute; inset:0; z-index:0; overflow:hidden;
   }
   .hero .frame img{
-    position:absolute; inset:-4%; width:108%; height:108%; object-fit:cover; object-position:50% 30%;
+    position:absolute; left:-4%; width:108%; height:auto; top:var(--hero-img-top);
     filter:saturate(.92) contrast(1.03);
     transform:scale(1.05) translateX(3%);
     transition:transform 3.4s cubic-bezier(.19,1,.22,1);
   }
   .hero .frame img.kb{ animation:kenburns 42s ease-in-out infinite alternate; }
   @keyframes kenburns{ from{transform:scale(1) translate(0,0)} to{transform:scale(1.07) translate(-1%,-1.5%)} }
+  @media(max-width:700px){
+    /* The banner is very wide relative to a phone screen's height, so at
+       its natural aspect ratio it shrinks to a near-invisible sliver here.
+       Fall back to full-bleed cover instead of the letterboxed banner. */
+    .hero .frame img{
+      left:-4%; top:-4%; width:108%; height:108%; object-fit:cover; object-position:50% 20%;
+    }
+  }
   .hero .tint{
     position:absolute; inset:0; z-index:1;
     background:
