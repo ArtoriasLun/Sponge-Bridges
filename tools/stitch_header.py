@@ -7,11 +7,16 @@ h1 = Image.open(f'{SRC}/H1.jpg').convert('RGB')
 h2 = Image.open(f'{SRC}/H2.jpg').convert('RGB')
 h3 = Image.open(f'{SRC}/H3.jpg').convert('RGB')
 
-# Vertical position on the actual page is now controlled by the
-# --hero-img-top CSS variable in sponge-bridges-homepage.html / index.html
-# (edit one number there + refresh, no need to rerun this script). So this
-# stays at the full source height -- no vertical cropping baked in here.
-CROP_H = 2706
+# The page shows this image at natural width-driven height (not cropped
+# to fill the hero section), so if CROP_H renders taller than the hero
+# viewport (~900px at desktop width), the excess gets clipped by the
+# viewport edge -- the opposite of "less cropping". Keep CROP_H tall
+# enough for good composition but short enough that the rendered banner
+# (roughly width * CROP_H/W * 1.08) stays under ~900px, so nothing gets
+# clipped by the screen edge. 1650 keeps the full courier figure in frame.
+# Vertical position within that is controlled by --hero-img-top in
+# sponge-bridges-homepage.html / index.html (edit + refresh, no rerun).
+CROP_H = 1650
 W = 1536
 panels = [
     (h1, 0),
