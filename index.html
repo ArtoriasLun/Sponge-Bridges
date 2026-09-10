@@ -47,6 +47,13 @@
       linear-gradient(180deg, rgba(5,4,9,.35) 0%, rgba(5,4,9,.15) 30%, rgba(5,4,9,.78) 88%, var(--bg2) 100%),
       linear-gradient(0deg, rgba(92,148,204,.10), transparent 40%);
   }
+  /* 鸟群粒子层：boids 算法 + 鼠标作为"捕食者"驱散 */
+  .flock{
+    position:absolute; inset:0; z-index:3; pointer-events:none;
+    width:100%; height:100%;
+    opacity:0; transition:opacity 1.6s ease .4s;
+  }
+  .flock.on{opacity:1}
   .embers{position:absolute; inset:0; z-index:2; pointer-events:none}
   .ember{
     position:absolute; bottom:-4%; width:3px; height:3px; border-radius:50%;
@@ -59,7 +66,7 @@
     90%{opacity:.5}
     100%{opacity:0; transform:translate(var(--drift,18px),-108vh)}
   }
-  @media (prefers-reduced-motion: reduce){ .hero .frame img{animation:none} .embers{display:none} }
+  @media (prefers-reduced-motion: reduce){ .hero .frame img{animation:none} .embers{display:none} .flock{display:none} }
 
   nav{
     position:absolute; top:0; left:0; right:0; z-index:6;
@@ -276,6 +283,7 @@
     <img src="images/header.jpg" alt="A courier carrying a stacked cargo tower walks down a burning, fog-cracked street at dusk, a vast shadow looming beyond the flames.">
   </div>
   <div class="tint"></div>
+  <canvas class="flock" id="flock" aria-hidden="true"></canvas>
   <div class="embers" id="embers"></div>
 
   <nav>
@@ -529,6 +537,192 @@
     document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+
+/* ── Hero 鸟群层：boids（分离/对齐/聚集）+ 鼠标作为捕食者 ── */
+(function(){
+  var cv = document.getElementById('flock');
+  if (!cv || !cv.getContext) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var ctx = cv.getContext('2d');
+  var W = 0, H = 0, rect = null, boids = [], raf = 0, last = 0;
+
+  var PERCEPT2 = 62 * 62;     // 感知半径²
+  var SEP2     = 22 * 22;     // 分离半径²
+  var MAXSPD = 1.05, MINSPD = 0.42, MAXF = 0.035;
+  var FLEESPD = MAXSPD * 2.6, FLEEF = MAXF * 5;   // 逃离时解除常规速度/转向限制
+  var MOUSE_R = 155, MOUSE_R2 = MOUSE_R * MOUSE_R;
+
+  var mx = -9999, my = -9999, mWant = 0, mNow = 0;  // mNow：鼠标影响力，平滑淡入淡出
+
+  function measure(){
+    rect = cv.getBoundingClientRect();
+    if (!rect.width || !rect.height) return false;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = rect.width; H = rect.height;
+    cv.width  = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return true;
+  }
+
+  function seed(){
+    var n = W < 700 ? 42 : (W < 1200 ? 70 : 92);
+    boids.length = 0;
+    for (var i = 0; i < n; i++){
+      var a = Math.random() * Math.PI * 2;
+      var s = MINSPD + Math.random() * (MAXSPD - MINSPD);
+      boids.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+        fire: Math.random() < 0.14,          // 少数火色个体，呼应余烬
+        sz: 0.7 + Math.random() * 0.7,
+        pan: 0                               // 受惊程度 0..1
+      });
+    }
+  }
+
+  // 把"期望方向"转成受限的转向力，结果写入 _fx/_fy（避免每帧分配对象）
+  // spd/mf 可覆盖：逃离时允许更高的速度与转向上限，否则光标一快就直接"犁"过鸟群
+  var _fx = 0, _fy = 0;
+  function steer(b, dx, dy, spd, mf){
+    var m = Math.sqrt(dx * dx + dy * dy);
+    if (m < 1e-6){ _fx = 0; _fy = 0; return; }
+    var k = spd / m;
+    var fx = dx * k - b.vx, fy = dy * k - b.vy;
+    var fm = Math.sqrt(fx * fx + fy * fy);
+    if (fm > mf){ var q = mf / fm; fx *= q; fy *= q; }
+    _fx = fx; _fy = fy;
+  }
+
+  function step(dt){
+    for (var i = 0; i < boids.length; i++){
+      var b = boids[i];
+      var ax = 0, ay = 0;
+      var cx = 0, cy = 0, avx = 0, avy = 0, sx = 0, sy = 0, nN = 0, nS = 0;
+
+      for (var j = 0; j < boids.length; j++){
+        if (i === j) continue;
+        var o = boids[j];
+        var dx = b.x - o.x, dy = b.y - o.y, d2 = dx * dx + dy * dy;
+        if (d2 > PERCEPT2 || d2 === 0) continue;
+        cx += o.x; cy += o.y; avx += o.vx; avy += o.vy; nN++;
+        if (d2 < SEP2){ var inv = 1 / d2; sx += dx * inv; sy += dy * inv; nS++; }
+      }
+
+      if (nN){
+        steer(b, cx / nN - b.x, cy / nN - b.y, MAXSPD, MAXF); ax += _fx * 0.85; ay += _fy * 0.85; // 聚集
+        steer(b, avx / nN, avy / nN, MAXSPD, MAXF);           ax += _fx;        ay += _fy;        // 对齐
+      }
+      if (nS){ steer(b, sx, sy, MAXSPD, MAXF); ax += _fx * 1.85; ay += _fy * 1.85; }              // 分离
+
+      // 鼠标 = 捕食者：径向逃离 + 切向环绕（否则会像爆炸一样直线散开）
+      var threat = 0;
+      if (mNow > 0.01){
+        var mdx = b.x - mx, mdy = b.y - my, md2 = mdx * mdx + mdy * mdy;
+        if (md2 < MOUSE_R2 && md2 > 1){
+          var f = 1 - Math.sqrt(md2) / MOUSE_R;
+          threat = f * f * mNow;
+          steer(b,  mdx, mdy, FLEESPD, FLEEF); ax += _fx * 3.4 * threat; ay += _fy * 3.4 * threat;
+          steer(b, -mdy, mdx, FLEESPD, FLEEF); ax += _fx * 1.5 * threat; ay += _fy * 1.5 * threat;
+        }
+      }
+      // 受惊后短暂保持高速，冲出包围圈再慢慢归队
+      b.pan = Math.max(b.pan * (1 - 0.035 * dt), threat);
+
+      b.vx += ax * dt; b.vy += ay * dt;
+
+      var cap = MAXSPD * (1 + 1.7 * b.pan);
+      var sp = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+      if (sp > cap){ var t1 = cap / sp; b.vx *= t1; b.vy *= t1; }
+      else if (sp > 1e-6 && sp < MINSPD){ var t2 = MINSPD / sp; b.vx *= t2; b.vy *= t2; }
+
+      b.x += b.vx * dt; b.y += b.vy * dt;
+
+      if (b.x < -24) b.x = W + 24; else if (b.x > W + 24) b.x = -24;   // 环绕出屏
+      if (b.y < -24) b.y = H + 24; else if (b.y > H + 24) b.y = -24;
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round';
+    for (var pass = 0; pass < 2; pass++){
+      ctx.strokeStyle = pass ? 'rgba(217,154,78,.62)' : 'rgba(198,214,232,.34)';
+      ctx.lineWidth   = pass ? 1.9 : 1.5;
+      ctx.shadowBlur  = pass ? 5 : 0;
+      ctx.shadowColor = pass ? 'rgba(217,154,78,.55)' : 'transparent';
+      ctx.beginPath();
+      for (var i = 0; i < boids.length; i++){
+        var b = boids[i];
+        if ((b.fire ? 1 : 0) !== pass) continue;
+        var sp = Math.sqrt(b.vx * b.vx + b.vy * b.vy) || 1;
+        var tl = (5 + b.sz * 5) / sp;               // 拖尾长度沿速度方向
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - b.vx * tl, b.y - b.vy * tl);
+      }
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+  }
+
+  function tick(now){
+    raf = requestAnimationFrame(tick);
+    if (!last) last = now;
+    var dt = (now - last) / 16.67;
+    last = now;
+    if (dt > 3) dt = 3;                              // 切回标签页时不要瞬移
+    mNow += (mWant - mNow) * Math.min(1, 0.07 * dt);
+    step(dt); draw();
+  }
+
+  function start(){ if (!raf && boids.length){ last = 0; raf = requestAnimationFrame(tick); } }
+  function stop(){ if (raf){ cancelAnimationFrame(raf); raf = 0; } }
+
+  function onMove(e){
+    if (!rect) return;
+    var p = e.touches ? e.touches[0] : e;
+    mx = p.clientX - rect.left; my = p.clientY - rect.top;
+    mWant = (mx > -40 && mx < W + 40 && my > -40 && my < H + 40) ? 1 : 0;
+  }
+
+  if (!measure()) return;
+  seed();
+  cv.classList.add('on');
+
+  window.addEventListener('mousemove', onMove, {passive: true});
+  window.addEventListener('touchmove', onMove, {passive: true});
+  // 注意：不能用 mouseout + relatedTarget==null 判断"离开窗口"——光标从 nav 等
+  // 子元素移出时也会带着 null relatedTarget 冒泡上来，会误关掉整个效果。
+  document.documentElement.addEventListener('mouseleave', function(){ mWant = 0; });
+  window.addEventListener('touchend', function(){ mWant = 0; }, {passive: true});
+  window.addEventListener('scroll', function(){ rect = cv.getBoundingClientRect(); }, {passive: true});
+
+  var rt = 0;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      var oldW = W, oldH = H;
+      if (!measure()) return;
+      for (var i = 0; i < boids.length; i++){       // 按比例把个体带进新画布
+        boids[i].x = boids[i].x / (oldW || W) * W;
+        boids[i].y = boids[i].y / (oldH || H) * H;
+      }
+    }, 160);
+  });
+
+  document.addEventListener('visibilitychange', function(){
+    document.hidden ? stop() : start();
+  });
+
+  if ('IntersectionObserver' in window){         // 滚出 hero 就停，省电
+    new IntersectionObserver(function(en){
+      en[0].isIntersecting ? start() : stop();
+    }, {threshold: 0}).observe(cv);
+  } else {
+    start();
   }
 })();
 </script>
