@@ -1,7 +1,7 @@
 var HOME_I18N_ZH = {
   'nav.dev':'开发中',
   'nav.support':'联系支持',
-  'hero.eyebrow':'致敬《死亡搁浅》与《大灾变：黑暗降临》',
+  'hero.eyebrow':'',
   'hero.tagline':'行走在送货的路上，步入危险之地',
   'hero.scroll':'向下滚动',
   'gallery.eyebrow':'画廊',

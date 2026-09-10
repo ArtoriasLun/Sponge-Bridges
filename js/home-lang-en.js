@@ -1,7 +1,7 @@
 var HOME_I18N_EN = {
   'nav.dev': 'In Development',
   'nav.support': 'Contact Support',
-  'hero.eyebrow': 'A Homage to Death Stranding & Cataclysm: Dark Days Ahead',
+  'hero.eyebrow': '',
   'hero.tagline': 'Walk the path of delivery into treacherous lands.',
   'hero.scroll': 'Scroll Down',
   'gallery.eyebrow': 'Gallery',
