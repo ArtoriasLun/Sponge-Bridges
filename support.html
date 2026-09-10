@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <title>Sponge Bridges — Support</title>
 <meta name="description" content="Contact support for Sponge Bridges.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
@@ -44,6 +45,8 @@
   nav .langsw button:hover{color:var(--ink)}
   nav .langsw button.active{color:var(--glass); background:var(--glass-dim)}
 
+  /* 火星层固定在 z-index:3，正文抬到它上面 */
+  nav,main,footer{position:relative; z-index:4}
   main{max-width:640px; margin:0 auto; padding:clamp(48px,9vh,96px) clamp(18px,5vw,24px) 100px}
   .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:16px}
   h1{
@@ -92,6 +95,7 @@
 
 <script src="js/support-lang-en.js"></script>
 <script src="js/support-lang-zh.js"></script>
+<script src="js/sparks.js"></script>
 <script>
 (function(){
   var LANGS = [
