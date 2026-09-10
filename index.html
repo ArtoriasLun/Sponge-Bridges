@@ -286,7 +286,7 @@
   </nav>
 
   <div class="herobody">
-    <div class="eyebrow" data-i18n="hero.eyebrow">A Homage to Death Stranding &amp; Cataclysm: Dark Days Ahead</div>
+    <div class="eyebrow" data-i18n="hero.eyebrow"></div>
     <h1 id="titleDrip">Sponge<br><em>Bridges</em></h1>
     <p class="tagline" data-i18n="hero.tagline">Walk the path of delivery into treacherous lands.</p>
   </div>
@@ -354,15 +354,17 @@
     currentLang = lang;
     var dict = I18N[lang] || I18N.en;
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    // 用 in 判断而不是 ||，用 != null 而不是真值判断：否则把某条词条设成空字符串
+    // （想让它不显示）会先回退到英文、再被真值判断挡掉，结果 HTML 里的兜底文字继续显示。
     document.querySelectorAll('[data-i18n]').forEach(function(el){
       var key = el.getAttribute('data-i18n');
-      var val = dict[key] || I18N.en[key];
-      if (val) el.textContent = val;
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.textContent = val;
     });
     document.querySelectorAll('[data-i18n-html]').forEach(function(el){
       var key = el.getAttribute('data-i18n-html');
-      var val = dict[key] || I18N.en[key];
-      if (val) el.innerHTML = val;
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.innerHTML = val;
     });
     document.querySelectorAll('#langsw button').forEach(function(b){
       b.classList.toggle('active', b.dataset.lang === lang);
