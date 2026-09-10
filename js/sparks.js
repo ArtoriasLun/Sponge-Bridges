@@ -20,8 +20,18 @@
   var ctx = cv.getContext('2d');
   var W = 0, H = 0, ps = [], raf = 0, last = 0;
 
-  var MOUSE_R = 165, MOUSE_R2 = MOUSE_R * MOUSE_R;
-  var PUSH = 0.62, SWIRL = 0.40;                    // 鼠标推开 / 卷动强度
+  // 影响半径按视口取，而不是写死像素：大屏才有"大范围"的观感
+  var MOUSE_R = 0, MOUSE_R2 = 0;
+  // 三个力配合，缺一不可：
+  //  SWIRL 切向卷动，铺满整个大半径，是"一大片在转"的观感来源；
+  //  PULL  向心力，平衡切向速度。只给切向力的话粒子会越转越快、沿切线飞走，
+  //        大半径下就变成把中间整片掏空、只在边缘堆一圈；
+  //  PUSH  只在光标附近一小圈的外推，留出跟着光标走的空腔，防止涡心塌成一点。
+  // 量级由阻力定：终端速度 ≈ a/0.014，中场想要 ~4px/帧 就得 a≈0.056，
+  // 对应 SWIRL≈0.13——比凭感觉给的 0.6 小了近 5 倍。
+  var SWIRL = 0.13, PULL = 0.105;
+  var PUSH = 0.30, PUSH_R = 0.24;                   // 外推强度 / 作用半径占比
+  var VMAX = 7.5;                                   // 速度上限，兜底防甩飞
   var mx = -9999, my = -9999, mWant = 0, mNow = 0;
 
   // 余烬色阶：白热 → 橙 → 站点火色 → 暗红。预渲染成精灵，避免每帧建渐变。
@@ -42,6 +52,8 @@
   function measure(){
     W = window.innerWidth; H = window.innerHeight;
     if (!W || !H) return false;
+    MOUSE_R = Math.max(300, Math.min(660, Math.min(W, H) * 0.62));
+    MOUSE_R2 = MOUSE_R * MOUSE_R;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width  = Math.round(W * dpr);
     cv.height = Math.round(H * dpr);
@@ -89,18 +101,30 @@
       if (mNow > 0.01){
         var dx = p.x - mx, dy = p.y - my, d2 = dx * dx + dy * dy;
         if (d2 < MOUSE_R2 && d2 > 1){
-          var d = Math.sqrt(d2), f = 1 - d / MOUSE_R;
-          f = f * f * mNow;
+          var d = Math.sqrt(d2);
+          // 卷动：smoothstep 铺满整个半径。平方衰减会让外围几乎没反应，
+          // 半径再大观感上也还是一小圈。
+          var b = 1 - d / MOUSE_R;
+          var fs = b * b * (3 - 2 * b) * mNow;
+          // 推力：只在内圈，且衰减更陡，避免把大范围掏空
+          var pb = 1 - d / (MOUSE_R * PUSH_R);
+          var fp = pb > 0 ? pb * pb * mNow : 0;
           var ix = dx / d, iy = dy / d;
-          p.vx += ( ix * PUSH - iy * SWIRL) * f * dt;
-          p.vy += ( iy * PUSH + ix * SWIRL) * f * dt;
-          if (f > p.fl) p.fl = f;
+          var rad = PUSH * fp - PULL * fs;           // 近处外推，中远场向心
+          p.vx += (ix * rad - iy * SWIRL * fs) * dt;
+          p.vy += (iy * rad + ix * SWIRL * fs) * dt;
+          if (fs > p.fl) p.fl = fs;                  // 整片都会被扇亮
         }
       }
       p.fl *= Math.pow(0.95, dt);
 
       var drag = Math.pow(0.986, dt);
       p.vx *= drag; p.vy *= drag;
+
+      var cap = VMAX * (1 + p.fl);                   // 被扇到时允许更快
+      var sp2 = p.vx * p.vx + p.vy * p.vy;
+      if (sp2 > cap * cap){ var q = cap / Math.sqrt(sp2); p.vx *= q; p.vy *= q; }
+
       p.x += p.vx * dt; p.y += p.vy * dt;
 
       p.life += ms;
