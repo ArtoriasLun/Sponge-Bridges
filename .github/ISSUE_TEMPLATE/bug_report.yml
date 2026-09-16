@@ -1,0 +1,87 @@
+name: "🐛 报告问题 / Bug report"
+description: "游戏里出错了、卡住了、崩溃了 — Something broke, froze, or crashed"
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你花时间反馈。**提交前请先搜索一下已有的 issue**，同一个问题合并在一条里，我们处理得更快。
+        Thanks for taking the time. **Please search existing issues first** — one thread per problem helps us move faster.
+
+        ⚠️ 这里是公开页面，所有人都能看到。请不要贴出你的邮箱、真实姓名或存档里的个人信息。
+        ⚠️ This is public. Don't paste your email, real name, or anything personal from your save.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: "发生了什么 / What happened"
+      description: "用一两句话说清楚你看到的现象。 A sentence or two on what you actually saw."
+      placeholder: "背着满载货塔从楼梯下来时，角色卡在了台阶中间，动不了也摔不下去。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: "怎么复现 / How to reproduce"
+      description: "能让我们照着做一遍的步骤。不确定也没关系，写你记得的部分。 Steps we can follow. Partial is fine."
+      placeholder: |
+        1. 接一单 60kg 以上的货
+        2. 走到市政厅二楼楼梯口
+        3. 蹲下往下走
+        4. 卡住
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "你原本以为会怎样 / What you expected instead"
+      placeholder: "应该正常走下楼梯，或者失衡摔下去。"
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: "游戏版本 / Game version"
+      description: "不确定的话，写下你是在哪里、什么时候下载的就行。 If you're not sure, just say where and when you downloaded it."
+      placeholder: "例如 Steam demo，2026-09 / e.g. Steam demo, 2026-09"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: "操作系统 / Operating system"
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Steam Deck
+        - 其他 / Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: specs
+    attributes:
+      label: "硬件与显卡 / Hardware and GPU"
+      description: "性能问题或崩溃时特别重要。 Matters most for performance problems and crashes."
+      placeholder: "CPU / 显卡 / 内存 / 分辨率"
+    validations:
+      required: false
+
+  - type: textarea
+    id: extras
+    attributes:
+      label: "截图、录屏或日志 / Screenshots, clips, or logs"
+      description: |
+        直接把文件拖进这个框就能上传。一段十几秒的录屏，往往比一整页文字更有用。
+        Drag files straight into this box to upload. A ten-second clip often beats a page of text.
+
+        存档也可以附上，这对"卡住""读不出来"一类的问题帮助很大。
+        A save file helps a lot for stuck-state and load-failure reports.
+    validations:
+      required: false

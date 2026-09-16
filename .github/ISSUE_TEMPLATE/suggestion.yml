@@ -1,0 +1,43 @@
+name: "💡 提个建议 / Suggestion"
+description: "想要的功能、想改的手感、想加的内容 — A feature, a feel change, or content you'd like"
+title: "[建议] "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        建议永远欢迎。请先搜一下有没有人提过 —— 如果有，去那条底下点个 👍 比新开一条更有用。
+        Suggestions always welcome. Search first — a 👍 on an existing thread counts for more than a new one.
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: "你想要什么 / What you want"
+      placeholder: "希望货塔在装载界面里能看到重心偏向哪一侧。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: "为什么 / Why"
+      description: "你是在什么情况下想到这个的？我们更想知道你遇到的困扰，而不只是解法本身。 What were you doing when you wished for this? The problem matters more to us than the proposed fix."
+      placeholder: "现在只能靠摔倒来发现配重歪了，重来一次的成本太高。"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "属于哪一块 / Which part of the game"
+      options:
+        - 送货与货塔 / Delivery and the cargo stack
+        - 生存模拟（饥饿/体温/伤势） / Survival sim (hunger, temperature, wounds)
+        - 战斗与焦油人 / Combat and the tar people
+        - 制作与拆解 / Crafting and disassembly
+        - 世界与探索 / World and exploration
+        - 界面与操作 / UI and controls
+        - 性能与优化 / Performance
+        - 其他 / Other
+    validations:
+      required: false

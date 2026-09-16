@@ -56,6 +56,25 @@
   .lede{color:var(--ink-dim); font-size:15.5px; line-height:1.75; max-width:38em; margin-bottom:44px}
   .lede em{font-style:italic; color:var(--glass)}
 
+  .split{display:flex; align-items:baseline; gap:14px; margin:0 0 20px}
+  .split h2{font-family:var(--display); font-weight:600; font-size:20px; letter-spacing:-.01em; white-space:nowrap}
+  .split .rule{flex:1; height:1px; background:var(--line)}
+  .tracker{margin-top:76px}
+  .tracker p{color:var(--ink-dim); font-size:14.5px; line-height:1.75; max-width:38em; margin-bottom:26px}
+  .routes{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+  .routes a{
+    display:block; padding:16px 18px; background:var(--bg); text-decoration:none;
+    transition:background .25s ease;
+  }
+  .routes a:hover{background:rgba(92,148,204,.07)}
+  .routes .t{display:block; color:var(--ink); font-size:14.5px; margin-bottom:5px}
+  .routes .d{display:block; color:var(--ink-faint); font-size:12.5px; line-height:1.6}
+  .routes a:hover .t{color:var(--glass)}
+  .note{
+    margin-top:18px; font-family:var(--mono); font-size:11px; line-height:1.8;
+    letter-spacing:.04em; color:var(--ink-faint);
+  }
+
   .embed{position:relative; border:1px solid var(--line); padding:clamp(10px,2vw,16px)}
   .embed::before,.embed::after{content:"";position:absolute;top:0;width:11px;height:11px}
   .embed::before{left:0;border-top:1px solid var(--glass);border-left:1px solid var(--glass)}
@@ -86,6 +105,32 @@
   <div class="embed">
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScIH3ZMvVJHEZaWgAKNKO2k2Tu1fYbCq2GABO_apDCmsG12KQ/viewform?embedded=true" title="Sponge Bridges support form">Loading…</iframe>
   </div>
+
+  <section class="tracker">
+    <div class="split"><h2 data-i18n="tracker.h2">Or file it in the open</h2><div class="rule"></div></div>
+    <p data-i18n="tracker.lede">Everything the game gets wrong is tracked publicly on GitHub. Filing there means you can see what we've already picked up, add to someone else's report instead of starting over, and watch your own through to the fix.</p>
+
+    <div class="routes">
+      <a href="https://github.com/ArtoriasLun/Sponge-Bridges/issues/new?template=bug_report.yml">
+        <span class="t" data-i18n="tracker.bug.t">🐛 Report a bug</span>
+        <span class="d" data-i18n="tracker.bug.d">Something broke, froze, or crashed.</span>
+      </a>
+      <a href="https://github.com/ArtoriasLun/Sponge-Bridges/issues/new?template=suggestion.yml">
+        <span class="t" data-i18n="tracker.idea.t">💡 Suggest something</span>
+        <span class="d" data-i18n="tracker.idea.d">A feature, a feel change, or content you'd like.</span>
+      </a>
+      <a href="https://github.com/ArtoriasLun/Sponge-Bridges/issues/new?template=translation.yml">
+        <span class="t" data-i18n="tracker.text.t">🌐 Text and translation</span>
+        <span class="d" data-i18n="tracker.text.d">Typos, awkward wording, text that overflows.</span>
+      </a>
+      <a href="https://github.com/ArtoriasLun/Sponge-Bridges/issues">
+        <span class="t" data-i18n="tracker.all.t">📋 Browse everything filed</span>
+        <span class="d" data-i18n="tracker.all.d">Check whether it's already known before you write.</span>
+      </a>
+    </div>
+
+    <p class="note" data-i18n-html="tracker.note">Needs a free GitHub account, and everything posted there is public — keep your email, real name, and anything personal out of it. If it's private, use the form above.</p>
+  </section>
 </main>
 
 <footer>
@@ -109,13 +154,13 @@
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.querySelectorAll('[data-i18n]').forEach(function(el){
       var key = el.getAttribute('data-i18n');
-      var val = dict[key] || I18N.en[key];
-      if (val) el.textContent = val;
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.textContent = val;
     });
     document.querySelectorAll('[data-i18n-html]').forEach(function(el){
       var key = el.getAttribute('data-i18n-html');
-      var val = dict[key] || I18N.en[key];
-      if (val) el.innerHTML = val;
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.innerHTML = val;
     });
     document.querySelectorAll('#langsw button').forEach(function(b){
       b.classList.toggle('active', b.dataset.lang === lang);

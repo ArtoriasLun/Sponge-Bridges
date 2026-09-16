@@ -1,0 +1,27 @@
+name: "🌐 文本与翻译 / Text and translation"
+description: "错别字、翻译不通顺、显示不下 — Typos, awkward wording, text that overflows"
+title: "[文本] "
+labels: ["text"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: "在哪看到的 / Where you saw it"
+      placeholder: "物品描述 / 主菜单 / 订单终端 …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: "现在的文本 / Current text"
+      description: "原样复制，或者直接截图。 Copy it as-is, or just screenshot it."
+    validations:
+      required: true
+
+  - type: textarea
+    id: better
+    attributes:
+      label: "你觉得该怎么写 / What it should say"
+    validations:
+      required: false

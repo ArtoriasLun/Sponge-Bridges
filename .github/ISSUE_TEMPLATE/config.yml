@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "📧 私下联系我们 / Contact us privately"
+    url: "https://artoriaslun.github.io/Sponge-Bridges/support.html"
+    about: "不想公开、或者涉及账号与个人信息的事情，走这个表单。 Use the form if it's private or involves your account."
+  - name: "🔐 安全问题 / Security issue"
+    url: "https://artoriaslun.github.io/Sponge-Bridges/support.html"
+    about: "请不要公开提交安全相关的问题，用表单单独告诉我们。 Please don't file security problems in public."
