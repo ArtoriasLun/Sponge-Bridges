@@ -252,6 +252,17 @@
   .notify .dot{width:6px; height:6px; border-radius:50%; background:currentColor; box-shadow:0 0 10px currentColor; animation:blink 1.8s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:1} 50%{opacity:.35}}
 
+  .closing .acts{position:relative; display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap}
+  .closing .support{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-dim); text-decoration:none;
+    border:1px solid var(--line); background:transparent; padding:13px 24px;
+    transition:color .3s ease, border-color .3s ease, background .3s ease;
+  }
+  .closing .support:hover{color:var(--fire); border-color:var(--fire-dim); background:rgba(217,154,78,.08)}
+  .closing .support svg{width:13px; height:13px; flex:none; stroke:currentColor; fill:none; stroke-width:1.6}
+
   footer{
     padding:26px clamp(20px,6vw,40px) 36px; display:flex; justify-content:space-between; align-items:center;
     flex-wrap:wrap; gap:10px; color:var(--ink-faint); font-family:var(--mono); font-size:10.5px;
@@ -324,7 +335,13 @@
 <section class="closing">
   <h2 data-i18n="closing.h2">Danger still awaits you.</h2>
   <p class="sub" data-i18n="closing.sub">Sponge Bridges is currently in development.</p>
-  <div class="notify"><span class="dot"></span> <span data-i18n="closing.notify">Stay Tuned</span></div>
+  <div class="acts">
+    <div class="notify"><span class="dot"></span> <span data-i18n="closing.notify">Stay Tuned</span></div>
+    <a class="support" href="support.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18v13H3z"/><path d="m3 7 9 6.5L21 7"/></svg>
+      <span data-i18n="nav.support">Contact Support</span>
+    </a>
+  </div>
 </section>
 
 <footer>
