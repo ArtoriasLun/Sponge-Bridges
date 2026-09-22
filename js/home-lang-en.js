@@ -1,5 +1,6 @@
 var HOME_I18N_EN = {
   'nav.dev': 'In Development',
+  'cta.wishlist': 'Wishlist on Steam',
   'nav.support': 'Contact Support',
   'hero.eyebrow': '',
   'hero.tagline': 'Walk the path of delivery into treacherous lands.',
@@ -11,7 +12,7 @@ var HOME_I18N_EN = {
   'pitch.h2': 'G-City',
   'pitch.p1': 'You are Sam (or whatever you prefer to call him). Ever since the toxic Red Mist seeped in from the outskirts, G-City has fallen. You must stack supplies tall upon your back, evade the Tarred, search for clues to clear the mist once and for all, and... try not to starve to death mid-delivery.',
   'pitch.p2': 'Sponge Bridges is a delivery-focused post-apocalyptic survival action game. You are Sam, a courier carrying a tower of cargo stacked ever higher on your back, traversing a ruined city engulfed in Red Mist.\nCargo isn\'t just a number on a weight scale—it\'s vital supplies for the few remaining survivors, but overloading is a truly lethal threat. Hunger, thirst, and sleep are real survival needs. When shot, gear coverage matters; wounds bleed, get infected, and fester—unattended, a minor scratch can be fatal. Weapons aren\'t simple instant-win buttons either.\nThe Tarred will hunt you by scent and footsteps. To kill or to spare is entirely up to you—you can put down your weapons and throw supplies to feed them until they calm down, or slaughter them all. With over 3,000 items and recipes and more than 300 enemy types, the deep craftable arsenal provides the tools to survive until your next choice. But one question remains: carrying this weight and every decision you\'ve made, can you find a way to clear the Red Mist once and for all?',
-  'pitch.platform': 'Platform — Available Now on Steam',
+  'pitch.platform': 'Platform — Coming to Steam',
   'pitch.cta': 'Access DEMO Dossier →',
   'pillar.1.title': 'Redemption',
   'pillar.1.desc': 'This world needs more redemption, not destruction.',

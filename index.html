@@ -115,7 +115,19 @@
     animation:rise 1.1s .55s cubic-bezier(.16,1,.3,1) forwards;
   }
   @keyframes rise{from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:translateY(0)}}
-  @media (prefers-reduced-motion: reduce){ .eyebrow,h1,.tagline{animation:none; opacity:1} }
+  /* 愿望单：全站主行动按钮，火色实心，和 wiki 的玻璃蓝次要 CTA 区分开 */
+  .wish{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none; cursor:pointer;
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--bg2); background:var(--fire); border:1px solid var(--fire);
+    padding:15px 28px; transition:background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  }
+  .wish:hover{background:#e8ab5f; border-color:#e8ab5f; box-shadow:0 6px 22px rgba(217,154,78,.32); transform:translateY(-2px)}
+  .wish svg{width:15px; height:15px; flex:none; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round}
+
+  .herobody .wish{margin-top:32px; opacity:0; animation:rise 1.1s .8s cubic-bezier(.16,1,.3,1) forwards}
+
+  @media (prefers-reduced-motion: reduce){ .eyebrow,h1,.tagline,.herobody .wish{animation:none; opacity:1} }
 
   .q-text{font-size:clamp(15px,1.9vw,19px); line-height:1.65; color:var(--ink-dim); font-weight:400; letter-spacing:0.02em;}
 
@@ -253,6 +265,7 @@
   @keyframes blink{0%,100%{opacity:1} 50%{opacity:.35}}
 
   .closing .acts{position:relative; display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap}
+  .closing .notify{order:-1}
   .closing .support{
     display:inline-flex; align-items:center; gap:9px;
     font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
@@ -281,6 +294,7 @@
   <nav>
     <div class="navleft">
       <div class="mark">Alun Games</div>
+      <a class="navlink" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener" data-i18n="cta.wishlist">Wishlist on Steam</a>
       <a class="navlink" href="support.html" data-i18n="nav.support">Contact Support</a>
       <div class="devstatus">
         <span data-i18n="nav.dev">In Development</span>
@@ -294,6 +308,9 @@
     <div class="eyebrow" data-i18n="hero.eyebrow"></div>
     <h1 id="titleDrip">Sponge<br><em>Bridges</em></h1>
     <p class="tagline" data-i18n="hero.tagline">Walk the path of delivery into treacherous lands.</p>
+    <a class="wish" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg><span data-i18n="cta.wishlist">Wishlist on Steam</span>
+    </a>
   </div>
 
   <div class="scrolldown"><span class="ln"></span><span data-i18n="hero.scroll">Scroll Down</span></div>
@@ -337,6 +354,9 @@
   <p class="sub" data-i18n="closing.sub">Sponge Bridges is currently in development.</p>
   <div class="acts">
     <div class="notify"><span class="dot"></span> <span data-i18n="closing.notify">Stay Tuned</span></div>
+    <a class="wish" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg><span data-i18n="cta.wishlist">Wishlist on Steam</span>
+    </a>
     <a class="support" href="support.html">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18v13H3z"/><path d="m3 7 9 6.5L21 7"/></svg>
       <span data-i18n="nav.support">Contact Support</span>
