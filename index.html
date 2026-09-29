@@ -289,6 +289,17 @@
     border-color:var(--glass); background:var(--glass); color:var(--bg2); 
     transform:translateX(6px); box-shadow:0 4px 15px rgba(92,148,204,0.3);
   }
+  /* 「关于这款游戏」原样来自 store/*.json，跨满两栏，不挤在右边那一列里 */
+  .pitch .storeabout{grid-column:1 / -1; margin-top:clamp(40px,6vw,72px); border-top:1px solid var(--line); padding-top:clamp(30px,4vw,48px)}
+  .pitch .storeabout h3{
+    font-family:var(--display); font-weight:600; font-size:clamp(19px,2.4vw,24px); color:var(--ink);
+    letter-spacing:-.01em; margin:38px 0 14px; text-wrap:balance;
+  }
+  .pitch .storeabout h3:first-child{margin-top:0}
+  .pitch .storeabout p{margin-bottom:11px; max-width:44em}
+  .pitch .storeabout p + p{margin-top:0}
+  .pitch .storeabout p strong{color:var(--ink); font-weight:600}
+
   @media(max-width:760px){ .pitch{grid-template-columns:1fr} .pitch .p-art{max-width:340px; margin:0 auto} }
 
   .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(92,148,204,.1); border-top:1px solid rgba(92,148,204,.15); border-bottom:1px solid rgba(92,148,204,.15)}
@@ -439,11 +450,14 @@
   <div class="p-copy reveal">
     <div class="p-eyebrow" data-i18n="pitch.eyebrow">Survivor's Dossier</div>
     <h2 data-i18n="pitch.h2">G-City</h2>
-    <p data-i18n-html="pitch.p1">You are Sam (or whatever you prefer to call him). Ever since the toxic Red Mist seeped in from the outskirts, G-City has fallen. You must stack supplies tall upon your back, evade the Tarred, search for clues to clear the mist once and for all, and... try not to starve to death mid-delivery.</p>
-    <p data-i18n-html="pitch.p2">Sponge Bridges is a delivery-focused post-apocalyptic survival action game. You are Sam, a courier carrying a tower of cargo stacked ever higher on your back, traversing a ruined city engulfed in Red Mist. Cargo isn't just a number on a weight scale—it's vital supplies for the few remaining survivors, but overloading is a truly lethal threat. Hunger, thirst, and sleep are real survival needs. When shot, gear coverage matters; wounds bleed, get infected, and fester—unattended, a minor scratch can be fatal. Weapons aren't simple instant-win buttons either. The Tarred will hunt you by scent and footsteps. To kill or to spare is entirely up to you—you can put down your weapons and throw supplies to feed them until they calm down, or slaughter them all. With over 3,000 items and recipes and more than 300 enemy types, the deep craftable arsenal provides the tools to survive until your next choice. But one question remains: carrying this weight and every decision you've made, can you find a way to clear the Red Mist once and for all?</p>
-    <div class="p-plat" data-i18n="pitch.platform">Platform — Available Now on Steam</div>
+    <p data-store="short_description" data-i18n-html="pitch.p1">You are Sam (or whatever you prefer to call him). Ever since the toxic Red Mist seeped in from the outskirts, G-City has fallen. You must stack supplies tall upon your back, evade the Tarred, search for clues to clear the mist once and for all, and... try not to starve to death mid-delivery.</p>
+    <div class="p-plat" data-i18n="pitch.platform">Platform — Coming to Steam</div>
     <br>
     <a class="cta-wiki" href="game-wiki.html" data-i18n="pitch.cta">Access DEMO Dossier →</a>
+  </div>
+
+  <div class="storeabout" data-store="about">
+    <p data-i18n-html="pitch.p2">Sponge Bridges is a delivery-focused post-apocalyptic survival game paying homage to Death Stranding and Cataclysm: Dark Days Ahead.</p>
   </div>
 </section>
 
@@ -471,6 +485,7 @@
 <script src="js/home-lang-zh.js"></script>
 <script src="js/sparks.js"></script>
 <script src="js/media.js"></script>
+<script src="js/store-copy.js"></script>
 <script>
 (function(){
   var LANGS = [

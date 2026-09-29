@@ -1,38 +1,44 @@
-# Steam 商店页文案
+# Steam store copy
 
-这两个文件是 Steam 后台**原样导出**的本地化 JSON，没有任何改动：
+These two files are the localization JSON exported from Steamworks, **kept
+exactly as exported**:
 
 ```
 store/schinese.json
 store/english.json
 ```
 
-网站直接读它们来显示简介，所以**商店页和网站永远是同一份文案**。改文案的流程：
+The site reads them directly, so **the store page and the website can never say
+different things.** To change the copy:
 
-1. 在 Steam 后台改
-2. 导出这两个 JSON
-3. 覆盖掉这里的同名文件，推上去
+1. Edit it in Steamworks
+2. Export both JSON files
+3. Overwrite the files here and push
 
-网页跟着就变了，不用再手动同步一遍中英字典。
+The website follows. There is no second copy to keep in sync by hand.
 
-## 页面怎么用
+## Using a field on a page
 
-给元素加 `data-store="字段名"`，`js/store-copy.js` 会把内容填进去：
+Add `data-store="<field>"` to an element and `js/store-copy.js` fills it in:
 
 ```html
-<p data-store="short_description">读不到 JSON 时显示的兜底文案</p>
-<div data-store="about">同上</div>
+<p data-store="short_description">Fallback text, shown if the JSON can't be read</p>
+<div data-store="about">Same</div>
 ```
 
-字段名就是 JSON 里 `app[content][...]` 中括号内的部分，例如 `about`、
-`short_description`。
+The field name is whatever sits inside the brackets of `app[content][...]` in the
+JSON — for example `about` or `short_description`.
 
-## 两件已知的事
+## Two known things
 
-**只认 Steam BBCode 的一个子集。** `[p] [h2] [b] [i] [url]` 会转成对应的 HTML；
-`[img]` 指向 Steam 自己的 CDN（`{STEAM_APP_IMAGE}`），本站取不到，会被丢掉 ——
-网页上的配图走 `images/` 那一套。不认识的标签原样显示，不会去猜。
+**Only part of Steam's BBCode is supported.** `[p] [h2] [b] [i] [url]` become
+their HTML equivalents. `[img]` is dropped, because it points at Steam's own CDN
+(`{STEAM_APP_IMAGE}`), which this site cannot reach — artwork on the site comes
+from [`images/`](../images/) instead. Any tag that isn't recognised renders as
+plain text rather than being guessed at.
 
-**兜底文案不会自动更新。** JSON 万一读不到（比如本地用 `file://` 打开），页面会
-退回 `js/game-wiki-lang-*.js` 里的文案。那两份是从这里的 JSON 生成的，但只生成过
-一次。商店页文案大改之后，顺手说一声，把兜底也刷一遍。
+**The fallback copy does not update itself.** If the JSON can't be fetched (for
+instance when opening a page over `file://`), the page falls back to the text in
+`js/home-lang-*.js` and `js/game-wiki-lang-*.js`. Those were generated from these
+JSON files once. After a significant store rewrite, say so and they can be
+regenerated.
