@@ -36,6 +36,10 @@ var HOME_I18N_ZH = {
   'pillar.2.desc':'生存是你行动的资本。',
   'pillar.3.title':'连接',
   'pillar.3.desc':'从绳索到桥梁：用连接重新缝合断裂的世界。',
+  'community.eyebrow':'社区',
+  'community.h2':'来聊聊',
+  'community.sub':'有疑问、有点子、发现了问题，或者只是想讲讲这一趟送货是怎么翻车的 —— 都可以去 Steam 讨论区。',
+  'community.cta':'Steam 讨论区',
   'closing.h2':'危险，仍在等你。',
   'closing.sub':'《Sponge Bridges》目前正在开发中。',
   'closing.notify':'敬请期待'

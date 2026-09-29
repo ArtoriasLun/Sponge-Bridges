@@ -36,6 +36,10 @@ var HOME_I18N_EN = {
   'pillar.2.desc': 'Survival is the currency of your journey.',
   'pillar.3.title': 'Connection',
   'pillar.3.desc': 'From ropes to bridges: stitch a broken world back together through connection.',
+  'community.eyebrow': 'Community',
+  'community.h2': 'Come talk about it',
+  'community.sub': 'Questions, ideas, bug reports, or just what happened on your last run — the Steam discussion board is where it all goes.',
+  'community.cta': 'Steam Discussions',
   'closing.h2': 'Danger still awaits you.',
   'closing.sub': 'Sponge Bridges is currently in development.',
   'closing.notify': 'Stay Tuned'
