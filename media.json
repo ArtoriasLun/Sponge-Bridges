@@ -1,6 +1,12 @@
 {
-  "generated": "2026-09-29T04:23:14Z",
-  "gallery": [],
+  "generated": "2026-09-29T04:31:20Z",
+  "gallery": [
+    {
+      "src": "images/gallery/01-gameplay.mp4",
+      "name": "01-gameplay",
+      "type": "video"
+    }
+  ],
   "news": {
     "demo-v01": "images/news/demo-v01.jpg"
   }
