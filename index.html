@@ -176,6 +176,8 @@
     line-height:1.15; letter-spacing:-.01em; color:var(--ink); margin-bottom:14px; text-wrap:balance;
   }
   .newscard .summary{color:var(--ink-dim); font-size:15px; line-height:1.75; max-width:46em}
+  .newscard .newshero[data-ready]{display:block; margin:0 0 22px; border:1px solid var(--line); overflow:hidden}
+  .newscard .newshero img{width:100%; aspect-ratio:16/7; object-fit:cover; display:block}
 
   /* 迷你路线图：桌面横排四节点，窄屏落成竖排 */
   .newscard .mini{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin:32px 0 26px; background:var(--line)}
@@ -215,8 +217,9 @@
   .viewer .stage::after{right:0;border-top:2px solid var(--glass);border-right:2px solid var(--glass)}
   .viewer .stage:hover::before, .viewer .stage:hover::after { border-color: var(--fire); }
   
-  .viewer .stage img{width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .5s ease}
-  .viewer .stage img.loaded{opacity:1}
+  .viewer .stage img,.viewer .stage video{width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .5s ease}
+  .viewer .stage img.loaded,.viewer .stage video.loaded{opacity:1}
+  .viewer .stage video{position:absolute; inset:0}
   .viewer .stage .placeholder{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint);
@@ -240,7 +243,11 @@
     flex:none; width:84px; aspect-ratio:16/9; border:1px solid transparent; cursor:pointer;
     background:var(--bg2); overflow:hidden; opacity:.5; transition:all .2s ease;
   }
-  .thumbs .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+  .thumbs .thumb img,.thumbs .thumb video{width:100%; height:100%; object-fit:cover; display:block}
+  .thumbs .thumb.isvid::after{
+    content:"\25B6"; position:absolute; right:4px; bottom:3px; font-size:8px; color:var(--ink);
+    text-shadow:0 0 5px rgba(0,0,0,.9); pointer-events:none;
+  }
   .thumbs .thumb.active{opacity:1; border:1px solid var(--glass); box-shadow: 0 0 10px rgba(92,148,204,.2);}
   .thumbs .thumb:hover{opacity:.85; border-color:var(--glass-line);}
   @media(max-width:640px){ .viewer{gap:8px} .viewer .navbtn{width:30px; height:30px; font-size:13px} }
@@ -376,6 +383,7 @@
   </div>
 
   <a class="newscard" href="news.html">
+    <figure class="newshero" data-news-hero="demo-v01"></figure>
     <div class="meta">
       <span class="date" data-i18n="news.date">September 29, 2026</span>
       <span class="tag" data-i18n="news.tag">Announcement</span>
@@ -462,6 +470,7 @@
 <script src="js/home-lang-en.js"></script>
 <script src="js/home-lang-zh.js"></script>
 <script src="js/sparks.js"></script>
+<script src="js/media.js"></script>
 <script>
 (function(){
   var LANGS = [
@@ -492,6 +501,7 @@
       b.classList.toggle('active', b.dataset.lang === lang);
     });
     try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+    document.dispatchEvent(new CustomEvent('sb:lang', {detail: lang}));
   }
 
   function detectLang(){
@@ -561,67 +571,7 @@
     host.innerHTML = dripLetters('SPONGE') + '<br><em>' + dripLetters('BRIDGES') + '</em>';
   })();
 
-  var SCREENSHOTS = [
-  ];
-  (function initGallery(){
-    var stage = document.getElementById('galStage');
-    if (!stage) return;
-    var img = document.getElementById('galImg');
-    var placeholder = document.getElementById('galPlaceholder');
-    var cap = document.getElementById('galCap');
-    var thumbs = document.getElementById('galThumbs');
-    var prevBtn = document.getElementById('galPrev');
-    var nextBtn = document.getElementById('galNext');
-    var idx = 0;
-
-    function render(){
-      if (!SCREENSHOTS.length) {
-        img.classList.remove('loaded');
-        img.removeAttribute('src');
-        placeholder.style.display = 'flex';
-        cap.textContent = '';
-        return;
-      }
-      var shot = SCREENSHOTS[idx];
-      placeholder.style.display = 'none';
-      img.classList.remove('loaded');
-      img.onload = function(){ img.classList.add('loaded'); };
-      img.onerror = function(){ img.classList.remove('loaded'); placeholder.style.display = 'flex'; };
-      img.src = shot.src;
-      img.alt = shot.cap || '';
-      cap.textContent = shot.cap || '';
-      thumbs.querySelectorAll('.thumb').forEach(function(t, i){ t.classList.toggle('active', i === idx); });
-    }
-
-    function buildThumbs(){
-      thumbs.innerHTML = '';
-      SCREENSHOTS.forEach(function(shot, i){
-        var t = document.createElement('div');
-        t.className = 'thumb';
-        var ti = document.createElement('img');
-        ti.src = shot.src;
-        ti.alt = '';
-        ti.onerror = function(){ t.style.display = 'none'; };
-        t.appendChild(ti);
-        t.addEventListener('click', function(){ idx = i; render(); });
-        thumbs.appendChild(t);
-      });
-    }
-
-    prevBtn.addEventListener('click', function(){
-      if (!SCREENSHOTS.length) return;
-      idx = (idx - 1 + SCREENSHOTS.length) % SCREENSHOTS.length;
-      render();
-    });
-    nextBtn.addEventListener('click', function(){
-      if (!SCREENSHOTS.length) return;
-      idx = (idx + 1) % SCREENSHOTS.length;
-      render();
-    });
-
-    buildThumbs();
-    render();
-  })();
+  // 实机画面轮播与公告头图都由 js/media.js 按 media.json 填充
 
   if ('IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function(entries){
