@@ -1,6 +1,7 @@
 var HOME_I18N_ZH = {
   'nav.dev':'开发中',
   'cta.wishlist':'加入 Steam 愿望单',
+  'nav.news':'公告',
   'nav.support':'联系支持',
   'hero.eyebrow':'',
   'hero.tagline':'行走在送货的路上，步入危险之地',

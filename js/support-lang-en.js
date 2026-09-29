@@ -1,4 +1,5 @@
 var SUPPORT_I18N_EN = {
+  'nav.news':'News',
   'nav.back':'← Home',
   'eyebrow':'Contact Support',
   'h1':'Need a hand<br>through the fog?',

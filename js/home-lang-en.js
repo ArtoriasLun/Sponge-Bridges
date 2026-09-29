@@ -1,6 +1,7 @@
 var HOME_I18N_EN = {
   'nav.dev': 'In Development',
   'cta.wishlist': 'Wishlist on Steam',
+  'nav.news': 'News',
   'nav.support': 'Contact Support',
   'hero.eyebrow': '',
   'hero.tagline': 'Walk the path of delivery into treacherous lands.',

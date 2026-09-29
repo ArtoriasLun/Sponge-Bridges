@@ -1,0 +1,243 @@
+<meta charset="UTF-8">
+<title>Sponge Bridges — News</title>
+<meta name="description" content="Development news and announcements for Sponge Bridges.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
+<style>
+  :root{
+    --bg:#0c0a16; --bg2:#050409;
+    --glass:#5C94CC; --glass-dim:rgba(92,148,204,.18); --glass-line:rgba(92,148,204,.32);
+    --fire:#D99A4E; --fire-dim:#986C37;
+    --ink:#f3ede0; --ink-dim:rgba(243,237,224,.62); --ink-faint:rgba(243,237,224,.34);
+    --line:rgba(243,237,224,.14);
+    --display:'Fraunces','Noto Serif SC',serif;
+    --body:'Archivo','Noto Sans SC',sans-serif;
+    --mono:'Share Tech Mono','Noto Sans SC',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(900px 500px at 15% -10%, rgba(92,148,204,.08), transparent 60%),
+      radial-gradient(700px 500px at 100% 0%, rgba(217,154,78,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--body); min-height:100svh;
+  }
+  ::selection{background:var(--glass);color:var(--bg2)}
+
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px clamp(18px,4vw,40px); border-bottom:1px solid var(--line);
+  }
+  nav a.mark{font-family:var(--mono); font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); text-decoration:none}
+  nav a.back{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-faint); text-decoration:none; border:1px solid var(--line); padding:6px 13px;
+    transition:color .25s ease, border-color .25s ease;
+  }
+  nav a.back:hover{color:var(--glass); border-color:var(--glass-line)}
+  nav .navright{display:flex; align-items:center; gap:12px}
+  nav .langsw{display:flex; border:1px solid var(--line)}
+  nav .langsw button{
+    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); background:transparent; border:none; padding:6px 11px; cursor:pointer;
+    transition:color .25s ease, background .25s ease;
+  }
+  nav .langsw button+button{border-left:1px solid var(--line)}
+  nav .langsw button:hover{color:var(--ink)}
+  nav .langsw button.active{color:var(--glass); background:var(--glass-dim)}
+
+  /* 火星层固定在 z-index:3，正文抬到它上面 */
+  nav,main,footer{position:relative; z-index:4}
+  main{max-width:680px; margin:0 auto; padding:clamp(48px,9vh,96px) clamp(18px,5vw,24px) 100px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:16px}
+  .pagetitle{
+    font-family:var(--display); font-weight:900; font-size:clamp(38px,7vw,64px);
+    line-height:1; letter-spacing:-.01em; margin-bottom:18px; text-wrap:balance;
+  }
+  .pagelede{color:var(--ink-dim); font-size:15.5px; line-height:1.75; max-width:38em; margin-bottom:64px}
+
+  /* 一条公告 = 一个 .post。以后加新公告就在最上面复制一段，keys 换成 p2./p3. */
+  .post + .post{margin-top:72px; padding-top:72px; border-top:1px solid var(--line)}
+  .post .meta{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .post .meta .date{color:var(--ink-faint)}
+  .post .meta .tag{color:var(--fire); border:1px solid var(--fire-dim); padding:4px 10px}
+  .post h2{
+    font-family:var(--display); font-weight:900; font-size:clamp(26px,4.2vw,36px);
+    line-height:1.12; letter-spacing:-.01em; margin-bottom:22px; text-wrap:balance;
+  }
+  .post p{color:var(--ink-dim); font-size:15px; line-height:1.8; margin-bottom:18px}
+  .post p.hello{color:var(--ink); font-size:17px; line-height:1.7}
+  .post p strong{color:var(--ink); font-weight:600}
+  .post .beats{
+    display:flex; flex-wrap:wrap; gap:10px 22px; margin:26px 0;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
+  }
+  .post .beats span{display:inline-flex; align-items:center; gap:8px}
+  .post .beats i{font-style:normal; color:var(--fire)}
+
+  h3{
+    font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-.01em;
+    color:var(--ink); margin:44px 0 20px;
+  }
+
+  /* 路线图：左侧一条时间线，每个节点一个方块 */
+  .road{position:relative; padding-left:26px}
+  .road::before{content:""; position:absolute; left:4px; top:6px; bottom:6px; width:1px; background:var(--line)}
+  .road .stop{position:relative; padding-bottom:28px}
+  .road .stop:last-child{padding-bottom:0}
+  .road .stop::before{
+    content:""; position:absolute; left:-26px; top:5px; width:9px; height:9px;
+    border:1px solid var(--glass-line); background:var(--bg);
+  }
+  .road .stop.next::before{border-color:var(--fire); background:var(--fire); box-shadow:0 0 10px rgba(217,154,78,.55)}
+  .road .when{
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--glass); margin-bottom:5px;
+  }
+  .road .stop.next .when{color:var(--fire)}
+  .road .what{color:var(--ink); font-size:14.5px; margin-bottom:3px}
+  .road .note{color:var(--ink-faint); font-size:13px; line-height:1.7}
+
+  .wish{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none; cursor:pointer; margin-top:30px;
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--bg2); background:var(--fire); border:1px solid var(--fire);
+    padding:15px 28px; transition:background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  }
+  .wish:hover{background:#e8ab5f; border-color:#e8ab5f; box-shadow:0 6px 22px rgba(217,154,78,.32); transform:translateY(-2px)}
+  .wish svg{width:15px; height:15px; flex:none; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round}
+
+  footer{
+    padding:26px clamp(18px,6vw,40px) 36px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:10px; color:var(--ink-faint); font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.06em; border-top:1px solid var(--line);
+  }
+</style>
+
+<nav>
+  <a class="mark" href="index.html">Sponge Bridges</a>
+  <div class="navright">
+    <a class="back" href="index.html" data-i18n="nav.back">← Home</a>
+    <div class="langsw" id="langsw"></div>
+  </div>
+</nav>
+
+<main>
+  <div class="eyebrow" data-i18n="page.eyebrow">Development News</div>
+  <h1 class="pagetitle" data-i18n="page.title">News</h1>
+  <p class="pagelede" data-i18n="page.lede">Announcements posted to the Steam page, collected here.</p>
+
+  <article class="post">
+    <div class="meta">
+      <span class="date" data-i18n="p1.date">September 29, 2026</span>
+      <span class="tag" data-i18n="p1.tag">Announcement</span>
+    </div>
+
+    <h2 data-i18n="p1.title">Sponge Bridges Demo v0.1 arrives October 1</h2>
+
+    <p class="hello" data-i18n="p1.hello1">Hey everyone — welcome to Sponge Bridges.</p>
+    <p data-i18n="p1.hello2">The first public demo is almost here, and this is the first time I'm properly saying hello to all of you.</p>
+
+    <p data-i18n-html="p1.body1">The first public demo of <strong>Sponge Bridges</strong> is expected on Steam on <strong>October 1, 2026</strong>.</p>
+    <p data-i18n="p1.body2">In a dangerous and lonely post-apocalyptic world.</p>
+
+    <div class="beats">
+      <span><i>▸</i><span data-i18n="p1.beat1">Deliver cargo</span></span>
+      <span><i>◈</i><span data-i18n="p1.beat2">Scavenge</span></span>
+      <span><i>✦</i><span data-i18n="p1.beat3">Survive</span></span>
+      <span><i>⚔</i><span data-i18n="p1.beat4">Fight</span></span>
+    </div>
+
+    <p data-i18n="p1.body3">And one day, find a way to reconnect what was lost.</p>
+    <p data-i18n-html="p1.body4">This is just the beginning. I'll keep updating and improving the demo as we head into <strong>Steam Next Fest — October 2026</strong>.</p>
+
+    <h3 data-i18n="p1.roadmap">Roadmap</h3>
+    <div class="road">
+      <div class="stop next">
+        <div class="when" data-i18n="p1.r1.when">October 1, 2026 (expected) — Demo v0.1</div>
+        <div class="what" data-i18n="p1.r1.what">The first public version of Sponge Bridges.</div>
+      </div>
+      <div class="stop">
+        <div class="when" data-i18n="p1.r2.when">November 1, 2026 — Early Access Beta Testing</div>
+        <div class="what" data-i18n="p1.r2.what">The next major step, with more content, systems, items, locations, and progression available for testing.</div>
+      </div>
+      <div class="stop">
+        <div class="when" data-i18n="p1.r3.when">December 2026 — Early Access</div>
+        <div class="what" data-i18n="p1.r3.what">Sponge Bridges officially enters Early Access.</div>
+      </div>
+      <div class="stop">
+        <div class="when" data-i18n="p1.r4.when">December 2027 — Version 1.0</div>
+        <div class="what" data-i18n="p1.r4.what">The planned full release of Sponge Bridges.</div>
+      </div>
+    </div>
+
+    <p style="margin-top:40px" data-i18n="p1.thanks">Thanks for playing and being here this early.</p>
+    <p data-i18n-html="p1.cta">If you enjoy the demo, wishlist <strong>Sponge Bridges</strong> and follow the game to keep up with development.</p>
+
+    <a class="wish" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+      <span data-i18n="cta.wishlist">Wishlist on Steam</span>
+    </a>
+  </article>
+</main>
+
+<footer>
+  <span>Sponge Bridges</span>
+  <span>© 2026</span>
+</footer>
+
+<script src="js/news-lang-en.js"></script>
+<script src="js/news-lang-zh.js"></script>
+<script src="js/sparks.js"></script>
+<script>
+(function(){
+  var LANGS = [
+    {code:'en', label:'EN'},
+    {code:'zh', label:'中文'}
+  ];
+  var I18N = { en: NEWS_I18N_EN, zh: NEWS_I18N_ZH };
+
+  function applyLang(lang){
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      // 空字符串是合法译文，所以用 key 在不在字典里来决定是否回退，而不是看真假值
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.textContent = val;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-html');
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.innerHTML = val;
+    });
+    document.querySelectorAll('#langsw button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+  }
+
+  function detectLang(){
+    try {
+      var saved = localStorage.getItem('sb_lang');
+      if (saved && I18N[saved]) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || 'en').toLowerCase();
+    if (nav.indexOf('zh') === 0) return 'zh';
+    return 'en';
+  }
+
+  var sw = document.getElementById('langsw');
+  LANGS.forEach(function(l){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.lang = l.code;
+    b.textContent = l.label;
+    b.addEventListener('click', function(){ applyLang(l.code); });
+    sw.appendChild(b);
+  });
+  applyLang(detectLang());
+})();
+</script>

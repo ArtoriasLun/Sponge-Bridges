@@ -1,5 +1,6 @@
 var I18N_ZH = {
       'page.title':'幸存者手册：G市',
+      'nav.news':'公告',
       'masthead.back':'← 返回首页',
       'masthead.h1':'幸存者手册：G市',
       'masthead.sub':'图鉴、道具、地点与机制。',
