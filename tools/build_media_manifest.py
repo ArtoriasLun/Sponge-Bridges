@@ -37,6 +37,15 @@ def entries(rel_dir):
         else:
             continue          # captions.json、README 之类一律跳过
         out.append({'src': rel_dir + '/' + name, 'name': stem, 'type': kind})
+
+    # 同一个 stem 出现两次（demo-v01.jpg 和 demo-v01.webp）时，后者会悄悄顶掉前者。
+    # 公告头图按 stem 索引，所以这种重复必须说出来，否则作者换图后看到的还是旧的。
+    seen = {}
+    for item in out:
+        seen.setdefault(item['name'], []).append(os.path.basename(item['src']))
+    for stem, names in seen.items():
+        if len(names) > 1:
+            print('WARN: %s/ 下有同名文件 %s —— 只有排在最后的那个会生效' % (rel_dir, ', '.join(names)))
     return out
 
 
