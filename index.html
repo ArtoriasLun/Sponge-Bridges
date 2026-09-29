@@ -49,7 +49,7 @@
   }
   @media (prefers-reduced-motion: reduce){ .hero .frame img{animation:none} }
   /* 火星层固定在 z-index:3（在 hero 底图之上），首屏之后的区块要抬到它上面 */
-  .gallery,.pitch,.closing,footer{position:relative; z-index:4}
+  .newsband,.gallery,.pitch,.closing,footer{position:relative; z-index:4}
 
   nav{
     position:absolute; top:0; left:0; right:0; z-index:6;
@@ -147,6 +147,57 @@
     animation:flow-ln 2.6s cubic-bezier(.4,0,.2,1) infinite;
   }
   @keyframes flow-ln{0%{top:-40%} 100%{top:100%}}
+
+  .newsband{padding:min(12vw,110px) clamp(20px,6vw,40px) 0; max-width:1100px; margin:0 auto}
+  .newsband .bandhead{display:flex; align-items:baseline; gap:16px; margin-bottom:26px}
+  .newsband .bandhead h2{font-family:var(--display); font-weight:600; font-size:clamp(22px,3vw,30px); color:var(--ink); white-space:nowrap}
+  .newsband .bandhead .rule{flex:1; height:1px; background:var(--line)}
+  .newsband .bandhead a{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-faint); text-decoration:none; white-space:nowrap; transition:color .25s ease;
+  }
+  .newsband .bandhead a:hover{color:var(--fire)}
+
+  .newscard{
+    display:block; text-decoration:none; color:inherit;
+    border:1px solid var(--line); padding:clamp(24px,3.4vw,40px);
+    background:linear-gradient(180deg, rgba(92,148,204,.05), transparent 60%);
+    transition:border-color .3s ease, background .3s ease;
+  }
+  .newscard:hover{border-color:var(--glass-line); background:linear-gradient(180deg, rgba(92,148,204,.09), transparent 60%)}
+  .newscard .meta{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .newscard .meta .date{color:var(--ink-faint)}
+  .newscard .meta .tag{color:var(--fire); border:1px solid var(--fire-dim); padding:4px 10px}
+  .newscard h3{
+    font-family:var(--display); font-weight:900; font-size:clamp(22px,3.2vw,32px);
+    line-height:1.15; letter-spacing:-.01em; color:var(--ink); margin-bottom:14px; text-wrap:balance;
+  }
+  .newscard .summary{color:var(--ink-dim); font-size:15px; line-height:1.75; max-width:46em}
+
+  /* 迷你路线图：桌面横排四节点，窄屏落成竖排 */
+  .newscard .mini{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin:32px 0 26px; background:var(--line)}
+  .newscard .mini .stop{background:var(--bg); padding:16px 16px 18px; position:relative}
+  .newscard .mini .stop::before{
+    content:""; position:absolute; left:16px; top:0; width:26px; height:2px; background:var(--glass-line);
+  }
+  .newscard .mini .stop.next::before{background:var(--fire); box-shadow:0 0 9px rgba(217,154,78,.7)}
+  .newscard .mini .when{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--glass); margin:14px 0 5px;
+  }
+  .newscard .mini .stop.next .when{color:var(--fire)}
+  .newscard .mini .what{color:var(--ink-faint); font-size:12.5px; line-height:1.55}
+  @media(max-width:760px){ .newscard .mini{grid-template-columns:1fr} }
+
+  .newscard .read{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--glass);
+    transition:gap .25s ease;
+  }
+  .newscard:hover .read{gap:16px}
 
   .gallery{padding:min(12vw,110px) clamp(20px,6vw,40px) min(10vw,90px); max-width:1100px; margin:0 auto}
   .gallery-head{text-align:center; margin-bottom:36px}
@@ -315,6 +366,44 @@
   </div>
 
   <div class="scrolldown"><span class="ln"></span><span data-i18n="hero.scroll">Scroll Down</span></div>
+</section>
+
+<section class="newsband">
+  <div class="bandhead">
+    <h2 data-i18n="news.h2">Latest News</h2>
+    <div class="rule"></div>
+    <a href="news.html" data-i18n="news.all">All announcements →</a>
+  </div>
+
+  <a class="newscard" href="news.html">
+    <div class="meta">
+      <span class="date" data-i18n="news.date">September 29, 2026</span>
+      <span class="tag" data-i18n="news.tag">Announcement</span>
+    </div>
+    <h3 data-i18n="news.title">Sponge Bridges Demo v0.1 — Coming October 1!</h3>
+    <p class="summary" data-i18n="news.summary">Demo v0.1 is planned for October 1, followed by Beta Testing on November 1 and Early Access in December 2026.</p>
+
+    <div class="mini">
+      <div class="stop next">
+        <div class="when" data-i18n="news.m1.when">Oct 1, 2026</div>
+        <div class="what" data-i18n="news.m1.what">Demo v0.1</div>
+      </div>
+      <div class="stop">
+        <div class="when" data-i18n="news.m2.when">Nov 1, 2026</div>
+        <div class="what" data-i18n="news.m2.what">Early Access Beta Testing</div>
+      </div>
+      <div class="stop">
+        <div class="when" data-i18n="news.m3.when">Dec 2026</div>
+        <div class="what" data-i18n="news.m3.what">Early Access</div>
+      </div>
+      <div class="stop">
+        <div class="when" data-i18n="news.m4.when">Dec 2027</div>
+        <div class="what" data-i18n="news.m4.what">Version 1.0</div>
+      </div>
+    </div>
+
+    <span class="read" data-i18n="news.read">Read the announcement →</span>
+  </a>
 </section>
 
 <section class="gallery">
