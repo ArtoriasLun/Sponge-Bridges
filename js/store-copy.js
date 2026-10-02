@@ -38,6 +38,7 @@
     t = t.replace(/\[img\b[^\]]*\](?:\[\/img\])?/gi, '').replace(/\[\/img\]/gi, '');
 
     t = t.replace(/\[b\]/gi, '<strong>').replace(/\[\/b\]/gi, '</strong>');
+    t = t.replace(/\[u\]/gi, '<u>').replace(/\[\/u\]/gi, '</u>');
     t = t.replace(/\[i\]/gi, '<em>').replace(/\[\/i\]/gi, '</em>');
     t = t.replace(/\[url=([^\]]+)\]/gi, function(_, href){
       return '<a href="' + href.replace(/"/g, '&quot;') + '" target="_blank" rel="noopener">';
@@ -53,7 +54,9 @@
       } else {
         // 商店页里大量 [p]\r\n[/p] 是排版用的空行，网页上交给 CSS 间距处理
         var body = m[3].replace(/\r/g, '').trim();
-        if (body) out.push('<p>' + body.replace(/\n/g, '<br>') + '</p>');
+        if (body && body.replace(/<[^>]*>/g, '').trim()) {
+          out.push('<p>' + body.replace(/\n/g, '<br>') + '</p>');
+        }
       }
     }
     // 整段一个 BBCode 标签都没有时，按纯文本段落处理

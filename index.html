@@ -22,6 +22,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
   body{background:var(--bg); color:var(--ink); font-family:var(--body); overflow-x:hidden}
   ::selection{background:var(--glass);color:var(--bg2)}
   @media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important} }
@@ -66,7 +67,15 @@
   }
   nav .navlink:hover{color:var(--fire); text-shadow:0 0 8px rgba(217,154,78,0.4)}
   nav .navlink.active{color:var(--glass); text-shadow:0 0 8px rgba(92,148,204,0.4)}
-  nav .devstatus{display:flex; align-items:center; gap:9px; color:var(--ink-faint); font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase}
+  nav a.devstatus{
+    display:flex; align-items:center; gap:9px; color:var(--ink-faint);
+    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    text-decoration:none; transition:color .2s ease;
+  }
+  nav a.devstatus:hover{color:var(--fire)}
+  nav a.devstatus:hover .bar{background:rgba(217,154,78,.2)}
+  nav a.devstatus .caret{transition:transform .2s ease}
+  nav a.devstatus:hover .caret{transform:translateY(2px)}
   nav .devstatus .bar{position:relative; width:30px; height:2px; background:rgba(243,237,224,.14); overflow:hidden}
   nav .devstatus .bar::after{
     content:""; position:absolute; top:0; left:0; height:100%; width:40%;
@@ -464,10 +473,14 @@
       <a class="navlink" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener" data-i18n="cta.wishlist">Wishlist on Steam</a>
       <a class="navlink" href="news.html" data-i18n="nav.news">News</a>
       <a class="navlink" href="support.html" data-i18n="nav.support">Contact Support</a>
-      <div class="devstatus">
+      <a class="devstatus" href="#roadmap" title="Roadmap">
         <span data-i18n="nav.dev">In Development</span>
         <span class="bar"></span>
-      </div>
+        <svg class="caret" viewBox="0 0 24 24" aria-hidden="true" width="10" height="10"
+             style="stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </a>
       <div class="langsw" id="langsw"></div>
     </div>
   </nav>
@@ -492,7 +505,7 @@
   </div>
 
   <a class="newscard" href="news.html">
-    <figure class="newshero" data-news-hero="demo-v01"></figure>
+    <figure class="newshero" data-news-hero="demo-live"></figure>
     <div class="meta">
       <span class="date" data-i18n="news.date">September 29, 2026</span>
       <span class="tag" data-i18n="news.tag">Announcement</span>
@@ -562,7 +575,7 @@
   </div>
 </section>
 
-<section class="roadmap">
+<section class="roadmap" id="roadmap">
   <div class="rhead">
     <div class="eyebrow2" data-i18n="roadmap.eyebrow">Roadmap</div>
     <h2 data-i18n="roadmap.h2">Where this goes next</h2>

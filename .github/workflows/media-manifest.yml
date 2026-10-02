@@ -1,14 +1,16 @@
 # 把 images/ 目录的内容写成 media.json，让静态页面知道里面有什么文件。
 # 触发器只有 push（以及手动运行），没有 pull_request_target / issue_comment
 # 这类能让外部 PR 拿到写权限的触发器。
-name: Build media manifest
+name: Build generated site data
 
 on:
   push:
     branches: [main]
     paths:
       - 'images/**'
+      - 'store/storepage.json'
       - 'tools/build_media_manifest.py'
+      - 'tools/split_store_export.py'
       - '.github/workflows/media-manifest.yml'
   workflow_dispatch:
 
@@ -28,22 +30,23 @@ jobs:
       - name: Generate media.json
         run: python3 tools/build_media_manifest.py
 
+      - name: Split the store export into the languages the site uses
+        run: python3 tools/split_store_export.py
+
       # media.json 不在 images/ 下，所以这次提交不会再次触发本工作流。
       - name: Commit if changed
         run: |
-          # generated 时间戳每次都会变，只有真正的内容变化才值得提交
-          if git diff --quiet -- media.json; then
-            echo "manifest unchanged"
-            exit 0
-          fi
+          # media.json 的 generated 时间戳每次都会变，只有它变了不值得提交
           if [ "$(git diff --unified=0 -- media.json | grep -c '^[+-][^+-]')" = "2" ] \
              && git diff -- media.json | grep -q '"generated"'; then
-            echo "only the timestamp moved, skipping"
             git checkout -- media.json
+          fi
+          if git diff --quiet -- media.json store/; then
+            echo "nothing changed"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add media.json
-          git commit -m "Rebuild media manifest"
+          git add media.json store/
+          git commit -m "Rebuild generated site data"
           git push

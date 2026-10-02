@@ -73,6 +73,8 @@
   .post p{color:var(--ink-dim); font-size:15px; line-height:1.8; margin-bottom:18px}
   .post p.hello{color:var(--ink); font-size:17px; line-height:1.7}
   .post p strong{color:var(--ink); font-weight:600}
+  .post .road .what a{color:var(--glass); text-decoration:none; border-bottom:1px solid var(--glass-line)}
+  .post .road .what a:hover{color:var(--fire); border-color:var(--fire-dim)}
   .post .beats{
     display:flex; flex-wrap:wrap; gap:10px 22px; margin:26px 0;
     font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
@@ -131,6 +133,40 @@
   <div class="eyebrow" data-i18n="page.eyebrow">Development News</div>
   <h1 class="pagetitle" data-i18n="page.title">News</h1>
   <p class="pagelede" data-i18n="page.lede">Announcements posted to the Steam page, collected here.</p>
+
+  <article class="post">
+    <figure class="newshero" data-news-hero="demo-live"></figure>
+    <div class="meta">
+      <span class="date" data-i18n="p2.date">October 1, 2026</span>
+      <span class="tag" data-i18n="p2.tag">Release</span>
+    </div>
+
+    <h2 data-i18n="p2.title">Sponge Bridges Demo v0.1 is now available!</h2>
+    <p class="subtitle" data-i18n="p2.subtitle">The first public demo is now live.</p>
+
+    <p class="hello" data-i18n="p2.body1">Sponge Bridges Demo v0.1 is now available!</p>
+    <p data-i18n="p2.body2">Welcome to the first public release.</p>
+    <p data-i18n="p2.body3">If you run into bugs or have any feedback, feel free to let me know in the Steam Community Discussions.</p>
+
+    <h3 data-i18n="p2.join">Join the community</h3>
+    <div class="road">
+      <div class="stop next">
+        <div class="when" data-i18n="p2.link1.when">Steam Community Discussions</div>
+        <div class="what"><a href="https://steamcommunity.com/app/5163770/discussions/" target="_blank" rel="noopener" data-i18n="p2.link1.what">Bugs, feedback, and everything else</a></div>
+      </div>
+      <div class="stop">
+        <div class="when" data-i18n="p2.link2.when">QQ group</div>
+        <div class="what" data-i18n="p2.link2.what">437182032</div>
+      </div>
+    </div>
+
+    <p style="margin-top:34px" data-i18n="p2.thanks">Thanks for playing!</p>
+
+    <a class="wish" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+      <span data-i18n="cta.wishlist">Wishlist on Steam</span>
+    </a>
+  </article>
 
   <article class="post">
     <figure class="newshero" data-news-hero="demo-v01"></figure>
