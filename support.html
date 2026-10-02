@@ -54,6 +54,17 @@
     line-height:1; letter-spacing:-.01em; margin-bottom:18px; text-wrap:balance;
   }
   .lede{color:var(--ink-dim); font-size:15.5px; line-height:1.75; max-width:38em; margin-bottom:44px}
+  /* QQ 群：只在中文下出现。英文词条留空，:empty 让整块消失，
+     不用再写一套按语言显隐的 JS。 */
+  .qq:empty{display:none}
+  .qq{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    border:1px solid var(--fire-dim); background:rgba(217,154,78,.07);
+    padding:14px 18px; margin:0 0 34px;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; color:var(--ink-dim);
+  }
+  .qq b{color:var(--fire); font-weight:400; font-size:15px; letter-spacing:.1em; user-select:all}
+
   .lede em{font-style:italic; color:var(--glass)}
 
   .split{display:flex; align-items:baseline; gap:14px; margin:0 0 20px}
@@ -102,6 +113,8 @@
   <div class="eyebrow" data-i18n="eyebrow">Contact Support</div>
   <h1 data-i18n-html="h1">Need a hand<br>through the fog?</h1>
   <p class="lede" data-i18n-html="lede">Tell us what's going on and we'll get back to you. <em>Be as specific as you can</em> — your system, what you were doing, what happened instead.</p>
+
+  <div class="qq" data-i18n-html="qq"></div>
 
   <div class="embed">
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScIH3ZMvVJHEZaWgAKNKO2k2Tu1fYbCq2GABO_apDCmsG12KQ/viewform?embedded=true" title="Sponge Bridges support form">Loading…</iframe>

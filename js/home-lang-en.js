@@ -57,6 +57,7 @@ var HOME_I18N_EN = {
   'community.eyebrow': 'Community',
   'community.h2': 'Come talk about it',
   'community.sub': 'Questions, ideas, bug reports, or just what happened on your last run — the Steam discussion board is where it all goes.',
+  'community.qq': '',
   'community.cta': 'Steam Discussions',
   'closing.h2': 'Danger still awaits you.',
   'closing.sub': 'Sponge Bridges is currently in development.',

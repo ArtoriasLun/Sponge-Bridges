@@ -421,6 +421,13 @@
     color:var(--bg2); background:var(--glass); border-color:var(--glass);
     box-shadow:0 6px 22px rgba(92,148,204,.3); transform:translateY(-2px);
   }
+  .community .qq:empty{display:none}
+  .community .qq{
+    display:inline-flex; align-items:baseline; gap:11px; flex-wrap:wrap; justify-content:center;
+    margin:26px auto 0; border:1px solid var(--fire-dim); background:rgba(217,154,78,.07);
+    padding:11px 18px; font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--ink-dim);
+  }
+  .community .qq b{color:var(--fire); font-weight:400; font-size:14px; letter-spacing:.1em; user-select:all}
   .community .hub svg{width:15px; height:15px; flex:none; stroke:currentColor; fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
 
   .closing{position:relative; padding:min(18vw,170px) clamp(20px,6vw,40px) clamp(64px,9vh,100px); text-align:center; overflow:hidden}
@@ -628,6 +635,7 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-2.9-.4L4 21l1.6-4A8.2 8.2 0 0 1 4 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 8 8.4z"/></svg>
     <span data-i18n="community.cta">Steam Discussions</span>
   </a>
+  <div class="qq" data-i18n-html="community.qq"></div>
 </section>
 
 <section class="closing">
