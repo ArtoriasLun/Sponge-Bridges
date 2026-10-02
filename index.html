@@ -49,7 +49,7 @@
   }
   @media (prefers-reduced-motion: reduce){ .hero .frame img{animation:none} }
   /* 火星层固定在 z-index:3（在 hero 底图之上），首屏之后的区块要抬到它上面 */
-  .newsband,.gallery,.pitch,.community,.closing,footer{position:relative; z-index:4}
+  .newsband,.gallery,.pitch,.roadmap,.community,.closing,footer{position:relative; z-index:4}
 
   nav{
     position:absolute; top:0; left:0; right:0; z-index:6;
@@ -316,6 +316,72 @@
   .pillar .q-text{font-size:13.5px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto; letter-spacing:0.02em;}
   @media(max-width:760px){ .pillars{grid-template-columns:1fr} .pillar{padding:40px 24px; border-bottom:1px solid rgba(92,148,204,.15)} }
 
+  /* 路线图：一条送货路线上的几个站点。已抵达的站实线相连，未抵达的虚线 ——
+     这条线本身就是进度条，不用再写「已完成 1/4」这种话。 */
+  .roadmap{--flag-space:28px; max-width:1080px; margin:0 auto; padding:min(13vw,120px) clamp(20px,6vw,40px) 0}
+  .roadmap .rhead{text-align:center; margin-bottom:clamp(44px,6vw,72px)}
+  .roadmap .eyebrow2{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:12px}
+  .roadmap .rhead h2{font-family:var(--display); font-weight:600; font-size:clamp(24px,3.4vw,38px); color:var(--ink)}
+
+  .route{display:grid; grid-template-columns:repeat(4,1fr); gap:0}
+  .stop{position:relative; padding:0 clamp(10px,1.6vw,20px)}
+
+  /* 轨道：画在标记圆心的高度上，左右两段分开画，首尾各缺一半，线才不会探出两端 */
+  .stop::before,.stop::after{content:""; position:absolute; top:19px; height:1px; width:50%}
+  .stop::before{left:0}
+  .stop::after{right:0}
+  .stop:first-child::before,.stop:last-child::after{display:none}
+  .stop::before,.stop::after{
+    background:repeating-linear-gradient(90deg, var(--ink-faint) 0 4px, transparent 4px 9px);
+    opacity:.5;
+  }
+  .stop.done::before,.stop.done::after,.stop.next::before{background:var(--fire-dim); opacity:1}
+
+  .stop .mark{
+    position:relative; z-index:1; width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line); background:var(--bg); margin:0 auto 18px;
+    transform:rotate(45deg);                       /* 菱形：和货箱、和站点标记的观感一致 */
+  }
+  .stop .mark svg{width:15px; height:15px; transform:rotate(-45deg); stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+  .stop.done .mark{border-color:var(--fire); background:var(--fire); color:var(--bg2)}
+  .stop.next .mark{border-color:var(--fire); color:var(--fire); box-shadow:0 0 0 4px rgba(217,154,78,.10), 0 0 18px rgba(217,154,78,.35)}
+  .stop.next .mark::after{
+    content:""; position:absolute; inset:-1px; border:1px solid var(--fire);
+    animation:pulse 2.6s cubic-bezier(.16,1,.3,1) infinite;
+  }
+  @keyframes pulse{0%{transform:scale(1); opacity:.7} 70%,100%{transform:scale(1.55); opacity:0}}
+  .stop.todo .mark{color:var(--ink-faint)}
+  @media (prefers-reduced-motion: reduce){ .stop.next .mark::after{animation:none; opacity:0} }
+
+  .stop:not(.done):not(.next) .when{padding-top:var(--flag-space)}
+  .stop .when{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); text-align:center; margin-bottom:7px}
+  .stop.done .when,.stop.next .when{color:var(--fire)}
+  .stop .what{font-family:var(--display); font-weight:600; font-size:16.5px; color:var(--ink); text-align:center; margin-bottom:9px; text-wrap:balance}
+  .stop .note{color:var(--ink-dim); font-size:13px; line-height:1.65; text-align:center}
+  .stop .flag{
+    display:block; width:fit-content; margin:0 auto 9px; font-family:var(--mono); font-size:9.5px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--fire); border:1px solid var(--fire-dim); padding:3px 8px;
+  }
+
+  .roadmap .outro{text-align:center; margin-top:clamp(48px,6vw,78px)}
+  .roadmap .outro p{color:var(--ink-dim); font-size:15px; line-height:1.75; max-width:32em; margin:0 auto 10px}
+
+  /* 窄屏改成竖排：轨道转到左侧，标记靠左 */
+  @media(max-width:860px){
+    .roadmap{--flag-space:0px}
+    .route{grid-template-columns:1fr; gap:0}
+    .stop{padding:0 0 30px 56px; text-align:left}
+    .stop:last-child{padding-bottom:0}
+    .stop::before{display:none}
+    .stop::after{left:19px; right:auto; top:38px; bottom:0; height:auto; width:1px;
+      background:repeating-linear-gradient(180deg, var(--ink-faint) 0 4px, transparent 4px 9px)}
+    .stop:last-child::after{display:none}
+    .stop.done::after,.stop.next::after{background:var(--fire-dim)}
+    .stop .mark{position:absolute; left:0; top:0; margin:0}
+    .stop .when,.stop .what,.stop .note{text-align:left}
+    .stop .flag{margin-left:0}
+  }
+
   /* 社区：跳去 Steam 讨论区。Steam 不提供讨论区的嵌入组件，
      社区站也禁止被别的站点套 iframe，所以这里只能是一个干净的出站入口。 */
   .community{
@@ -435,11 +501,11 @@
     <p class="summary" data-i18n="news.summary">Demo v0.1 is planned for October 1, followed by Beta Testing on November 1 and Early Access in December 2026.</p>
 
     <div class="mini">
-      <div class="stop next">
+      <div class="stop">
         <div class="when" data-i18n="news.m1.when">Oct 1, 2026</div>
         <div class="what" data-i18n="news.m1.what">Demo v0.1</div>
       </div>
-      <div class="stop">
+      <div class="stop next">
         <div class="when" data-i18n="news.m2.when">Nov 1, 2026</div>
         <div class="what" data-i18n="news.m2.what">Early Access Beta Testing</div>
       </div>
@@ -493,6 +559,51 @@
 
   <div class="storeabout" data-store="about">
     <p data-i18n-html="pitch.p2">Sponge Bridges is a delivery-focused post-apocalyptic survival game paying homage to Death Stranding and Cataclysm: Dark Days Ahead.</p>
+  </div>
+</section>
+
+<section class="roadmap">
+  <div class="rhead">
+    <div class="eyebrow2" data-i18n="roadmap.eyebrow">Roadmap</div>
+    <h2 data-i18n="roadmap.h2">Where this goes next</h2>
+  </div>
+
+  <div class="route">
+    <div class="stop done">
+      <div class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4 10-10"/></svg></div>
+      <span class="flag" data-i18n="roadmap.s0.flag">Out now</span>
+      <div class="when" data-i18n="roadmap.s0.when">Oct 1, 2026</div>
+      <div class="what" data-i18n="roadmap.s0.what">Demo v0.1</div>
+      <p class="note" data-i18n="roadmap.s0.note">The first public version of Sponge Bridges.</p>
+    </div>
+    <div class="stop next">
+      <div class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg></div>
+      <span class="flag" data-i18n="roadmap.s1.flag">Up next</span>
+      <div class="when" data-i18n="roadmap.s1.when">Nov 1, 2026</div>
+      <div class="what" data-i18n="roadmap.s1.what">Early Access Beta Testing</div>
+      <p class="note" data-i18n="roadmap.s1.note">The next major step, with more content, systems, items, locations, and progression available for testing.</p>
+    </div>
+    <div class="stop todo">
+      <div class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg></div>
+      <div class="when" data-i18n="roadmap.s2.when">Dec 2026</div>
+      <div class="what" data-i18n="roadmap.s2.what">Early Access</div>
+      <p class="note" data-i18n="roadmap.s2.note">Sponge Bridges officially enters Early Access.</p>
+    </div>
+    <div class="stop todo">
+      <div class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg></div>
+      <div class="when" data-i18n="roadmap.s3.when">Dec 2027</div>
+      <div class="what" data-i18n="roadmap.s3.what">Version 1.0</div>
+      <p class="note" data-i18n="roadmap.s3.note">The planned full release of Sponge Bridges.</p>
+    </div>
+  </div>
+
+  <div class="outro">
+    <p data-i18n="roadmap.thanks">Thanks for being here this early.</p>
+    <p data-i18n-html="roadmap.cta">Wishlist <strong>Sponge Bridges</strong> and follow the game to keep up with development.</p>
+    <a class="wish" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+      <span data-i18n="cta.wishlist">Wishlist on Steam</span>
+    </a>
   </div>
 </section>
 
