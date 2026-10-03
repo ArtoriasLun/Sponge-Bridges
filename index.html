@@ -50,7 +50,7 @@
   }
   @media (prefers-reduced-motion: reduce){ .hero .frame img{animation:none} }
   /* 火星层固定在 z-index:3（在 hero 底图之上），首屏之后的区块要抬到它上面 */
-  .newsband,.gallery,.pitch,.roadmap,.community,.closing,footer{position:relative; z-index:4}
+  .newsband,.gallery,.pitch,.crowd,.roadmap,.community,.closing,footer{position:relative; z-index:4}
 
   nav{
     position:absolute; top:0; left:0; right:0; z-index:6;
@@ -325,6 +325,37 @@
   .pillar .q-text{font-size:13.5px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto; letter-spacing:0.02em;}
   @media(max-width:760px){ .pillars{grid-template-columns:1fr} .pillar{padding:40px 24px; border-bottom:1px solid rgba(92,148,204,.15)} }
 
+  /* 众筹：带角标的面板，和画廊舞台、支持页表单用的是同一套角标语言。
+     时效性的东西，所以给了呼吸的指示点和实心火色按钮。 */
+  .crowd{max-width:1080px; margin:0 auto; padding:min(12vw,110px) clamp(20px,6vw,40px) 0}
+  .crowd .panel{
+    position:relative; text-align:center; border:1px solid var(--glass-line);
+    background:
+      radial-gradient(620px 240px at 50% 0%, rgba(217,154,78,.10), transparent 70%),
+      rgba(92,148,204,.04);
+    padding:clamp(34px,5vw,58px) clamp(20px,4vw,48px);
+  }
+  .crowd .panel::before,.crowd .panel::after{content:""; position:absolute; top:-1px; width:18px; height:18px}
+  .crowd .panel::before{left:-1px; border-top:2px solid var(--fire); border-left:2px solid var(--fire)}
+  .crowd .panel::after{right:-1px; border-top:2px solid var(--fire); border-right:2px solid var(--fire)}
+  .crowd .live{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:16px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--fire);
+  }
+  .crowd .live .dot{width:7px; height:7px; border-radius:50%; background:currentColor;
+    box-shadow:0 0 10px currentColor; animation:blink 1.8s ease-in-out infinite}
+  .crowd h2{font-family:var(--display); font-weight:600; font-size:clamp(24px,3.4vw,38px); color:var(--ink);
+    margin-bottom:14px; text-wrap:balance}
+  .crowd .sub{color:var(--ink-dim); font-size:15px; line-height:1.75; max-width:34em; margin:0 auto 32px; letter-spacing:.02em}
+  .crowd .back{
+    display:inline-flex; align-items:center; gap:11px; text-decoration:none; cursor:pointer;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--bg2); background:var(--fire); border:1px solid var(--fire);
+    padding:17px 34px; transition:background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  }
+  .crowd .back:hover{background:#e8ab5f; border-color:#e8ab5f; box-shadow:0 6px 24px rgba(217,154,78,.34); transform:translateY(-2px)}
+  .crowd .back svg{width:15px; height:15px; flex:none; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+
   /* 路线图：一条送货路线上的几个站点。已抵达的站实线相连，未抵达的虚线 ——
      这条线本身就是进度条，不用再写「已完成 1/4」这种话。 */
   .roadmap{--flag-space:28px; max-width:1080px; margin:0 auto; padding:min(13vw,120px) clamp(20px,6vw,40px) 0}
@@ -579,6 +610,18 @@
 
   <div class="storeabout" data-store="about">
     <p data-i18n-html="pitch.p2">Sponge Bridges is a delivery-focused post-apocalyptic survival game paying homage to Death Stranding and Cataclysm: Dark Days Ahead.</p>
+  </div>
+</section>
+
+<section class="crowd">
+  <div class="panel">
+    <div class="live"><span class="dot"></span><span data-i18n="crowd.live">Live on Kickstarter</span></div>
+    <h2 data-i18n="crowd.h2">Sponge Bridges is crowdfunding</h2>
+    <p class="sub" data-i18n="crowd.sub">The campaign page lays out the development plan, the reward tiers, and where the money goes.</p>
+    <a class="back" href="https://www.kickstarter.com/projects/alungames/sponge-bridges-a-deep-survival-game-of-delivery" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="m19 5-7 7 7 7"/><path d="M12 12H9"/></svg>
+      <span data-i18n="crowd.cta">Back the project</span>
+    </a>
   </div>
 </section>
 
