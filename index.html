@@ -3,6 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Sponge Bridges</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sponge Bridges">
+<meta property="og:title" content="Sponge Bridges">
+<meta property="og:description" content="A delivery-focused post-apocalyptic survival game. Stack the cargo, cross the Red Mist, and reconnect a broken world.">
+<meta property="og:url" content="https://artoriaslun.github.io/Sponge-Bridges/index.html">
+<meta property="og:image" content="https://artoriaslun.github.io/Sponge-Bridges/images/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sponge Bridges">
+<meta name="twitter:description" content="A delivery-focused post-apocalyptic survival game. Stack the cargo, cross the Red Mist, and reconnect a broken world.">
+<meta name="twitter:image" content="https://artoriaslun.github.io/Sponge-Bridges/images/og-card.jpg">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="A lone courier walks a fogbound town, carrying everything on his back. Sponge Bridges — coming soon.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
@@ -156,6 +170,30 @@
     animation:flow-ln 2.6s cubic-bezier(.4,0,.2,1) infinite;
   }
   @keyframes flow-ln{0%{top:-40%} 100%{top:100%}}
+
+  /* 回到顶部：和首屏的「向下滚动」同款 —— 同样的位置、字号、细线，
+     只是线里的光点反向往上流。每个板块一个。 */
+  .backtop{
+    position:absolute; bottom:26px; z-index:5;
+    right:calc(clamp(20px,5vw,56px) - (var(--vw, 100vw) - 100%) / 2);
+    display:flex; align-items:center; gap:10px; color:var(--ink-faint);
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+    text-decoration:none; transition:color .25s ease;
+  }
+  .backtop:hover{color:var(--fire)}
+  .backtop .ln{
+    position:relative; width:1px; height:34px; overflow:hidden;
+    background:linear-gradient(180deg, transparent, rgba(243,237,224,.2) 20%, rgba(243,237,224,.2) 80%, transparent);
+  }
+  .backtop .ln::after{
+    content:""; position:absolute; left:0; top:100%; width:100%; height:40%;
+    background:linear-gradient(180deg, transparent, var(--glass) 55%, transparent);
+    box-shadow:0 0 6px var(--glass);
+    animation:flow-up 2.6s cubic-bezier(.4,0,.2,1) infinite;
+  }
+  .backtop:hover .ln::after{background:linear-gradient(180deg, transparent, var(--fire) 55%, transparent); box-shadow:0 0 6px var(--fire)}
+  @keyframes flow-up{0%{top:100%} 100%{top:-40%}}
+  @media (prefers-reduced-motion: reduce){ .backtop .ln::after{animation:none; opacity:0} }
 
   .newsband{padding:min(12vw,110px) clamp(20px,6vw,40px) 0; max-width:1100px; margin:0 auto}
   .newsband .bandhead{display:flex; align-items:baseline; gap:16px; margin-bottom:26px}
@@ -507,7 +545,7 @@
 </head>
 <body>
 
-<section class="hero">
+<section class="hero" id="top">
   <div class="frame">
     <img src="images/header.jpg" alt="A courier carrying a stacked cargo tower walks down a burning, fog-cracked street at dusk, a vast shadow looming beyond the flames.">
   </div>
@@ -580,6 +618,7 @@
 
     <span class="read" data-i18n="news.read">Read the announcement →</span>
   </a>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
 
 <section class="gallery">
@@ -597,6 +636,7 @@
     <button class="navbtn" id="galNext" aria-label="Next">›</button>
   </div>
   <div class="thumbs" id="galThumbs"></div>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
 
 <section class="pitch">
@@ -619,6 +659,7 @@
   <div class="storeabout" data-store="about">
     <p data-i18n-html="pitch.p2">Sponge Bridges is a delivery-focused post-apocalyptic survival game paying homage to Death Stranding and Cataclysm: Dark Days Ahead.</p>
   </div>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
 
 <section class="crowd">
@@ -631,6 +672,7 @@
       Live on <b>Kickstarter</b>
     </a>
   </div>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
 
 <section class="roadmap" id="roadmap">
@@ -676,6 +718,7 @@
       <span data-i18n="cta.wishlist">Wishlist on Steam</span>
     </a>
   </div>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
 
 <section class="community">
@@ -687,6 +730,7 @@
     <span data-i18n="community.cta">Steam Discussions</span>
   </a>
   <div class="qq" data-i18n-html="community.qq"></div>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
 
 <section class="closing">
@@ -702,6 +746,7 @@
       <span data-i18n="nav.support">Contact Support</span>
     </a>
   </div>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
 
 <footer>
@@ -756,6 +801,14 @@
     if (nav.indexOf('zh') === 0) return 'zh';
     return 'en';
   }
+
+  // 「回到顶部」要对齐视口右边缘，而板块是定宽居中的，所以得知道视口实际宽度。
+  // clientWidth 不含滚动条，100vw 含，差一个滚动条宽度。
+  function setVW(){
+    document.documentElement.style.setProperty('--vw', document.documentElement.clientWidth + 'px');
+  }
+  setVW();
+  window.addEventListener('resize', setVW, {passive: true});
 
   var sw = document.getElementById('langsw');
   LANGS.forEach(function(l, i){

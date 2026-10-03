@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="5" fill="#0c0a16"/>
+  <!-- 背上的货塔：越往上越窄，16px 下也还能认出是个堆叠 -->
+  <g fill="#D99A4E">
+    <rect x="7"  y="21" width="18" height="5" rx="1"/>
+    <rect x="9"  y="14" width="14" height="5" rx="1" opacity=".85"/>
+    <rect x="11" y="7"  width="10" height="5" rx="1" opacity=".7"/>
+  </g>
+</svg>

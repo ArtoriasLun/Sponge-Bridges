@@ -1,4 +1,5 @@
 var HOME_I18N_EN = {
+  'nav.top': 'Back to top',
   'nav.dev': 'In Development',
   'cta.wishlist': 'Wishlist on Steam',
   'nav.news': 'News',

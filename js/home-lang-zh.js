@@ -1,4 +1,5 @@
 var HOME_I18N_ZH = {
+  'nav.top':'回到顶部',
   'nav.dev':'开发中',
   'cta.wishlist':'加入 Steam 愿望单',
   'nav.news':'公告',
