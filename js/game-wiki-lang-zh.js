@@ -1,4 +1,5 @@
 var I18N_ZH = {
+      'nav.phil':'理念',
       'page.title':'幸存者手册：G市',
       'nav.news':'公告',
       'masthead.back':'← 返回首页',

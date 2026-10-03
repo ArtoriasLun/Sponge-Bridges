@@ -1,4 +1,5 @@
 var SUPPORT_I18N_EN = {
+  'nav.phil':'Philosophy',
   'nav.news':'News',
   'nav.back':'← Home',
   'eyebrow':'Contact Support',

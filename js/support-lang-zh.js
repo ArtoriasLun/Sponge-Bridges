@@ -1,4 +1,5 @@
 var SUPPORT_I18N_ZH = {
+  'nav.phil':'理念',
   'nav.news':'公告',
   'nav.back':'← 返回首页',
   'eyebrow':'联系支持',

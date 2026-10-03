@@ -1,24 +1,25 @@
 <!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>Sponge Bridges — News</title>
+<title>Sponge Bridges — Philosophy</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sponge Bridges">
-<meta property="og:title" content="News — Sponge Bridges">
-<meta property="og:description" content="Development news and announcements for Sponge Bridges.">
-<meta property="og:url" content="https://artoriaslun.github.io/Sponge-Bridges/news.html">
+<meta property="og:title" content="Philosophy — Sponge Bridges">
+<meta property="og:description" content="The thinking behind Sponge Bridges, and where it is going.">
+<meta property="og:url" content="https://artoriaslun.github.io/Sponge-Bridges/philosophy.html">
 <meta property="og:image" content="https://artoriaslun.github.io/Sponge-Bridges/images/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="News — Sponge Bridges">
-<meta name="twitter:description" content="Development news and announcements for Sponge Bridges.">
+<meta name="twitter:title" content="Philosophy — Sponge Bridges">
+<meta name="twitter:description" content="The thinking behind Sponge Bridges, and where it is going.">
 <meta name="twitter:image" content="https://artoriaslun.github.io/Sponge-Bridges/images/og-card.jpg">
 
-<meta name="description" content="Development news and announcements for Sponge Bridges.">
+<meta name="description" content="The thinking behind Sponge Bridges, and where it is going.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
 <style>
+
   :root{
     --bg:#0c0a16; --bg2:#050409;
     --glass:#5C94CC; --glass-dim:rgba(92,148,204,.18); --glass-line:rgba(92,148,204,.32);
@@ -144,142 +145,126 @@
     flex-wrap:wrap; gap:10px; color:var(--ink-faint); font-family:var(--mono); font-size:10.5px;
     letter-spacing:.06em; border-top:1px solid var(--line);
   }
+  /* 理念页：长文排版。比公告页宽一点，因为有并列的清单。 */
+  main{max-width:720px}
+  .chap{margin-top:clamp(56px,7vw,86px)}
+  .chap:first-of-type{margin-top:0}
+  .chap .n{font-family:var(--mono); font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--fire); margin-bottom:12px}
+  .chap h2{font-family:var(--display); font-weight:900; font-size:clamp(22px,3.4vw,30px); line-height:1.2; letter-spacing:-.01em; margin-bottom:20px; text-wrap:balance}
+  .chap p{color:var(--ink-dim); font-size:15px; line-height:1.85; margin-bottom:16px}
+  .chap p strong{color:var(--ink); font-weight:600}
+  .chap .say{color:var(--ink); font-size:16.5px; line-height:1.7}
+
+  blockquote{
+    font-family:var(--display); font-weight:300; font-style:italic;
+    font-size:clamp(20px,3vw,28px); line-height:1.45; color:var(--ink);
+    margin:34px 0; padding-left:22px; border-left:2px solid var(--fire); text-wrap:balance;
+  }
+
+  ul.ticks{list-style:none; margin:4px 0 20px; display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+  ul.ticks li{background:var(--bg); padding:11px 15px; color:var(--ink-dim); font-size:14px; display:flex; gap:11px; align-items:baseline}
+  ul.ticks li::before{content:"+"; color:var(--fire); font-family:var(--mono); font-size:12px; flex:none}
+
+  .wrapup{margin-top:clamp(56px,7vw,86px); border-top:1px solid var(--line); padding-top:34px; text-align:center}
+  .wrapup p{font-family:var(--display); font-weight:600; font-size:clamp(17px,2.3vw,21px); color:var(--ink); line-height:1.7; margin:0}
 </style>
 
 <nav>
   <a class="mark" href="index.html">Sponge Bridges</a>
   <div class="navright">
-    <a class="back" href="philosophy.html" data-i18n="nav.phil">Philosophy</a>
+    <a class="back" href="news.html" data-i18n="nav.news">News</a>
     <a class="back" href="index.html" data-i18n="nav.back">← Home</a>
     <div class="langsw" id="langsw"></div>
   </div>
 </nav>
 
 <main>
-  <div class="eyebrow" data-i18n="page.eyebrow">Development News</div>
-  <h1 class="pagetitle" data-i18n="page.title">News</h1>
-  <p class="pagelede" data-i18n="page.lede">Announcements posted to the Steam page, collected here.</p>
+  <div class="eyebrow" data-i18n="page.eyebrow">Design philosophy</div>
+  <h1 class="pagetitle" data-i18n="page.title">Keep the depth</h1>
+  <p class="pagelede" data-i18n="page.lede">The thinking behind the game, and where it is going.</p>
 
-  <article class="post">
-    <figure class="newshero" data-news-hero="ks-live"></figure>
-    <div class="meta">
-      <span class="date" data-i18n="p3.date">October 3, 2026</span>
-      <span class="tag" data-i18n="p3.tag">Kickstarter</span>
-    </div>
+  <section class="chap">
+    <p class="say" data-i18n="c0.p1">Hi, I am Alun, an independent game developer.</p>
+    <p data-i18n="c0.p2">I have a lot of respect for Cataclysm: Dark Days Ahead.</p>
+    <p data-i18n="c0.p3">Sponge Bridges takes that philosophy and presents it more approachably.</p>
+    <blockquote data-i18n-html="c0.quote">Keep the depth.<br>Make it easier to play.</blockquote>
+  </section>
 
-    <h2 data-i18n="p3.title">Sponge Bridges is now on Kickstarter!</h2>
-    <p class="subtitle" data-i18n="p3.subtitle">More development time, more ways for players to become part of the world.</p>
+  <section class="chap">
+    <div class="n" data-i18n="c1.n">01</div>
+    <h2 data-i18n="c1.h">Deep world, simple interaction</h2>
+    <p data-i18n="c1.p1">Movement, combat, inventory, interaction and survival should be easy to understand.</p>
+    <p data-i18n="c1.p2">The complexity should come from the world itself.</p>
+    <p data-i18n="c1.p3">The same problem should never have only one solution.</p>
+  </section>
 
-    <p class="hello" data-i18n="p3.body1">Sponge Bridges is now on Kickstarter!</p>
-    <p data-i18n="p3.body2">Kickstarter can give me more time to work on the game, but I also want it to become another way for players to take part in its development.</p>
-    <p data-i18n="p3.body3">Feedback, ideas, professions, appearances, stories, and custom NPCs can all help make the world of Sponge Bridges richer and more varied.</p>
-    <p data-i18n="p3.body4">If you'd like to support the project — or even leave a small part of yourself in the game — you can join the campaign here:</p>
+  <section class="chap">
+    <div class="n" data-i18n="c2.n">02</div>
+    <h2 data-i18n="c2.h">More visual, more readable</h2>
+    <p data-i18n="c2.p1">Characters are animated. Combat has clearer feedback. Lighting and atmosphere matter.</p>
+    <p data-i18n="c2.p2">Development continues on:</p>
+    <ul class="ticks">
+      <li data-i18n="c2.l1">Lighting and atmosphere</li>
+      <li data-i18n="c2.l2">Animation</li>
+      <li data-i18n="c2.l3">Combat</li>
+      <li data-i18n="c2.l4">UI clarity</li>
+      <li data-i18n="c2.l5">Environmental feedback</li>
+      <li data-i18n="c2.l6">Performance</li>
+    </ul>
+    <p data-i18n="c2.p3">The goal is not to make the systems simpler.</p>
+  </section>
 
-    <a class="ksbadge" href="https://www.kickstarter.com/projects/alungames/sponge-bridges-a-deep-survival-game-of-delivery" target="_blank" rel="noopener" aria-label="Live on Kickstarter">
-      Live on <b>Kickstarter</b>
-    </a>
+  <section class="chap">
+    <div class="n" data-i18n="c3.n">03</div>
+    <h2 data-i18n="c3.h">A reason to keep moving</h2>
+    <p data-i18n="c3.p1">Travel, burden, delivery, connection.</p>
+    <p data-i18n="c3.p2">Combat is not always the answer.</p>
+    <blockquote data-i18n="c3.quote">Connection can be more interesting than destruction.</blockquote>
+  </section>
 
-    <p style="margin-top:34px" data-i18n="p3.thanks">Thank you for helping me build this world together with you!</p>
-  </article>
+  <section class="chap">
+    <div class="n" data-i18n="c4.n">04</div>
+    <h2 data-i18n="c4.h">Where I want to take it</h2>
+    <p data-i18n="c4.p1">The goal is not simply to add more content.</p>
+    <ul class="ticks">
+      <li data-i18n="c4.l1">Stronger visuals and lighting</li>
+      <li data-i18n="c4.l2">More animation</li>
+      <li data-i18n="c4.l3">Deeper combat</li>
+      <li data-i18n="c4.l4">More peaceful solutions</li>
+      <li data-i18n="c4.l5">Stronger survival systems</li>
+      <li data-i18n="c4.l6">Better performance</li>
+      <li data-i18n="c4.l7">Steam Achievements, Cloud and Workshop</li>
+      <li data-i18n="c4.l8">Better controller and Steam Deck support</li>
+      <li data-i18n="c4.l9">Expanded localization</li>
+    </ul>
+  </section>
 
-  <article class="post">
-    <figure class="newshero" data-news-hero="demo-live"></figure>
-    <div class="meta">
-      <span class="date" data-i18n="p2.date">October 1, 2026</span>
-      <span class="tag" data-i18n="p2.tag">Release</span>
-    </div>
+  <section class="chap">
+    <div class="n" data-i18n="c5.n">05</div>
+    <h2 data-i18n="c5.h">Someone else was here</h2>
+    <p data-i18n="c5.p1">For future online features, I am most interested in asynchronous interaction.</p>
+    <p data-i18n="c5.p2">Players may leave resources, structures or information for someone to find later.</p>
+    <blockquote data-i18n-html="c5.quote">You may never meet that player.<br>But you know: someone else was here.</blockquote>
+  </section>
 
-    <h2 data-i18n="p2.title">Sponge Bridges Demo v0.1 is now available!</h2>
-    <p class="subtitle" data-i18n="p2.subtitle">The first public demo is now live.</p>
+  <section class="chap">
+    <div class="n" data-i18n="c6.n">06</div>
+    <h2 data-i18n="c6.h">Further out</h2>
+    <p data-i18n="c6.p1">A classic MMORPG structure inside a world with CDDA-like systemic interaction.</p>
+    <p data-i18n="c6.p2">That is a long-term ambition, not a promise.</p>
+  </section>
 
-    <p class="hello" data-i18n="p2.body1">Sponge Bridges Demo v0.1 is now available!</p>
-    <p data-i18n="p2.body2">Welcome to the first public release.</p>
-    <p data-i18n="p2.body3">If you run into bugs or have any feedback, feel free to let me know in the Steam Community Discussions.</p>
-
-    <h3 data-i18n="p2.join">Join the community</h3>
-    <div class="road">
-      <div class="stop next">
-        <div class="when" data-i18n="p2.link1.when">Steam Community Discussions</div>
-        <div class="what"><a href="https://steamcommunity.com/app/5163770/discussions/" target="_blank" rel="noopener" data-i18n="p2.link1.what">Bugs, feedback, and everything else</a></div>
-      </div>
-      <div class="stop">
-        <div class="when" data-i18n="p2.link2.when">QQ group</div>
-        <div class="what" data-i18n="p2.link2.what">437182032</div>
-      </div>
-    </div>
-
-    <p style="margin-top:34px" data-i18n="p2.thanks">Thanks for playing!</p>
-
-    <a class="wish" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-      <span data-i18n="cta.wishlist">Wishlist on Steam</span>
-    </a>
-  </article>
-
-  <article class="post">
-    <figure class="newshero" data-news-hero="demo-v01"></figure>
-    <div class="meta">
-      <span class="date" data-i18n="p1.date">September 29, 2026</span>
-      <span class="tag" data-i18n="p1.tag">Announcement</span>
-    </div>
-
-    <h2 data-i18n="p1.title">Sponge Bridges Demo v0.1 — Coming October 1!</h2>
-    <p class="subtitle" data-i18n="p1.subtitle">The first public demo is almost here. Welcome to the world of Sponge Bridges.</p>
-
-    <p class="hello" data-i18n="p1.hello1">Hey everyone — I'm Alun, welcome to Sponge Bridges.</p>
-    <p data-i18n="p1.hello2">The first public demo is almost here, and this is the first time I'm properly saying hello to all of you.</p>
-
-    <p data-i18n-html="p1.body1"><strong>Sponge Bridges Demo v0.1 is planned to launch on October 1, 2026.</strong></p>
-    <p data-i18n="p1.body1b">Yes, indeed.</p>
-    <p data-i18n="p1.body2">In a dangerous and lonely post-apocalyptic world.</p>
-
-    <div class="beats">
-      <span><i>▸</i><span data-i18n="p1.beat1">Deliver cargo</span></span>
-      <span><i>◈</i><span data-i18n="p1.beat2">Scavenge</span></span>
-      <span><i>✦</i><span data-i18n="p1.beat3">Survive</span></span>
-      <span><i>⚔</i><span data-i18n="p1.beat4">Fight</span></span>
-    </div>
-
-    <p data-i18n="p1.body3">And one day, find a way to reconnect what was lost.</p>
-    <p data-i18n-html="p1.body4">This is just the beginning. I'll keep updating and improving the demo as we head into <strong>Steam Next Fest — October 2026</strong>.</p>
-
-    <h3 data-i18n="p1.roadmap">Roadmap</h3>
-    <div class="road">
-      <div class="stop next">
-        <div class="when" data-i18n="p1.r1.when">October 1, 2026 — Demo v0.1</div>
-        <div class="what" data-i18n="p1.r1.what">The first public version of Sponge Bridges.</div>
-      </div>
-      <div class="stop">
-        <div class="when" data-i18n="p1.r2.when">November 1, 2026 — Early Access Beta Testing</div>
-        <div class="what" data-i18n="p1.r2.what">The next major step, with more content, systems, items, locations, and progression available for testing.</div>
-      </div>
-      <div class="stop">
-        <div class="when" data-i18n="p1.r3.when">December 2026 — Early Access</div>
-        <div class="what" data-i18n="p1.r3.what">Sponge Bridges officially enters Early Access.</div>
-      </div>
-      <div class="stop">
-        <div class="when" data-i18n="p1.r4.when">December 2027 — Version 1.0</div>
-        <div class="what" data-i18n="p1.r4.what">The planned full release of Sponge Bridges.</div>
-      </div>
-    </div>
-
-    <p style="margin-top:40px" data-i18n="p1.thanks">Thanks for being here this early.</p>
-    <p data-i18n-html="p1.cta">Wishlist <strong>Sponge Bridges</strong> and follow the game to keep up with development.</p>
-
-    <a class="wish" href="https://store.steampowered.com/app/5163770/Sponge_Bridges/" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-      <span data-i18n="cta.wishlist">Wishlist on Steam</span>
-    </a>
-  </article>
+  <div class="wrapup">
+    <p data-i18n-html="wrapup">Deep world.<br>Simple interaction.<br>More ways to play.</p>
+  </div>
 </main>
 
 <footer>
   <span>Sponge Bridges</span>
-  <span>© 2026</span>
+  <span>&copy; 2026</span>
 </footer>
-
-<script src="js/news-lang-en.js"></script>
-<script src="js/news-lang-zh.js"></script>
+<script src="js/philosophy-lang-en.js"></script>
+<script src="js/philosophy-lang-zh.js"></script>
 <script src="js/sparks.js"></script>
 <script src="js/media.js"></script>
 <script>
@@ -288,7 +273,7 @@
     {code:'en', label:'EN'},
     {code:'zh', label:'中文'}
   ];
-  var I18N = { en: NEWS_I18N_EN, zh: NEWS_I18N_ZH };
+  var I18N = { en: PHIL_I18N_EN, zh: PHIL_I18N_ZH };
 
   function applyLang(lang){
     var dict = I18N[lang] || I18N.en;

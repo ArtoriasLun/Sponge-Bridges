@@ -1,4 +1,5 @@
 var I18N_EN = {
+  'nav.phil': 'Philosophy',
   'page.title': 'Survivor\'s Dossier: G-City',
   'nav.news': 'News',
   'masthead.back': '← Back to Home',
