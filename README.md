@@ -2,7 +2,7 @@
 
 Official homepage for **Sponge Bridges**.
 
-Live at: [https://artoriaslun.github.io/Sponge-Bridges/](https://artoriaslun.github.io/Sponge-Bridges/)
+Live at: [https://spongebridges.com/](https://spongebridges.com/)
 
 ## Player feedback
 
@@ -17,7 +17,7 @@ Hit a problem in the game, or have something to suggest? File it here:
 
 Before you post: this tracker is public and anyone can read what you write.
 **Keep your email, real name, and anything personal out of it.** If it's private,
-use the [support form](https://artoriaslun.github.io/Sponge-Bridges/support.html) instead.
+use the [support form](https://spongebridges.com/support.html) instead.
 
 ## How the site is put together
 
