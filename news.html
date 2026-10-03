@@ -89,6 +89,8 @@
   .post p{color:var(--ink-dim); font-size:15px; line-height:1.8; margin-bottom:18px}
   .post p.hello{color:var(--ink); font-size:17px; line-height:1.7}
   .post p strong{color:var(--ink); font-weight:600}
+  .post .road .stop.cn-only{display:none}
+  html[lang^="zh"] .post .road .stop.cn-only{display:block}
   .post .road .what a{color:var(--glass); text-decoration:none; border-bottom:1px solid var(--glass-line)}
   .post .road .what a:hover{color:var(--fire); border-color:var(--fire-dim)}
   .ksbadge{
@@ -202,7 +204,7 @@
         <div class="when" data-i18n="p2.link1.when">Steam Community Discussions</div>
         <div class="what"><a href="https://steamcommunity.com/app/5163770/discussions/" target="_blank" rel="noopener" data-i18n="p2.link1.what">Bugs, feedback, and everything else</a></div>
       </div>
-      <div class="stop">
+      <div class="stop cn-only">
         <div class="when" data-i18n="p2.link2.when">QQ group</div>
         <div class="what" data-i18n="p2.link2.what">437182032</div>
       </div>
