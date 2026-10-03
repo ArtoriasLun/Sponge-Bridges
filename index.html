@@ -64,7 +64,7 @@
   }
   @media (prefers-reduced-motion: reduce){ .hero .frame img{animation:none} }
   /* 火星层固定在 z-index:3（在 hero 底图之上），首屏之后的区块要抬到它上面 */
-  .newsband,.gallery,.pitch,.crowd,.roadmap,.community,.closing,footer{position:relative; z-index:4}
+  .newsband,.gallery,.pitch,.ethos,.crowd,.roadmap,.community,.closing,footer{position:relative; z-index:4}
 
   nav{
     position:absolute; top:0; left:0; right:0; z-index:6;
@@ -363,6 +363,37 @@
   .pillar .q-text{font-size:13.5px; line-height:1.7; color:var(--ink-dim); max-width:26em; margin:0 auto; letter-spacing:0.02em;}
   @media(max-width:760px){ .pillars{grid-template-columns:1fr} .pillar{padding:40px 24px; border-bottom:1px solid rgba(92,148,204,.15)} }
 
+  /* 设计理念：三条主张 + 一句关于未来的引文。
+     放在众筹板块之前 —— 先讲清楚为什么这么做，再谈支持。 */
+  .ethos{max-width:1080px; margin:0 auto; padding:min(13vw,120px) clamp(20px,6vw,40px) 0}
+  .ethos .ehead{text-align:center; margin-bottom:clamp(40px,5vw,64px)}
+  .ethos .eyebrow2{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:12px}
+  .ethos .ehead h2{font-family:var(--display); font-weight:600; font-size:clamp(24px,3.4vw,38px); color:var(--ink); margin-bottom:18px; text-wrap:balance}
+  .ethos .ehead .lede{color:var(--ink-dim); font-size:15px; line-height:1.8; max-width:40em; margin:0 auto; letter-spacing:.02em}
+
+  .tenets{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line)}
+  .tenet{background:var(--bg); padding:clamp(26px,3vw,36px)}
+  .tenet .gl{display:block; width:26px; height:26px; margin-bottom:16px; stroke:var(--fire); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round}
+  .tenet h3{font-family:var(--display); font-weight:600; font-size:17.5px; color:var(--ink); margin-bottom:11px; text-wrap:balance}
+  .tenet p{color:var(--ink-dim); font-size:13.8px; line-height:1.75}
+  @media(max-width:860px){ .tenets{grid-template-columns:1fr} }
+
+  .ahead{margin-top:clamp(44px,5vw,64px); text-align:center; border-top:1px solid var(--line); padding-top:clamp(36px,4vw,52px)}
+  .ahead .lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:22px}
+  .ahead blockquote{
+    font-family:var(--display); font-weight:300; font-style:italic;
+    font-size:clamp(20px,2.9vw,30px); line-height:1.45; color:var(--ink);
+    max-width:20em; margin:0 auto 22px; text-wrap:balance;
+  }
+  .ahead .note{color:var(--ink-dim); font-size:14.5px; line-height:1.75; max-width:34em; margin:0 auto 14px}
+  .ahead .far{color:var(--ink-faint); font-size:13px; line-height:1.7; max-width:36em; margin:0 auto}
+  .ahead .more{
+    display:inline-block; margin-top:26px; font-family:var(--mono); font-size:11px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--glass); text-decoration:none;
+    border-bottom:1px solid var(--glass-line); padding-bottom:3px; transition:color .25s ease, border-color .25s ease;
+  }
+  .ahead .more:hover{color:var(--fire); border-color:var(--fire-dim)}
+
   /* 众筹：带角标的面板，和画廊舞台、支持页表单用的是同一套角标语言。
      时效性的东西，所以给了呼吸的指示点和实心火色按钮。 */
   .crowd{max-width:1080px; margin:0 auto; padding:min(12vw,110px) clamp(20px,6vw,40px) 0}
@@ -658,6 +689,42 @@
 
   <div class="storeabout" data-store="about">
     <p data-i18n-html="pitch.p2">Sponge Bridges is a delivery-focused post-apocalyptic survival game paying homage to Death Stranding and Cataclysm: Dark Days Ahead.</p>
+  </div>
+  <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
+</section>
+
+<section class="ethos">
+  <div class="ehead">
+    <div class="eyebrow2" data-i18n="ethos.eyebrow">Design philosophy</div>
+    <h2 data-i18n="ethos.h2">Keep the depth. Make it easier to play.</h2>
+    <p class="lede" data-i18n="ethos.lede">I'm Alun, an independent developer.</p>
+  </div>
+
+  <div class="tenets">
+    <div class="tenet">
+      <svg class="gl" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg>
+      <h3 data-i18n="ethos.t1.h">Deep world, simple interaction</h3>
+      <p data-i18n="ethos.t1.p">The complexity should come from the world itself.</p>
+    </div>
+    <div class="tenet">
+      <svg class="gl" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      <h3 data-i18n="ethos.t2.h">Make the depth visible</h3>
+      <p data-i18n="ethos.t2.p">Not simpler systems — depth that is easier to see.</p>
+    </div>
+    <div class="tenet">
+      <svg class="gl" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 14.5 6 18a3.5 3.5 0 1 1-2-6"/><path d="M14.5 9.5 18 6a3.5 3.5 0 1 1 2 6"/><path d="M9 15 15 9"/></svg>
+      <h3 data-i18n="ethos.t3.h">Connection over destruction</h3>
+      <p data-i18n="ethos.t3.p">Combat is not always the answer.</p>
+    </div>
+  </div>
+
+  <div class="ahead">
+    <div class="lbl" data-i18n="ethos.ahead">Looking ahead</div>
+    <blockquote data-i18n-html="ethos.quote">You may never meet that player.<br>But you know: someone else was here.</blockquote>
+    <p class="note" data-i18n="ethos.note">Asynchronous interaction.</p>
+    <p class="far" data-i18n="ethos.far">A long-term ambition, not a promise.</p>
+    <a class="more" href="https://www.kickstarter.com/projects/alungames/sponge-bridges-a-deep-survival-game-of-delivery"
+       target="_blank" rel="noopener" data-i18n="ethos.more">Read the full story on Kickstarter →</a>
   </div>
   <a class="backtop" href="#top"><span class="ln"></span><span data-i18n="nav.top">Back to top</span></a>
 </section>
