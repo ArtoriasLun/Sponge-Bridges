@@ -6,6 +6,16 @@ var NEWS_I18N_EN = {
   'page.title':'News',
   'page.lede':'Announcements posted to the Steam page, collected here.',
 
+  'p3.date':'October 3, 2026',
+  'p3.tag':'Kickstarter',
+  'p3.title':'Sponge Bridges is now on Kickstarter!',
+  'p3.subtitle':'More development time, more ways for players to become part of the world.',
+  'p3.body1':'Sponge Bridges is now on Kickstarter!',
+  'p3.body2':'Kickstarter can give me more time to work on the game, but I also want it to become another way for players to take part in its development.',
+  'p3.body3':'Feedback, ideas, professions, appearances, stories, and custom NPCs can all help make the world of Sponge Bridges richer and more varied.',
+  'p3.body4':'If you\'d like to support the project — or even leave a small part of yourself in the game — you can join the campaign here:',
+  'p3.thanks':'Thank you for helping me build this world together with you!',
+
   'p2.date':'October 1, 2026',
   'p2.tag':'Release',
   'p2.title':'Sponge Bridges Demo v0.1 is now available!',

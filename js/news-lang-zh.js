@@ -6,6 +6,16 @@ var NEWS_I18N_ZH = {
   'page.title':'公告',
   'page.lede':'发布在 Steam 页面上的公告，都会同步收在这里。',
 
+  'p3.date':'2026 年 10 月 3 日',
+  'p3.tag':'众筹',
+  'p3.title':'Sponge Bridges 现已登陆 Kickstarter！',
+  'p3.subtitle':'更多开发时间，也让玩家真正成为这个世界的一部分。',
+  'p3.body1':'Sponge Bridges 现已登陆 Kickstarter！',
+  'p3.body2':'Kickstarter 不仅能让我投入更多时间开发游戏，我也希望它能成为玩家参与开发的另一种方式。',
+  'p3.body3':'反馈、想法、职业、外观、故事，以及定制 NPC，都有机会让 Sponge Bridges 的世界变得更加丰富和多样。',
+  'p3.body4':'如果你愿意支持这个项目，甚至在游戏世界里留下一点属于自己的东西，可以在这里参与众筹：',
+  'p3.thanks':'感谢大家和我一起把这个世界慢慢做出来！',
+
   'p2.date':'2026 年 10 月 1 日',
   'p2.tag':'发布',
   'p2.title':'Sponge Bridges 试玩版 v0.1 现已上线！',

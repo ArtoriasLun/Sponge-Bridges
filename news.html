@@ -75,6 +75,15 @@
   .post p strong{color:var(--ink); font-weight:600}
   .post .road .what a{color:var(--glass); text-decoration:none; border-bottom:1px solid var(--glass-line)}
   .post .road .what a:hover{color:var(--fire); border-color:var(--fire-dim)}
+  .ksbadge{
+    display:inline-flex; align-items:center; gap:.5em; text-decoration:none; margin-top:10px;
+    font-family:var(--body); font-size:17px; line-height:1; letter-spacing:.02em; text-transform:uppercase;
+    color:#fff; font-weight:500; background:#05CE78; border-radius:4px; padding:.72em 1.1em;
+    box-shadow:0 3px 0 rgba(0,0,0,.22), 0 10px 26px rgba(5,206,120,.26);
+    transition:background .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .ksbadge:hover{background:#04b96c; transform:translateY(-2px); box-shadow:0 5px 0 rgba(0,0,0,.22), 0 14px 32px rgba(5,206,120,.34)}
+  .ksbadge b{font-weight:700; letter-spacing:-.005em}
   .post .beats{
     display:flex; flex-wrap:wrap; gap:10px 22px; margin:26px 0;
     font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
@@ -133,6 +142,28 @@
   <div class="eyebrow" data-i18n="page.eyebrow">Development News</div>
   <h1 class="pagetitle" data-i18n="page.title">News</h1>
   <p class="pagelede" data-i18n="page.lede">Announcements posted to the Steam page, collected here.</p>
+
+  <article class="post">
+    <figure class="newshero" data-news-hero="ks-live"></figure>
+    <div class="meta">
+      <span class="date" data-i18n="p3.date">October 3, 2026</span>
+      <span class="tag" data-i18n="p3.tag">Kickstarter</span>
+    </div>
+
+    <h2 data-i18n="p3.title">Sponge Bridges is now on Kickstarter!</h2>
+    <p class="subtitle" data-i18n="p3.subtitle">More development time, more ways for players to become part of the world.</p>
+
+    <p class="hello" data-i18n="p3.body1">Sponge Bridges is now on Kickstarter!</p>
+    <p data-i18n="p3.body2">Kickstarter can give me more time to work on the game, but I also want it to become another way for players to take part in its development.</p>
+    <p data-i18n="p3.body3">Feedback, ideas, professions, appearances, stories, and custom NPCs can all help make the world of Sponge Bridges richer and more varied.</p>
+    <p data-i18n="p3.body4">If you'd like to support the project — or even leave a small part of yourself in the game — you can join the campaign here:</p>
+
+    <a class="ksbadge" href="https://www.kickstarter.com/projects/alungames/sponge-bridges-a-deep-survival-game-of-delivery" target="_blank" rel="noopener" aria-label="Live on Kickstarter">
+      Live on <b>Kickstarter</b>
+    </a>
+
+    <p style="margin-top:34px" data-i18n="p3.thanks">Thank you for helping me build this world together with you!</p>
+  </article>
 
   <article class="post">
     <figure class="newshero" data-news-hero="demo-live"></figure>
