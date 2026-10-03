@@ -1,0 +1,208 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Sponge Bridges — Not found</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sponge Bridges">
+<meta property="og:title" content="Not found — Sponge Bridges">
+<meta property="og:description" content="This page does not exist.">
+<meta property="og:url" content="https://artoriaslun.github.io/Sponge-Bridges/404.html">
+<meta property="og:image" content="https://artoriaslun.github.io/Sponge-Bridges/images/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Not found — Sponge Bridges">
+<meta name="twitter:description" content="This page does not exist.">
+<meta name="twitter:image" content="https://artoriaslun.github.io/Sponge-Bridges/images/og-card.jpg">
+
+<meta name="description" content="Contact support for Sponge Bridges.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;600&family=Share+Tech+Mono&display=swap">
+<style>
+  :root{
+    --bg:#0c0a16; --bg2:#050409;
+    --glass:#5C94CC; --glass-dim:rgba(92,148,204,.18); --glass-line:rgba(92,148,204,.32);
+    --fire:#D99A4E; --fire-dim:#986C37;
+    --ink:#f3ede0; --ink-dim:rgba(243,237,224,.62); --ink-faint:rgba(243,237,224,.34);
+    --line:rgba(243,237,224,.14);
+    --display:'Fraunces','Noto Serif SC',serif;
+    --body:'Archivo','Noto Sans SC',sans-serif;
+    --mono:'Share Tech Mono','Noto Sans SC',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(900px 500px at 15% -10%, rgba(92,148,204,.08), transparent 60%),
+      radial-gradient(700px 500px at 100% 0%, rgba(217,154,78,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--body); min-height:100svh;
+  }
+  ::selection{background:var(--glass);color:var(--bg2)}
+
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px clamp(18px,4vw,40px); border-bottom:1px solid var(--line);
+  }
+  nav a.mark{font-family:var(--mono); font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); text-decoration:none}
+  nav a.back{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-faint); text-decoration:none; border:1px solid var(--line); padding:6px 13px;
+    transition:color .25s ease, border-color .25s ease;
+  }
+  nav a.back:hover{color:var(--glass); border-color:var(--glass-line)}
+  nav .navright{display:flex; align-items:center; gap:12px}
+  nav .langsw{display:flex; border:1px solid var(--line)}
+  nav .langsw button{
+    font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); background:transparent; border:none; padding:6px 11px; cursor:pointer;
+    transition:color .25s ease, background .25s ease;
+  }
+  nav .langsw button+button{border-left:1px solid var(--line)}
+  nav .langsw button:hover{color:var(--ink)}
+  nav .langsw button.active{color:var(--glass); background:var(--glass-dim)}
+
+  /* 火星层固定在 z-index:3，正文抬到它上面 */
+  nav,main,footer{position:relative; z-index:4}
+  main{max-width:640px; margin:0 auto; padding:clamp(48px,9vh,96px) clamp(18px,5vw,24px) 100px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--fire); margin-bottom:16px}
+  h1{
+    font-family:var(--display); font-weight:900; font-size:clamp(38px,7vw,64px);
+    line-height:1; letter-spacing:-.01em; margin-bottom:18px; text-wrap:balance;
+  }
+  .lede{color:var(--ink-dim); font-size:15.5px; line-height:1.75; max-width:38em; margin-bottom:44px}
+  /* QQ 群：只在中文下出现。英文词条留空，:empty 让整块消失，
+     不用再写一套按语言显隐的 JS。 */
+  .qq:empty{display:none}
+  .qq{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    border:1px solid var(--fire-dim); background:rgba(217,154,78,.07);
+    padding:14px 18px; margin:0 0 34px;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; color:var(--ink-dim);
+  }
+  .qq b{color:var(--fire); font-weight:400; font-size:15px; letter-spacing:.1em; user-select:all}
+
+  .lede em{font-style:italic; color:var(--glass)}
+
+  .split{display:flex; align-items:baseline; gap:14px; margin:0 0 20px}
+  .split h2{font-family:var(--display); font-weight:600; font-size:20px; letter-spacing:-.01em; white-space:nowrap}
+  .split .rule{flex:1; height:1px; background:var(--line)}
+  .tracker{margin-top:76px}
+  .tracker p{color:var(--ink-dim); font-size:14.5px; line-height:1.75; max-width:38em; margin-bottom:26px}
+  .routes{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+  .routes a{
+    display:block; padding:16px 18px; background:var(--bg); text-decoration:none;
+    transition:background .25s ease;
+  }
+  .routes a:hover{background:rgba(92,148,204,.07)}
+  .routes .t{display:block; color:var(--ink); font-size:14.5px; margin-bottom:5px}
+  .routes .d{display:block; color:var(--ink-faint); font-size:12.5px; line-height:1.6}
+  .routes a:hover .t{color:var(--glass)}
+  .note{
+    margin-top:18px; font-family:var(--mono); font-size:11px; line-height:1.8;
+    letter-spacing:.04em; color:var(--ink-faint);
+  }
+
+  .embed{position:relative; border:1px solid var(--line); padding:clamp(10px,2vw,16px)}
+  .embed::before,.embed::after{content:"";position:absolute;top:0;width:11px;height:11px}
+  .embed::before{left:0;border-top:1px solid var(--glass);border-left:1px solid var(--glass)}
+  .embed::after{right:0;border-top:1px solid var(--glass);border-right:1px solid var(--glass)}
+  .embed iframe{width:100%; height:920px; border:0; display:block; background:transparent; color-scheme:light}
+  @media(max-width:520px){ .embed iframe{height:1080px} }
+
+  footer{
+    padding:26px clamp(18px,6vw,40px) 36px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:10px; color:var(--ink-faint); font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.06em; border-top:1px solid var(--line);
+  }
+
+
+
+  main{max-width:560px; text-align:center; padding-top:clamp(70px,14vh,140px)}
+  .code{font-family:var(--mono); font-size:clamp(56px,13vw,104px); line-height:1; color:var(--fire); letter-spacing:.04em; margin-bottom:22px}
+  h1{font-family:var(--display); font-weight:900; font-size:clamp(26px,4.4vw,38px); line-height:1.15; margin-bottom:16px; text-wrap:balance}
+  .lost{color:var(--ink-dim); font-size:15px; line-height:1.8; margin:0 auto 38px; max-width:28em}
+  .ways{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); text-align:left}
+  .ways a{display:block; padding:15px 18px; background:var(--bg); text-decoration:none; transition:background .25s ease}
+  .ways a:hover{background:rgba(92,148,204,.07)}
+  .ways .t{display:block; color:var(--ink); font-size:14.5px}
+  .ways a:hover .t{color:var(--glass)}
+</style>
+
+<nav>
+  <a class="mark" href="index.html">Sponge Bridges</a>
+  <div class="navright">
+    <a class="back" href="index.html" data-i18n="nav.back">← Home</a>
+    <div class="langsw" id="langsw"></div>
+  </div>
+</nav>
+
+<main>
+  <div class="code">404</div>
+  <h1 data-i18n="h1">This road leads nowhere.</h1>
+  <p class="lost" data-i18n="lost">The page you were looking for is not here. It may have moved, or never existed.</p>
+  <div class="ways">
+    <a href="index.html"><span class="t" data-i18n="w.home">← Back to the homepage</span></a>
+    <a href="news.html"><span class="t" data-i18n="w.news">News</span></a>
+    <a href="philosophy.html"><span class="t" data-i18n="w.phil">Design philosophy</span></a>
+    <a href="support.html"><span class="t" data-i18n="w.support">Contact support</span></a>
+  </div>
+</main>
+
+<footer>
+  <span>Sponge Bridges</span>
+  <span>&copy; 2026</span>
+</footer>
+<script src="js/notfound-lang-en.js"></script>
+<script src="js/notfound-lang-zh.js"></script>
+<script src="js/sparks.js"></script>
+<script>
+(function(){
+  var LANGS = [
+    {code:'en', label:'EN'},
+    {code:'zh', label:'中文'}
+  ];
+  var I18N = { en: NF_I18N_EN, zh: NF_I18N_ZH };
+
+  function applyLang(lang){
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.textContent = val;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-html');
+      var val = (key in dict) ? dict[key] : I18N.en[key];
+      if (val != null) el.innerHTML = val;
+    });
+    document.querySelectorAll('#langsw button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+  }
+
+  function detectLang(){
+    try {
+      var saved = localStorage.getItem('sb_lang');
+      if (saved && I18N[saved]) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || 'en').toLowerCase();
+    if (nav.indexOf('zh') === 0) return 'zh';
+    return 'en';
+  }
+
+  var sw = document.getElementById('langsw');
+  LANGS.forEach(function(l){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.lang = l.code;
+    b.textContent = l.label;
+    b.addEventListener('click', function(){ applyLang(l.code); });
+    sw.appendChild(b);
+  });
+  applyLang(detectLang());
+})();
+</script>
+
