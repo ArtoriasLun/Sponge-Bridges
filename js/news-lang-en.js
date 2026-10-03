@@ -1,4 +1,5 @@
 var NEWS_I18N_EN = {
+  'page.doctitle':'News & Updates — Sponge Bridges',
   'nav.phil':'Philosophy',
   'nav.back':'← Home',
   'cta.wishlist':'Wishlist on Steam',

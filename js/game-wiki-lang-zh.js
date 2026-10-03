@@ -1,4 +1,5 @@
 var I18N_ZH = {
+      'page.doctitle':'幸存者手册：G市 — Sponge Bridges 海绵桥',
       'nav.phil':'理念',
       'page.title':'幸存者手册：G市',
       'nav.news':'公告',

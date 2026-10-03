@@ -1,4 +1,5 @@
 var NEWS_I18N_ZH = {
+  'page.doctitle':'开发公告 — Sponge Bridges 海绵桥',
   'nav.phil':'理念',
   'nav.back':'← 返回首页',
   'cta.wishlist':'加入 Steam 愿望单',

@@ -1,4 +1,5 @@
 var I18N_EN = {
+  'page.doctitle':'Survivor\'s Dossier — Sponge Bridges Wiki',
   'nav.phil': 'Philosophy',
   'page.title': 'Survivor\'s Dossier: G-City',
   'nav.news': 'News',

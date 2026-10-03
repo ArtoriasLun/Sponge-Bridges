@@ -1,4 +1,5 @@
 var PHIL_I18N_EN = {
+  'page.doctitle':'Design Philosophy — Sponge Bridges',
   'nav.back':'← Home',
   'nav.news':'News',
 

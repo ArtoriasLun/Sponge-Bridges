@@ -1,4 +1,5 @@
 var SUPPORT_I18N_EN = {
+  'page.doctitle':'Support & Feedback — Sponge Bridges',
   'nav.phil':'Philosophy',
   'nav.news':'News',
   'nav.back':'← Home',

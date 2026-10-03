@@ -1,4 +1,5 @@
 var PHIL_I18N_ZH = {
+  'page.doctitle':'设计理念 — Sponge Bridges 海绵桥',
   'nav.back':'← 返回首页',
   'nav.news':'公告',
 

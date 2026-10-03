@@ -1,4 +1,5 @@
 var SUPPORT_I18N_ZH = {
+  'page.doctitle':'联系支持 — Sponge Bridges 海绵桥',
   'nav.phil':'理念',
   'nav.news':'公告',
   'nav.back':'← 返回首页',

@@ -1,7 +1,7 @@
 <!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>Sponge Bridges — Support</title>
+<title>Support & Feedback — Sponge Bridges</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sponge Bridges">
@@ -197,6 +197,7 @@
       b.classList.toggle('active', b.dataset.lang === lang);
     });
     try { localStorage.setItem('sb_lang', lang); } catch (e) {}
+    if (dict['page.doctitle']) document.title = dict['page.doctitle'];
   }
 
   function detectLang(){
