@@ -26,7 +26,7 @@ deploys on its own.
 
 | | |
 |---|---|
-| `index.html` · `news.html` · `game-wiki.html` · `support.html` | The four pages |
+| `index.html` · `philosophy.html` · `game-wiki.html` · `support.html` | The four pages |
 | `js/*-lang-*.js` | Per-page translation dictionaries, keyed by `data-i18n` |
 | `js/sparks.js` | The ember particle layer, shared by every page |
 | `js/media.js` + `media.json` | Images and video, from [`images/`](images/) |
