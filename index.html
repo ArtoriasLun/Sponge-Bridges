@@ -193,6 +193,9 @@
   }
   .backtop:hover .ln::after{background:linear-gradient(180deg, transparent, var(--fire) 55%, transparent); box-shadow:0 0 6px var(--fire)}
   @keyframes flow-up{0%{top:100%} 100%{top:-40%}}
+  @media(max-width:860px){
+    .backtop{position:static; justify-content:flex-end; margin:30px 0 0; padding:0 clamp(20px,5vw,56px) 0 0}
+  }
   @media (prefers-reduced-motion: reduce){ .backtop .ln::after{animation:none; opacity:0} }
 
   .gallery{padding:min(12vw,110px) clamp(20px,6vw,40px) min(10vw,90px); max-width:1100px; margin:0 auto}
